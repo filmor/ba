@@ -20,23 +20,30 @@ void Analyse::Loop()
         if (ientry < 0) break;
         nb = fChain->GetEntry(jentry);
         nbytes += nb;
-        // if (Cut(ientry) < 0) continue;
-        //      std::cout << El_N << "\n";
-        if (El_N == 2)
-        {
-            TLorentzVector v1, v2, v3;
-            v1.SetPxPyPzE ((*El_px)[0], (*El_py)[0],
-                           (*El_pz)[0], (*El_E)[0]);
-            v2.SetPxPyPzE ((*El_px)[1], (*El_py)[1],
-                           (*El_pz)[1], (*El_E)[1]);
 
-            v3 = v1 + v2;
-            z_mass->Fill(v3.M() / 1000);
+        if (El_N == 2 && Mu_N == 0)
+        {
+            TLorentzVector v = get_electron_vector(0) + get_electron_vector(1);
+            z_mass->Fill(v.M() / 1000);
+        }
+
+        if (Mu_N == 2 && El_N == 0)
+        {
+            TLorentzVector v = get_muon_vector(0) + get_muon_vector(1);
+            z_mass->Fill(v.M() / 1000);
+        }
+
+        if (Mu_N == 2 && El_N == 1)
+        {
+        }
+
+        if (El_N == 2 && Mu_N == 1)
+        {
         }
 
     }
 
-    TFile f ("histogramm.root", "new");
+    TFile f ("histogramm.root", "UPDATE");
     f.cd();
     z_mass->Write();
 }
