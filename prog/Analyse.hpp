@@ -8,8 +8,9 @@
 
 namespace ba
 {
+    using std::vector;
 
-    class dataset
+    class Analyse
     {
     private:
        TTree          *fChain;   //!pointer to the analyzed TTree or TChain
@@ -1961,8 +1962,9 @@ namespace ba
        TBranch        *b_ControlSampleRunNumber;   //!
        TBranch        *b_ControlSampleNInstance;   //!
 
-       dataset(TTree *tree=0);
-       ~dataset();
+    public:
+       Analyse(TTree *tree=0);
+       ~Analyse();
        Int_t    Cut(Long64_t entry);
        Int_t    GetEntry(Long64_t entry);
        Long64_t LoadTree(Long64_t entry);
@@ -1971,12 +1973,14 @@ namespace ba
        Bool_t   Notify();
     };
 
-    result_type analyze (dataset const&);
+}
 
 #endif
 
-#ifdef dataset_cxx
-    dataset::dataset(TTree *tree)
+#ifdef Analyse_cpp
+using namespace ba;
+
+    Analyse::Analyse(TTree *tree)
     {
     // if parameter tree is not specified (or zero), connect the file
     // used to generate this class and read the Tree.
@@ -1991,19 +1995,19 @@ namespace ba
        Init(tree);
     }
 
-    dataset::~dataset()
+    Analyse::~Analyse()
     {
        if (!fChain) return;
        delete fChain->GetCurrentFile();
     }
 
-    Int_t dataset::GetEntry(Long64_t entry)
+    Int_t Analyse::GetEntry(Long64_t entry)
     {
     // Read contents of entry.
        if (!fChain) return 0;
        return fChain->GetEntry(entry);
     }
-    Long64_t dataset::LoadTree(Long64_t entry)
+    Long64_t Analyse::LoadTree(Long64_t entry)
     {
     // Set the environment to read one entry
        if (!fChain) return -5;
@@ -2013,12 +2017,11 @@ namespace ba
        TChain *chain = (TChain*)fChain;
        if (chain->GetTreeNumber() != fCurrent) {
           fCurrent = chain->GetTreeNumber();
-          Notify();
        }
        return centry;
     }
 
-    void dataset::Init(TTree *tree)
+    void Analyse::Init(TTree *tree)
     {
        // The Init() function is called when the selector needs to initialize
        // a new tree or chain. Typically here the branch addresses and branch
@@ -3300,15 +3303,6 @@ namespace ba
        fChain->SetBranchAddress("ControlSampleEventAndInstance", &ControlSampleEventAndInstance, &b_ControlSampleEventAndInstance);
        fChain->SetBranchAddress("ControlSampleRunNumber", &ControlSampleRunNumber, &b_ControlSampleRunNumber);
        fChain->SetBranchAddress("ControlSampleNInstance", &ControlSampleNInstance, &b_ControlSampleNInstance);
-       Notify();
-    }
-
-    void dataset::Show(Long64_t entry)
-    {
-    // Print contents of entry.
-    // If entry is not specified, print current entry
-       if (!fChain) return;
-       fChain->Show(entry);
     }
 
 #endif

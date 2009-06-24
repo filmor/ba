@@ -25,10 +25,11 @@ def configure(conf):
     # Check for ROOT
 
     rc = conf.find_program('root-config')
-    conf.env['LIBPATH_ROOT'] = Utils.cmd_output("%s --libdir" % rc).strip()
-    conf.env['CPPPATH_ROOT'] = Utils.cmd_output("%s --incdir" % rc).strip()
-    conf.check_cxx(lib='Core', uselib_store='ROOT')
-    print conf.env
+    get = lambda name: Utils.cmd_output("%s --%s" % (rc, name)).strip().split()
+    conf.env['CXXFLAGS_ROOT'] = get('auxcflags')
+    conf.env['LIBPATH_ROOT'] = get('libdir')
+    conf.env['CPPPATH_ROOT'] = get('incdir')
+    conf.env['LINKFLAGS_ROOT'] = get('libs')
 
 def build(bld):
     task = bld.new_task_gen()
