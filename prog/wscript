@@ -19,9 +19,11 @@ import Utils
 
 def set_options(opt):
     opt.tool_options('compiler_cxx')
+    opt.tool_options('boost')
 
 def configure(conf):
     conf.check_tool('compiler_cxx')
+    conf.check_tool('boost')
     # Check for ROOT
 
     rc = conf.find_program('root-config')
@@ -31,10 +33,12 @@ def configure(conf):
     conf.env['CPPPATH_ROOT'] = get('incdir')
     conf.env['LINKFLAGS_ROOT'] = get('libs')
 
+    conf.check_boost(min_version='1.37', uselib_store='BOOST')
+
 def build(bld):
     task = bld.new_task_gen()
     task.features = 'cxx cprogram'
     task.source = sources + [program_file]
     task.target = APPNAME
-    task.uselib = "ROOT"
+    task.uselib = "ROOT BOOST"
 
