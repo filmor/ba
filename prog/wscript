@@ -32,6 +32,7 @@ def configure(conf):
     conf.env['LIBPATH_ROOT'] = get('libdir')
     conf.env['CPPPATH_ROOT'] = get('incdir')
     conf.env['LINKFLAGS_ROOT'] = get('libs')
+    conf.env['LIB_ROOT'] = ['TreePlayer']
 
     conf.check_boost(min_version='1.37', uselib_store='BOOST')
 

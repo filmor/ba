@@ -81,6 +81,9 @@ private:
     template <typename DerivedT>
     class test
     {
+    public:
+        typedef void result_type;
+        void result () {}
     protected:
         template <typename ParametersT>
         void do_initialize(ParametersT const& parameters, TTree* tree)
