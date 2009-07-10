@@ -3,97 +3,68 @@
 
 #include <TTree.h>
 
-#include <boost/preprocessor.hpp>
-#include <boost/fusion/container/generation/vector_tie.hpp>
-#include <boost/fusion/algorithm.hpp>
-#include <boost/array.hpp>
-#include <boost/fusion/adapted/array.hpp>
-#include <boost/fusion/view/zip_view.hpp>
-
-#include <utility>
-#include <string>
-#include <iostream>
-
 namespace ba
 {
 
-#define DO_MEMBER(r, data, elem)                                    \
-    BOOST_PP_TUPLE_ELEM(2, 0, elem) BOOST_PP_TUPLE_ELEM(2, 1, elem);
-
-#define GET_TYPE(s, data, elem)                                     \
-    BOOST_PP_TUPLE_ELEM(2, 0, elem)&
-
-#define GET_NAME(s, data, elem)                                     \
-    BOOST_PP_TUPLE_ELEM(2, 1, elem)
-
-#define GET_NAME_STRING(s, data, elem)                              \
-    BOOST_PP_STRINGIZE(GET_NAME(s, data, elem))
-
-#define TEST_PARAMETERS(seq)                                        \
-    BOOST_PP_SEQ_FOR_EACH(DO_MEMBER, _, seq)                        \
-                                                                    \
-public:                                                             \
-    void initialize(TTree* tree)                                    \
-    {                                                               \
-        static const                                                \
-            boost::array<const char*, BOOST_PP_SEQ_SIZE(seq)>       \
-            names = {{                                              \
-            BOOST_PP_SEQ_ENUM(                                      \
-                BOOST_PP_SEQ_TRANSFORM(GET_NAME_STRING, 1, seq)     \
-                )}};                                                \
-                                                                    \
-        BOOST_PP_CAT(boost::fusion::vector, BOOST_PP_SEQ_SIZE(seq)) \
-            <                                                       \
-                BOOST_PP_SEQ_ENUM(                                  \
-                    BOOST_PP_SEQ_TRANSFORM(GET_TYPE, 0, seq)        \
-                )                                                   \
-            >                                                       \
-            types (                                                 \
-         BOOST_PP_SEQ_ENUM(BOOST_PP_SEQ_TRANSFORM(GET_NAME,1, seq)) \
-               );                                                   \
-        do_initialize(                                              \
-            boost::fusion::vector_tie(names, types),                \
-          tree                                                      \
-        );                                                          \
-    }                                                               \
-private:
-
     namespace
     {
-        using namespace boost::fusion;
-        struct initialize_parameter
+        class test_base
         {
-            TTree* tree_;
-
-            initialize_parameter(TTree* tree) : tree_(tree) {}
-
-            template <typename T>
-            void operator() (T const& x) const
+        public:
+            template <typename T, typename... Args>
+            T& get_ref_to (std::string const& name, Args const&... args)
             {
-                tree_->SetBranchAddress(
-                            at_c<0>(x),
-                            reinterpret_cast<void*>(&(at_c<1>(x)))
-                        );
+                if (addresses_.find(name) == addresses_.end())
+                {
+                    void* ptr = pool_.ordered_malloc(sizeof(T));
+                    reinterpret_cast<T*>(ptr)->T(args...);
+                    addresses[name] = ptr;
+                    // register destructors?
+                }
+                return *reinterpret_cast<T*>(addresses_[name]);
             }
+            
+        protected:
+            void set_tree(TTree* tree)
+            {
+                if(tree != tree_)
+                {
+                    tree_ = tree;
+
+                    for (std::map<std::string, void*>::const_iterator i = addresses_.begin();
+                         i != addresses_.end();
+                         ++i)
+                    {
+                        tree_.SetBranchAddress(i->first.c_str(), i->second);
+                    }
+                }
+            }
+        private:
+            // Current tree
+            TTree* tree_;
+            // Maps names on addresses
+            std::map<std::string, void*> addresses_;
+            boost::singleton_pool<test_base, 1> pool_;
         };
     }
 
+    // Vielleicht sollten alle Elemente den Pool benutzen, der in der
+    // Vererbungs-/Nutzungshierarchie ganz unten sitzt
     template <typename DerivedT>
-    class test
+    class test : public test_base
     {
     public:
-        typedef void result_type;
-        void result () {}
-    protected:
-        template <typename ParametersT>
-        void do_initialize(ParametersT const& parameters, TTree* tree)
+        inline friend void analyze(DerivedT& derived, TTree* tree)
         {
-            using namespace boost::fusion;
+            set_tree(tree);
+            Long64_t nentries = tree->GetEntriesFast();
 
-            for_each(
-                zip_view<ParametersT>(parameters),
-                initialize_parameter(tree)
-                );
+            for (Long64_t i = 0; i < nentries; ++i)
+            {
+                tree->LoadTree(i);
+                tree->GetEntry(i);
+                derived();
+            }
         }
     };
 

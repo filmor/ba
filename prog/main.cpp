@@ -1,5 +1,5 @@
 #include "analyze.hpp"
-#include "count_zs.hpp"
+#include "main_test.hpp"
 
 #include <TFile.h>
 
@@ -13,11 +13,7 @@ int main (int argc, char** argv)
     TFile f (argv[1]);
     TTree* t = reinterpret_cast<TTree*> (gDirectory->Get ("ControlSample0"));
 
-    ba::count_zs test;
+    ba::main_test test ("histogramm.root");
 
-    ba::analyze(t, test);
-
-    TFile out ("histogramm.root", "UPDATE");
-    out.cd();
-    test.result()->Write();
+    ba::analyze (t, test);
 }

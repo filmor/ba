@@ -24,8 +24,10 @@ def set_options(opt):
 def configure(conf):
     conf.check_tool('compiler_cxx')
     conf.check_tool('boost')
-    # Check for ROOT
 
+    conf.env['CXXFLAGS'] += ["--std=c++0x"]
+
+    # Check for ROOT
     rc = conf.find_program('root-config')
     get = lambda name: Utils.cmd_output("%s --%s" % (rc, name)).strip().split()
     conf.env['CXXFLAGS_ROOT'] = get('auxcflags')
