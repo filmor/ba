@@ -7,17 +7,23 @@ APPNAME='ZtoWll'
 
 srcdir = '.'
 
+program_file = 'main.cpp'
+
+sources = [basename(i) for i in glob(join(srcdir, '*.cpp'))]
+sources.remove(program_file)
+
 blddir = 'build'
+
+import Utils
+
 
 def set_options(opt):
     opt.tool_options('compiler_cxx')
-    opt.tool_options('boost')
 
 def configure(conf):
     conf.check_tool('compiler_cxx')
-    conf.check_tool('boost')
 
-    conf.env['CXXFLAGS'] += ["--std=c++0x"]
+#     conf.env['CXXFLAGS'] += ["--std=c++0x"]
 
     # Check for ROOT
     rc = conf.find_program('root-config')
@@ -28,12 +34,10 @@ def configure(conf):
     conf.env['LINKFLAGS_ROOT'] = get('libs')
     conf.env['LIB_ROOT'] = ['TreePlayer']
 
-    conf.check_boost(min_version='1.37', uselib_store='BOOST')
-
 def build(bld):
     task = bld.new_task_gen()
     task.features = 'cxx cprogram'
-    task.source = [basename(i) for i in glob(join(srcdir, '*.cpp'))]
+    task.source = sources + [program_file]
     task.target = APPNAME
-    task.uselib = "ROOT BOOST"
+    task.uselib = "ROOT"
 

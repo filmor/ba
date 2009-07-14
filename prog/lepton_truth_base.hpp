@@ -9,7 +9,7 @@
 namespace ba
 {
 
-    class lepton_base : public pool_client<lepton_base>
+    class lepton_truth_base : public pool_client<lepton_base>
     {
     public:
         lepton_base()
