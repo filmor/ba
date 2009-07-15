@@ -256,7 +256,7 @@ namespace ba
         vector<vector<double> > *T_El_ParentEta;
 
     public:
-        Analyse(TTree* tree = 0);
+        Analyse(TTree* tree);
         ~Analyse();
         Int_t    Cut(Long64_t entry);
         Int_t    GetEntry(Long64_t entry);
