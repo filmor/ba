@@ -1,10 +1,10 @@
 #ifndef ANALYSE_HPP
 #define ANALYSE_HPP
 
-#include <root/TROOT.h>
-#include <root/TChain.h>
-#include <root/TFile.h>
-#include <root/TLorentzVector.h>
+#include <TROOT.h>
+#include <TChain.h>
+#include <TFile.h>
+#include <TLorentzVector.h>
 #include <vector>
 #include <set>
 
@@ -261,10 +261,9 @@ namespace ba
     public:
         Analyse(TTree* tree);
         ~Analyse();
-        Int_t    Cut(Long64_t entry);
+
         std::size_t get_entry(std::size_t entry);
         Long64_t LoadTree(Long64_t entry);
-
         void     loop();
 
     private:

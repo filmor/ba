@@ -4,8 +4,6 @@ namespace ba
 {
     Analyse::~Analyse()
     {
-        if (!fChain) return;
-        delete fChain->GetCurrentFile();
     }
 
     Long64_t Analyse::LoadTree(Long64_t entry)

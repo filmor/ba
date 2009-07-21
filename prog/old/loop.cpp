@@ -1,6 +1,6 @@
 #include "Analyse.hpp"
 
-#include <root/TH1D.h>
+#include <TH1D.h>
 
 namespace ba
 {
@@ -46,17 +46,16 @@ namespace ba
                         first = i;
                         second = j;
 
-                        z_mass->Fill((i->momentum + j->momentum).M()
-                                      / 1000);
-                        // z.M() ist MeV
-
                         break;
                     }
                 }
             }
-            
+
             particle z (particle::Z_BOSON,
                         first->momentum + second->momentum);
+
+            // [z.M()] = MeV
+            z_mass->Fill(z.momentum.M() / 1000);
 
             // Drittes Lepton wählen
             // MET dazunehmen (transversale Masse)
