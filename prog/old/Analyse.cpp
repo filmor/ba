@@ -8,13 +8,6 @@ namespace ba
         delete fChain->GetCurrentFile();
     }
 
-    Int_t Analyse::GetEntry(Long64_t entry)
-    {
-        // Read contents of entry.
-        if (!fChain) return 0;
-        return fChain->GetEntry(entry);
-    }
-
     Long64_t Analyse::LoadTree(Long64_t entry)
     {
         // Set the environment to read one entry
@@ -385,6 +378,7 @@ namespace ba
         fChain->SetBranchAddress("JetC4T_T_Jet_Matched", &JetC4T_T_Jet_Matched);
         fChain->SetBranchAddress("JetC4T_T_El_Matched", &JetC4T_T_El_Matched);
         fChain->SetBranchAddress("JetC4T_T_Ph_Matched", &JetC4T_T_Ph_Matched);
+#ifdef BA_TRUTH_VARIABLES
         fChain->SetBranchAddress("T_Mu_nParents", &T_Mu_nParents);
         fChain->SetBranchAddress("T_Mu_nDecay", &T_Mu_nDecay);
         fChain->SetBranchAddress("T_El_nParents", &T_El_nParents);
@@ -413,6 +407,7 @@ namespace ba
         fChain->SetBranchAddress("T_El_DecayEta", &T_El_DecayEta);
         fChain->SetBranchAddress("T_El_ParentPt", &T_El_ParentPt);
         fChain->SetBranchAddress("T_El_ParentEta", &T_El_ParentEta);
+#endif
     }
 
 }

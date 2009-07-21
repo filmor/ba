@@ -1,6 +1,6 @@
 #include <stdexcept>
 #include <iostream>
-#include <TFile.h>
+#include <root/TFile.h>
 #include "Analyse.hpp"
 
 int main (int argc, char** argv)
@@ -12,6 +12,6 @@ int main (int argc, char** argv)
     TTree* t = reinterpret_cast<TTree*> (gDirectory->Get ("ControlSample0"));
 
     ba::Analyse a (t);
-    a.Loop();
+    a.loop();
     std::cout << "Finished" << std::endl;
 }

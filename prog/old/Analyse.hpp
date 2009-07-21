@@ -1,11 +1,14 @@
 #ifndef ANALYSE_HPP
 #define ANALYSE_HPP
 
-#include <TROOT.h>
-#include <TChain.h>
-#include <TFile.h>
-#include <TLorentzVector.h>
+#include <root/TROOT.h>
+#include <root/TChain.h>
+#include <root/TFile.h>
+#include <root/TLorentzVector.h>
 #include <vector>
+#include <set>
+
+#include "particle.hpp"
 
 namespace ba
 {
@@ -259,22 +262,19 @@ namespace ba
         Analyse(TTree* tree);
         ~Analyse();
         Int_t    Cut(Long64_t entry);
-        Int_t    GetEntry(Long64_t entry);
+        std::size_t get_entry(std::size_t entry);
         Long64_t LoadTree(Long64_t entry);
 
-        void     Loop();
+        void     loop();
 
     private:
-#define GET_PARTICLE_VECTOR(name, nm) \
-        TLorentzVector get_##name##_vector(int index) \
-        { \
-            return TLorentzVector((*nm##_px)[index], (*nm##_py)[index], \
-                    (*nm##_pz)[index], (*nm##_E)[index]); \
-        }
+        bool good_lepton(charged_particle const&);
 
-        GET_PARTICLE_VECTOR(electron, El)
-        GET_PARTICLE_VECTOR(muon, Mu)
-        GET_PARTICLE_VECTOR(jet, JetC4T)
+        typedef std::vector<charged_particle> particle_vector;
+
+        particle_vector jets_, leptons_;
+
+        TLorentzVector met_;
     };
 }
 

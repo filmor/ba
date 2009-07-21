@@ -27,14 +27,14 @@ def configure(conf):
                 """,
                 cxxflags=['--std=c++0x'],
                 msg='Checking for variadic templates',
-                mandatory=False
                 )
     if cxx0x:
         conf.env['CXXFLAGS_CPP0X'] =['--std=c++0x']
 
     # Check for ROOT
     rc = conf.find_program('root-config')
-    get = lambda name: Utils.cmd_output("%s --%s" % (rc, name)).strip().split()
+    get = lambda name: \
+            Utils.cmd_output("%s --%s" % (rc, name)).strip().split()
     conf.env['CXXFLAGS_ROOT'] = get('auxcflags')
     conf.env['LIBPATH_ROOT'] = get('libdir')
     conf.env['CPPPATH_ROOT'] = get('incdir')
@@ -44,12 +44,13 @@ def configure(conf):
     conf.check_boost(min_version='1.37', uselib_store='BOOST')
 
 def build(bld):
-    new = bld.new_task_gen(features='cxx cprogram', uselib='ROOT')
+#    new = bld.new_task_gen(features='cxx cprogram', uselib='ROOT')
     old = bld.new_task_gen(features='cxx cprogram', uselib='ROOT')
-    new.source = glob('new/*.cpp')
-    new.target = APPNAME + "_new"
-    new.uselib = "BOOST CPP0X"
+#    new.source = glob('new/*.cpp')
+#    new.target = APPNAME + "_new"
+#    new.uselib += " BOOST CPP0X"
 
     old.source = glob(join('old', '*.cpp'))
     old.target = APPNAME
+    old.uselib += " CPP0X"
 
