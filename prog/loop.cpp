@@ -1,25 +1,37 @@
 #include "Analyse.hpp"
 
 #include <TH1D.h>
+#include <algorithm>
 
 namespace ba
 {
     const double Z_MASS = 91.1876; // GeV, delta 0.0021
 
-    void Analyse::loop()
+    namespace
     {
-        if (fChain == 0) return;
-
-        Long64_t nentries = fChain->GetEntriesFast();
-        TH1D* z_mass = new TH1D("z_mass", "Z Masse", 100, 50, 150);
-
-        Long64_t nbytes = 0, nb = 0;
-        for (Long64_t jentry=0; jentry<nentries;jentry++)
+        const char* make_name(std::string const& prefix,
+                              std::string const& name)
         {
-            Long64_t ientry = LoadTree(jentry);
-            if (ientry < 0) break;
-            nb = get_entry(jentry);
-            nbytes += nb;
+            return ("[" + prefix + "] " + name).c_str();
+        }
+    }
+
+    void Analyse::loop(std::string const& prefix,
+                       Long64_t begin, Long64_t end)
+    {
+        if (end < 0)
+            end = tree_.GetEntriesFast ();
+        else
+            end = std::min (end, tree_.GetEntriesFast ());
+
+        if (begin >= end) return;
+
+        TH1D z_mass (make_name(prefix, "ll_mass"), "m_ll", 100, 50, 150);
+        TH1D p_t (make_name(prefix, "W_mass"), "m_W", 100, 50, 150);
+
+        for (Long64_t entry = begin; entry < end; ++entry)
+        {
+            get_entry(tree_.LoadTree(entry));
 
             // We need at least 3 leptons
             if (leptons_.size() < 3) continue;
@@ -55,16 +67,17 @@ namespace ba
                         first->momentum + second->momentum);
 
             // [z.M()] = MeV
-            z_mass->Fill(z.momentum.M() / 1000);
+            z_mass.Fill(z.momentum.M() / 1000);
 
             // Drittes Lepton wählen
             // MET dazunehmen (transversale Masse)
 
         }
 
-        TFile f ("histogramm.root", "RECREATE");
+        TFile f ("output.root", "UPDATE");
         f.cd();
-        z_mass->Write();
+        z_mass.Write();
+        p_t.Write();
     }
 
 }

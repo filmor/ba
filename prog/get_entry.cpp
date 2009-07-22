@@ -12,8 +12,7 @@ namespace ba
 
     std::size_t Analyse::get_entry(std::size_t entry)
     {
-        if (!fChain) return 0;
-        std::size_t result = fChain->GetEntry(entry);
+        std::size_t result = tree_.GetEntry(entry);
         // Read contents of entry.
         leptons_.clear();
         jets_.clear();

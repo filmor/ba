@@ -11,7 +11,7 @@ int main (int argc, char** argv)
     TFile f (argv[1]);
 
     ba::Analyse a (
-            reinterpret_cast<TTree*> (gDirectory->Get("ControlSample0"))
+            *reinterpret_cast<TTree*> (gDirectory->Get("ControlSample0"))
             );
     a.loop();
 }

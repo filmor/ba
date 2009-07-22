@@ -17,8 +17,8 @@ namespace ba
     class Analyse
     {
     private:
-        TTree          *fChain;   //!pointer to the analyzed TTree or TChain
-        Int_t           fCurrent; //!current Tree number in a TChain
+        //!pointer to the analyzed TTree or TChain
+        TTree&          tree_;  
 
         // Declaration of leave types
         Double_t        MET_RefFinal_ex;
@@ -182,6 +182,7 @@ namespace ba
         vector<double>  *Trk_m;
         vector<double>  *Trk_charge;
         vector<double>  *Trk_pdgId;
+#ifdef BA_TRUTH_VARIABLES
         vector<double>  *T_Mu_E;
         vector<double>  *T_Mu_p_T;
         vector<double>  *T_Mu_phi;
@@ -257,14 +258,16 @@ namespace ba
         vector<vector<double> > *T_El_DecayEta;
         vector<vector<double> > *T_El_ParentPt;
         vector<vector<double> > *T_El_ParentEta;
+#endif
 
     public:
-        Analyse(TTree* tree);
+        Analyse(TTree& tree);
         ~Analyse();
 
-        std::size_t get_entry(std::size_t entry);
-        Long64_t LoadTree(Long64_t entry);
-        void     loop();
+        std::size_t get_entry (std::size_t entry);
+
+        void        loop (std::string const& prefix = "",
+                          Long64_t begin = 0, Long64_t end = -1);
 
     private:
         bool good_lepton(charged_particle const&);
