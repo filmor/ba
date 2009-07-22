@@ -7,7 +7,7 @@
 
 namespace ba
 {
-    const double Z_MASS = 91.1876; // in GeV, delta 0.0021
+    const double Z_MASS = 91.1876e3; // in MeV, delta 0.0021e3
 
     // in e
     const double EPS_CHARGE = std::numeric_limits<double>::epsilon();
@@ -38,7 +38,7 @@ namespace ba
         if (begin >= end) return;
 
         TH1D z_mass (make_name(prefix, "Z mass"), "m_ll", 100, 50, 150);
-        TH1D p_t (make_name(prefix, "W mass"), "m_W", 100, 50, 150);
+        TH1D p_t (make_name(prefix, "W mass"), "m_W", 300, 0, 300);
 
         for (Long64_t entry = begin; entry < end; ++entry)
         {
@@ -90,9 +90,14 @@ namespace ba
             const particle z (particle::Z_BOSON,
                               first->momentum + second->momentum);
 
+            const particle met (particle::UNDEFINED,
+                                MET_RefFinal_ex, MET_RefFinal_ey,
+                                0.0, MET_RefFinal_et);
+
             // [z.M()] = MeV
 
             z_mass.Fill(z.momentum.M() / 1000);
+            p_t.Fill(met.momentum.Pt() / 1000);
 
             // Drittes Lepton wählen
             // MET dazunehmen (transversale Masse) und m_W bestimmen
