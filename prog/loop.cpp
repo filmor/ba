@@ -2,17 +2,27 @@
 
 #include <TH1D.h>
 #include <algorithm>
+#include <limits>
+#include <cmath>
 
 namespace ba
 {
-    const double Z_MASS = 91.1876; // GeV, delta 0.0021
+    const double Z_MASS = 91.1876; // in GeV, delta 0.0021
+
+    const double EPS_CHARGE = 0.3; // in e
+    const double EPS_Z_MASS = std::numeric_limits<double>::max(); // MeV
 
     namespace
     {
         const char* make_name(std::string const& prefix,
                               std::string const& name)
         {
-            return ("[" + prefix + "] " + name).c_str();
+            static std::string val;
+            if (prefix != "")
+                val = "[" + prefix + "] " + name;
+            else
+                val = name;
+            return val.c_str();
         }
     }
 
@@ -26,8 +36,8 @@ namespace ba
 
         if (begin >= end) return;
 
-        TH1D z_mass (make_name(prefix, "ll_mass"), "m_ll", 100, 50, 150);
-        TH1D p_t (make_name(prefix, "W_mass"), "m_W", 100, 50, 150);
+        TH1D z_mass (make_name(prefix, "Z mass"), "m_ll", 100, 50, 150);
+        TH1D p_t (make_name(prefix, "W mass"), "m_W", 100, 50, 150);
 
         for (Long64_t entry = begin; entry < end; ++entry)
         {
@@ -36,7 +46,11 @@ namespace ba
             // We need at least 3 leptons
             if (leptons_.size() < 3) continue;
 
-            particle_vector::const_iterator first, second;
+            particle_vector::const_iterator first = leptons_.end()
+                                          , second = leptons_.end();
+
+            // Massendifferenz zum echten Z⁰
+            double delta_m = std::numeric_limits<double>::max();
 
             for (particle_vector::const_iterator i = leptons_.begin();
                  i != leptons_.end();
@@ -50,27 +64,37 @@ namespace ba
                     if (i->kind != j->kind)
                         continue;
                     // Opposite charge
-                    if (i->charge + j->charge < 0.1)
+                    if (i->charge + j->charge < EPS_CHARGE)
                     {
-                        // Zuerst nehmen wir einfach den ersten
-                        // gefundenen mit z.M() irgendwo in der Nähe
-                        // von z
-                        first = i;
-                        second = j;
+                        
+                        const double d =
+                            std::fabs((i->momentum + j->momentum).M()
+                                      - Z_MASS)
+                            ;
 
-                        break;
+                        if (d < delta_m)
+                        {
+                            first = i;
+                            second = j;
+                            delta_m = d;
+                        }
                     }
                 }
             }
 
-            particle z (particle::Z_BOSON,
-                        first->momentum + second->momentum);
+            // Keine anständigen Leptonen gefunden
+            if (first == leptons_.end() || delta_m > EPS_Z_MASS)
+                continue;
+
+            const particle z (particle::Z_BOSON,
+                              first->momentum + second->momentum);
 
             // [z.M()] = MeV
+
             z_mass.Fill(z.momentum.M() / 1000);
 
             // Drittes Lepton wählen
-            // MET dazunehmen (transversale Masse)
+            // MET dazunehmen (transversale Masse) und m_W bestimmen
 
         }
 
