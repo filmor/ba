@@ -5,8 +5,7 @@ import sys, os
 import Utils
 from Configure import conf
 
-APPNAME='ZtoWll'
-
+APPNAME='analyse'
 blddir = 'build'
 
 def get_version():
@@ -14,12 +13,12 @@ def get_version():
 
 def set_options(opt):
     opt.tool_options('compiler_cxx')
-    opt.tool_options('boost')
+#    opt.tool_options('boost')
 
 def configure(conf):
     conf.check_tool('compiler_cxx')
     
-    conf.check_tool('boost')
+#    conf.check_tool('boost')
     cxx0x = conf.check_cxx(fragment="""
                 template <typename... Args> void func(Args const&...) {}
     
@@ -27,9 +26,11 @@ def configure(conf):
                 """,
                 cxxflags=['--std=c++0x'],
                 msg='Checking for variadic templates',
+                mandatory=False,
                 )
     if cxx0x:
         conf.env['CXXFLAGS_CPP0X'] =['--std=c++0x']
+
 
     # Check for ROOT
     rc = conf.find_program('root-config')
@@ -41,16 +42,13 @@ def configure(conf):
     conf.env['LINKFLAGS_ROOT'] = get('libs')
     conf.env['LIB_ROOT'] = ['TreePlayer']
 
-    conf.check_boost(min_version='1.37', uselib_store='BOOST')
+#    conf.check_boost(min_version='1.37', uselib_store='BOOST')
 
 def build(bld):
-#    new = bld.new_task_gen(features='cxx cprogram', uselib='ROOT')
-    old = bld.new_task_gen(features='cxx cprogram', uselib='ROOT')
-#    new.source = glob('new/*.cpp')
-#    new.target = APPNAME + "_new"
-#    new.uselib += " BOOST CPP0X"
+    task = bld.new_task_gen()
+    task.features = 'cxx cprogram'
 
-    old.source = glob(join('old', '*.cpp'))
-    old.target = APPNAME
-    old.uselib += " CPP0X"
+    task.source = glob('*.cpp')
+    task.target = APPNAME
+    task.uselib = "ROOT CPP0X"
 
