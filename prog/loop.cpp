@@ -9,7 +9,8 @@ namespace ba
 {
     const double Z_MASS = 91.1876; // in GeV, delta 0.0021
 
-    const double EPS_CHARGE = 0.3; // in e
+    // in e
+    const double EPS_CHARGE = std::numeric_limits<double>::epsilon();
     const double EPS_Z_MASS = std::numeric_limits<double>::max(); // MeV
 
     namespace

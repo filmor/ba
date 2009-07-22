@@ -112,18 +112,10 @@ namespace ba
         Int_t           El_N;
         Int_t           Mu_N;
         Int_t           JetC4T_N;
-        Int_t           Trk_N;
-        Int_t           T_Mu_N;
-        Int_t           T_El_N;
-        Int_t           T_JetC4_N;
         vector<double>  *El_E;
-        vector<double>  *El_p_T;
-        vector<double>  *El_phi;
-        vector<double>  *El_eta;
         vector<double>  *El_px;
         vector<double>  *El_py;
         vector<double>  *El_pz;
-        vector<double>  *El_m;
         vector<double>  *El_charge;
         vector<double>  *El_pdgId;
         vector<double>  *El_EtaCorrMag;
@@ -151,13 +143,9 @@ namespace ba
         vector<double>  *Mu_SumTrkPtInCone;
         vector<double>  *Mu_T_Mu_DeltaR;
         vector<double>  *JetC4T_E;
-        vector<double>  *JetC4T_p_T;
-        vector<double>  *JetC4T_phi;
-        vector<double>  *JetC4T_eta;
         vector<double>  *JetC4T_px;
         vector<double>  *JetC4T_py;
         vector<double>  *JetC4T_pz;
-        vector<double>  *JetC4T_m;
         vector<double>  *JetC4T_charge;
         vector<double>  *JetC4T_pdgId;
         vector<double>  *JetC4T_weight;
@@ -172,17 +160,10 @@ namespace ba
         vector<double>  *JetC4T_T_Jet_DeltaR;
         vector<double>  *JetC4T_T_El_DeltaR;
         vector<double>  *JetC4T_T_Ph_DeltaR;
-        vector<double>  *Trk_E;
-        vector<double>  *Trk_p_T;
-        vector<double>  *Trk_phi;
-        vector<double>  *Trk_eta;
-        vector<double>  *Trk_px;
-        vector<double>  *Trk_py;
-        vector<double>  *Trk_pz;
-        vector<double>  *Trk_m;
-        vector<double>  *Trk_charge;
-        vector<double>  *Trk_pdgId;
 #ifdef BA_TRUTH_VARIABLES
+        Int_t           T_Mu_N;
+        Int_t           T_El_N;
+        Int_t           T_JetC4_N;
         vector<double>  *T_Mu_E;
         vector<double>  *T_Mu_p_T;
         vector<double>  *T_Mu_phi;
@@ -218,13 +199,8 @@ namespace ba
         vector<double>  *T_JetC4_T_Ph_DeltaR;
         vector<double>  *T_JetC4_T_Jet_DeltaR;
         vector<int>     *El_IsEM;
-        vector<int>     *El_author;
-        vector<int>     *El_T_El_Matched;
-        vector<int>     *Mu_author;
         vector<int>     *Mu_hasCluster;
         vector<int>     *Mu_hasCombinedMuon;
-        vector<int>     *Mu_nTrkInCone;
-        vector<int>     *Mu_T_Mu_Matched;
         vector<int>     *JetC4T_SoftMuonNumTrack;
         vector<int>     *JetC4T_SoftElectronNumTrack;
         vector<int>     *JetC4T_T_Jet_Matched;
@@ -275,8 +251,6 @@ namespace ba
         typedef std::vector<charged_particle> particle_vector;
 
         particle_vector jets_, leptons_;
-
-        TLorentzVector met_;
     };
 }
 

@@ -5,13 +5,17 @@
 
 int main (int argc, char** argv)
 {
-    if (argc != 2)
-        throw std::runtime_error ("Aye");
+    if (argc < 2 || argc > 3)
+        throw std::runtime_error ("Invalid number of arguments");
 
     TFile f (argv[1]);
 
     ba::Analyse a (
             *reinterpret_cast<TTree*> (gDirectory->Get("ControlSample0"))
             );
-    a.loop();
+
+    if (argc == 3)
+        a.loop(argv[2]);
+    else
+        a.loop(argv[1]);
 }

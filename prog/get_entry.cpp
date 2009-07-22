@@ -33,8 +33,6 @@ namespace ba
                 leptons_.push_back(p);
         }
 
-        // met_ = GET_PARTICLE_VECTOR(Met)(0);
-
         return result;
     }
     
