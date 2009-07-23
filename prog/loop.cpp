@@ -25,6 +25,24 @@ namespace ba
                 val = name;
             return val.c_str();
         }
+        
+        class histogram : TH1D
+        {
+        public:
+            histogram (std::string const& prefix,
+                       std::string const& name, unsigned count,
+                       unsigned start, unsigned end)
+                : th1d_(make_name(prefix, name), name.c_str(), count,
+                        start, end)
+            {}
+            ~histogram () { th1d_.Write(); }
+
+            void fill_mev (double value) { th1d_.Fill(value / 1000.); }
+            void fill (double value) { th1d_.Fill(value); }
+
+        private:
+            TH1D th1d_;
+        };
     }
 
     void Analyse::loop(std::string const& prefix,
@@ -37,15 +55,23 @@ namespace ba
 
         if (begin >= end) return;
 
-        TH1D z_mass (make_name(prefix, "Z mass"), "m_ll", 100, 50, 150);
-        TH1D p_t (make_name(prefix, "W mass"), "m_W", 300, 0, 300);
+        
+        histogram
+            z_mass (prefix, "Z mass", 100, 50, 150),
+            z_pt (prefix, "Z p_t", 300, 0, 200),
+            l_pt (prefix, "lepton p_t", 300, 0, 200),
+            m_t (prefix, "transverse mass", 300, 0, 200),
+            delta_phi (prefix, "W,Z delta phi", 100, -4, 4),
+            w_pt (prefix, "W p_t", 300, 0, 200)
+            ;
+
 
         for (Long64_t entry = begin; entry < end; ++entry)
         {
             get_entry(tree_.LoadTree(entry));
 
-            // We need at least 3 leptons
-            if (leptons_.size() < 3) continue;
+            // We need 3 leptons
+            if (leptons_.size() != 3) continue;
 
             particle_vector::const_iterator first = leptons_.end()
                                           , second = leptons_.end();
@@ -87,7 +113,7 @@ namespace ba
             if (first == leptons_.end() || delta_m > EPS_Z_MASS)
                 continue;
 
-            const particle z (particle::Z_BOSON,
+            const particle Z (particle::Z_BOSON,
                               first->momentum + second->momentum);
 
             const particle met (particle::UNDEFINED,
@@ -95,19 +121,43 @@ namespace ba
                                 0.0, MET_RefFinal_et);
 
             // [z.M()] = MeV
-
-            z_mass.Fill(z.momentum.M() / 1000);
-            p_t.Fill(met.momentum.Pt() / 1000);
-
+            
             // Drittes Lepton wählen
-            // MET dazunehmen (transversale Masse) und m_W bestimmen
+            charged_particle const* p_l = 0;
+            for (particle_vector::const_iterator i = leptons_.begin();
+                 i != leptons_.end(); ++i)
+            {
+                if (i == first || i == second)
+                    continue;
+                p_l = &(*i);
+            }
 
+            const charged_particle& l = *p_l;
+            
+            const charged_particle W (
+                    particle::W_BOSON, l.charge,
+                    l.momentum + met.momentum
+                    );
+
+            // Z⁰ Masse
+            z_mass.fill_mev (Z.momentum.M());
+
+            // Transversale Impulse
+            w_pt.fill_mev (W.momentum.Pt());
+            z_pt.fill_mev (Z.momentum.Pt());
+            l_pt.fill_mev (l.momentum.Pt());
+            
+            // Transversale Masse
+            m_t.fill_mev (
+                std::sqrt(
+                    2 * met.momentum.Pt() * l.momentum.Pt()
+                      * (1 - std::cos(met.momentum.DeltaPhi(l.momentum))
+                    ))
+                );
+
+
+            // Delta Phi
+            delta_phi.fill (Z.momentum.DeltaPhi(W.momentum));
         }
-
-        TFile f ("output.root", "UPDATE");
-        f.cd();
-        z_mass.Write();
-        p_t.Write();
     }
-
 }

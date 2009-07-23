@@ -5,7 +5,7 @@
 
 int main (int argc, char** argv)
 {
-    if (argc < 2 || argc > 3)
+    if (argc < 2 || argc > 4)
         throw std::runtime_error ("Invalid number of arguments");
 
     TFile f (argv[1]);
@@ -14,8 +14,16 @@ int main (int argc, char** argv)
             *reinterpret_cast<TTree*> (gDirectory->Get("ControlSample0"))
             );
 
+    std::string output_file = "output.root";
+
+    if (argc == 4)
+        output_file = argv[3];
+
+    TFile output (output_file.c_str(), "UPDATE");
+    output.cd();
+
     if (argc == 3)
         a.loop(argv[2]);
     else
-        a.loop(argv[1]);
+        a.loop("");
 }
