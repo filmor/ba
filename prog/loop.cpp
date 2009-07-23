@@ -61,7 +61,7 @@ namespace ba
             z_pt (prefix, "Z p_t", 300, 0, 200),
             l_pt (prefix, "lepton p_t", 300, 0, 200),
             m_t (prefix, "transverse mass", 300, 0, 200),
-            delta_phi (prefix, "W,Z delta phi", 100, -4, 4),
+            delta_phi (prefix, "delta phi_WZ", 100, -4, 4),
             w_pt (prefix, "W p_t", 300, 0, 200)
             ;
 
