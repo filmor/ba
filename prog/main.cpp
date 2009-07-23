@@ -1,6 +1,7 @@
 #include <stdexcept>
-#include <iostream>
+
 #include <TFile.h>
+
 #include "Analyse.hpp"
 
 int main (int argc, char** argv)
@@ -14,12 +15,12 @@ int main (int argc, char** argv)
             *reinterpret_cast<TTree*> (gDirectory->Get("ControlSample0"))
             );
 
-    std::string output_file = "output.root";
+    const char* output_file = "output.root";
 
     if (argc == 4)
         output_file = argv[3];
 
-    TFile output (output_file.c_str(), "UPDATE");
+    TFile output (output_file, "UPDATE");
     output.cd();
 
     if (argc == 3)

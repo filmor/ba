@@ -1,7 +1,6 @@
 #include "Analyse.hpp"
 
 #include <cassert>
-#include <iostream>
 #include <limits>
 
 namespace ba

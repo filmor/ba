@@ -1,9 +1,11 @@
 #include "Analyse.hpp"
 
-#include <TH1D.h>
 #include <algorithm>
 #include <limits>
 #include <cmath>
+#include <string>
+
+#include <TH1D.h>
 
 namespace ba
 {

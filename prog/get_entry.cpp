@@ -1,6 +1,6 @@
 #include "Analyse.hpp"
+
 #include <cassert>
-#include <iostream>
 
 namespace ba
 {
@@ -10,12 +10,13 @@ namespace ba
                      (*nm##_py)[index], (*nm##_pz)[index], \
                      (*nm##_E)[index])
 
-    std::size_t Analyse::get_entry(std::size_t entry)
+    void Analyse::get_entry(std::size_t entry)
     {
-        std::size_t result = tree_.GetEntry(entry);
-        // Read contents of entry.
+        tree_.GetEntry(entry);
+
         leptons_.clear();
         jets_.clear();
+
         // Die Jets werden in good_lepton verwendet.
         for (int i = 0; i < JetC4T_N; ++i)
             jets_.push_back(PARTICLE(JetC4T, i, particle::UNDEFINED));
@@ -32,8 +33,6 @@ namespace ba
             if (good_lepton(p))
                 leptons_.push_back(p);
         }
-
-        return result;
     }
     
 #undef PARTICLE
