@@ -1,9 +1,11 @@
 #include "Analyse.hpp"
 
-#include <TH1D.h>
 #include <algorithm>
 #include <limits>
 #include <cmath>
+#include <string>
+
+#include <TH1D.h>
 
 namespace ba
 {
@@ -16,7 +18,7 @@ namespace ba
     namespace
     {
         const char* make_name(std::string const& prefix,
-                              std::string const& name)
+                              const char* name)
         {
             static std::string val;
             if (prefix != "")
@@ -29,10 +31,9 @@ namespace ba
         class histogram : TH1D
         {
         public:
-            histogram (std::string const& prefix,
-                       std::string const& name, unsigned count,
-                       unsigned start, unsigned end)
-                : th1d_(make_name(prefix, name), name.c_str(), count,
+            histogram (std::string const& prefix, const char* name,
+                       unsigned count, int start, int end)
+                : th1d_(make_name(prefix, name), name, count,
                         start, end)
             {}
             ~histogram () { th1d_.Write(); }

@@ -1,22 +1,30 @@
 #ifndef ANALYSE_HPP
 #define ANALYSE_HPP
 
-#include <TROOT.h>
-#include <TTree.h>
-
 #include <vector>
 #include <set>
+
+#include <TTree.h>
 
 #include "particle.hpp"
 
 namespace ba
 {
-    using std::vector;
 
     class Analyse
     {
+    public:
+        Analyse(TTree& tree);
+
+        void loop (std::string const& prefix = "",
+                   Long64_t begin = 0, Long64_t end = -1);
+
     private:
-        // Reference to the analyzed TTree or TChain
+        void get_entry (std::size_t entry);
+        bool good_lepton (charged_particle const&);
+
+        typedef std::vector<charged_particle> particle_vector;
+        particle_vector jets_, leptons_;
         TTree&          tree_;  
 
         // Declaration of leave types
@@ -41,23 +49,7 @@ namespace ba
         std::vector<double>  *JetC4T_py;
         std::vector<double>  *JetC4T_pz;
         std::vector<double>  *JetC4T_charge;
-
-    public:
-        Analyse(TTree& tree);
-        ~Analyse();
-
-        std::size_t get_entry (std::size_t entry);
-
-        void loop (std::string const& prefix = "",
-                   Long64_t begin = 0, Long64_t end = -1);
-
-    private:
-        bool good_lepton(charged_particle const&);
-
-        typedef std::vector<charged_particle> particle_vector;
-
-        particle_vector jets_, leptons_;
-    };
+   };
 }
 
 #endif

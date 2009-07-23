@@ -13,12 +13,11 @@ def get_version():
 
 def set_options(opt):
     opt.tool_options('compiler_cxx')
-#    opt.tool_options('boost')
 
 def configure(conf):
     conf.check_tool('compiler_cxx')
+
     
-#    conf.check_tool('boost')
     cxx0x = conf.check_cxx(fragment="""
                 template <typename... Args> void func(Args const&...) {}
     
@@ -29,7 +28,8 @@ def configure(conf):
                 mandatory=False,
                 )
     if cxx0x:
-        conf.env['CXXFLAGS_CPP0X'] =['--std=c++0x']
+        conf.env['CXXFLAGS_CPP0X'] = ['--std=c++0x',
+                                      '-DHAS_VARIADIC_TEMPLATES']
 
 
     # Check for ROOT
@@ -42,7 +42,12 @@ def configure(conf):
     conf.env['LINKFLAGS_ROOT'] = get('libs')
     conf.env['LIB_ROOT'] = ['TreePlayer']
 
-#    conf.check_boost(min_version='1.37', uselib_store='BOOST')
+    env = conf.env.copy()
+    env.append_unique('CXXFLAGS', ['-O0', '-g3'])
+    conf.env.append_unique('CXXFLAGS', ['-O2', '-DNDEBUG'])
+
+    env.set_variant('debug')
+    conf.set_env_name('debug', env)
 
 def build(bld):
     task = bld.new_task_gen()
@@ -51,4 +56,7 @@ def build(bld):
     task.source = glob('*.cpp')
     task.target = APPNAME
     task.uselib = "ROOT CPP0X"
+
+    for obj in [] + bld.all_task_gen:
+        obj.clone('debug')
 

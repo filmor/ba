@@ -2,9 +2,6 @@
 
 namespace ba
 {
-    Analyse::~Analyse()
-    {
-    }
 
     Analyse::Analyse(TTree& tree) : tree_(tree)
     {
