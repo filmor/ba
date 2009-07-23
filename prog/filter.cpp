@@ -2,6 +2,7 @@
 
 #include <cassert>
 #include <iostream>
+#include <limits>
 
 namespace ba
 {
@@ -11,6 +12,13 @@ namespace ba
         assert(lepton.kind == particle::ELECTRON ||
                lepton.kind == particle::MUON);
 
+        if (lepton.charge == 0.0)
+            return false;
+        
+        // Für Myonen: Mu_matchChi2 sollte klein sein
+        // Für Elektronen: El_IsEM, flags in TWiki nachsehen
+        // Rekonstruktion der Jets mit delR = 0.4 in Atlas
+        
         for (particle_vector::const_iterator i = jets_.begin();
              i != jets_.end(); ++i)
         {
