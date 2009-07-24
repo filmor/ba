@@ -1,4 +1,5 @@
 #include <stdexcept>
+#include <iostream>
 
 #include <TFile.h>
 
@@ -21,6 +22,8 @@ int main (int argc, char** argv)
         output_file = argv[3];
 
     TFile output (output_file, "UPDATE");
+    if (output.IsZombie())
+        throw std::runtime_error ("Can't use output file");
     output.cd();
 
     if (argc == 3)
