@@ -1,5 +1,9 @@
 #include "Analyse.hpp"
 
+#ifndef NO_PROGRESS_BAR
+#include "boost/progress.hpp"
+#endif
+
 #include <algorithm>
 #include <limits>
 #include <cmath>
@@ -55,7 +59,6 @@ namespace ba
             end = std::min (end, tree_.GetEntriesFast ());
 
         if (begin >= end) return;
-
         
         histogram
             z_mass (prefix, "Z mass", 100, 50, 150),
@@ -66,9 +69,16 @@ namespace ba
             w_pt (prefix, "W p_t", 300, 0, 200)
             ;
 
+#ifndef NO_PROGRESS_BAR
+        boost::progress_display show_progress(end - begin);
+        boost::progress_timer timer;
+#endif
 
         for (Long64_t entry = begin; entry < end; ++entry)
         {
+#ifndef NO_PROGESS_BAR
+            ++show_progress;
+#endif
             get_entry(tree_.LoadTree(entry));
 
             // We need 3 leptons
