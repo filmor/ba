@@ -1,11 +1,10 @@
 #!/bin/bash
 
 DIR=data/background
-EXE=./analyse
 
 if ! which root-config > /dev/null
 then
-    source skitathena -r 15.3.0 -n
+    source setup-root -n -r 5.22.00
 fi
 
 TASKS=()
@@ -14,6 +13,10 @@ append_task()
 {
     TASKS[${#TASKS[*]}]=$1
 }
+
+analyze()
+{
+    ./analyze $* >> ~/analyze_curr.log 2> ~/analyze_err.log
 
 analyze_dir()
 {
@@ -49,5 +52,5 @@ for (( i = 0; i < N; i++))
 do
     task=${TASKS[$i]}
     echo -ne "Task $i of $N:\n\t$task\n..."
-    $EXE $task > /dev/null && echo -e "done\n" || echo -e "failed\n"
+    analyze $task && echo -e "done\n" || echo -e "failed\n"
 done

@@ -2,7 +2,7 @@
 
 #include <TFile.h>
 
-#include "Analyse.hpp"
+#include "analysis.hpp"
 
 int main (int argc, char** argv)
 {
@@ -11,20 +11,24 @@ int main (int argc, char** argv)
 
     TFile f (argv[1]);
 
-    ba::Analyse a (
+    // Analyse mit der geladenen Datei initialisieren
+    ba::analysis a (
             *reinterpret_cast<TTree*> (gDirectory->Get("ControlSample0"))
             );
 
     const char* output_file = "output.root";
 
+    // Falls es ein viertes Argument ist ist dies die Ausgabedatei
     if (argc == 4)
         output_file = argv[3];
 
+    // Ausgabedatei öffnen
     TFile output (output_file, "UPDATE");
     if (output.IsZombie())
         throw std::runtime_error ("Can't use output file");
     output.cd();
 
+    // Hauptschleife ausführen
     if (argc == 3)
         a.loop(argv[2]);
     else

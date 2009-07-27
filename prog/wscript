@@ -5,7 +5,7 @@ import sys, os
 import Utils
 from Configure import conf
 
-APPNAME='analyse'
+APPNAME='analyze'
 blddir = 'build'
 
 def get_version():

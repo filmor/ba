@@ -1,11 +1,12 @@
-#include "Analyse.hpp"
+#include "analysis.hpp"
 
 namespace ba
 {
 
-    Analyse::Analyse(TTree& tree) : tree_(tree)
+    analysis::analysis (TTree& tree) : tree_(tree)
     {
-        // Set object pointer
+        // Zeiger auf 0 setzen, damit SetBranchAddress anständig
+        // funktioniert
         El_E = 0;
         El_px = 0;
         El_py = 0;
@@ -22,6 +23,7 @@ namespace ba
         JetC4T_pz = 0;
         JetC4T_charge = 0;
 
+        // Die Zweigadressen auf die Membervariablen setzen
         tree_.SetBranchAddress("MET_RefFinal_ex", &MET_RefFinal_ex);
         tree_.SetBranchAddress("MET_RefFinal_ey", &MET_RefFinal_ey);
         tree_.SetBranchAddress("MET_RefFinal_et", &MET_RefFinal_et);

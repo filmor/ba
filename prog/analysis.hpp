@@ -11,10 +11,10 @@
 namespace ba
 {
 
-    class Analyse
+    class analysis
     {
     public:
-        Analyse(TTree& tree);
+        analysis(TTree& tree);
 
         void loop (std::string const& prefix = "",
                    Long64_t begin = 0, Long64_t end = -1);

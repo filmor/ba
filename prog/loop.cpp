@@ -1,4 +1,4 @@
-#include "Analyse.hpp"
+#include "analysis.hpp"
 
 #ifndef NO_PROGRESS_BAR
 #include "boost/progress.hpp"
@@ -14,10 +14,6 @@
 namespace ba
 {
     const double Z_MASS = 91.1876e3; // in MeV, delta 0.0021e3
-
-    // in e
-    const double EPS_CHARGE = std::numeric_limits<double>::epsilon();
-    const double EPS_Z_MASS = std::numeric_limits<double>::max(); // MeV
 
     namespace
     {
@@ -50,8 +46,8 @@ namespace ba
         };
     }
 
-    void Analyse::loop(std::string const& prefix,
-                       Long64_t begin, Long64_t end)
+    void analysis::loop(std::string const& prefix,
+                        Long64_t begin, Long64_t end)
     {
         if (end < 0)
             end = tree_.GetEntriesFast ();
@@ -60,6 +56,7 @@ namespace ba
 
         if (begin >= end) return;
         
+        // Histogramme initialisieren
         histogram
             z_mass (prefix, "Z mass", 100, 50, 150),
             z_pt (prefix, "Z p_t", 300, 0, 200),
@@ -81,7 +78,7 @@ namespace ba
 #endif
             get_entry(tree_.LoadTree(entry));
 
-            // We need 3 leptons
+            // Wir benötigen genau drei Leptonen
             if (leptons_.size() != 3) continue;
 
             particle_vector::const_iterator first = leptons_.end()
@@ -90,6 +87,8 @@ namespace ba
             // Massendifferenz zum echten Z⁰
             double delta_m = std::numeric_limits<double>::max();
 
+            // Gehen über alle Kombinationen von (bereits gefilterten
+            // Leptonen)
             for (particle_vector::const_iterator i = leptons_.begin();
                  i != leptons_.end();
                  ++i)
@@ -98,53 +97,59 @@ namespace ba
                      j != leptons_.end();
                      ++j)
                 {
-                    // Same flavour
+                    // Die Leptonen, die das Z ausmachen müssen gleiches
+                    // Flavour haben ...
                     if (i->kind != j->kind)
                         continue;
-                    // Opposite charge
-                    if (i->charge + j->charge < EPS_CHARGE)
-                    {
-                        
-                        const double d =
-                            std::fabs((i->momentum + j->momentum).M()
-                                      - Z_MASS)
-                            ;
+                    // ... aber entgegengesetzte Ladung
+                    if (std::fabs(i->charge + j->charge) >
+                            std::numeric_limits<double>::epsilon())
+                        continue;
 
-                        if (d < delta_m)
-                        {
-                            first = i;
-                            second = j;
-                            delta_m = d;
-                        }
+                        
+                    const double d =
+                        std::fabs((i->momentum + j->momentum).M()
+                                  - Z_MASS)
+                        ;
+                    
+                    // Wähle die Kombination mit der kleinsten Entfernung
+                    // zur echten Z⁰-Masse.
+                    if (d < delta_m)
+                    {
+                        first = i;
+                        second = j;
+                        delta_m = d;
                     }
                 }
             }
 
             // Keine anständigen Leptonen gefunden
-            if (first == leptons_.end() || delta_m > EPS_Z_MASS)
+            // (Schnitt an delta_m wird nicht benötigt)
+            if (first == leptons_.end())
                 continue;
 
+            // Z⁰
             const particle Z (particle::Z_BOSON,
                               first->momentum + second->momentum);
 
+            // Pseudopartikel, das der transversal fehlenden Energie
+            // zugeordnet und als Neutrino angenommen wird
             const particle met (particle::UNDEFINED,
                                 MET_RefFinal_ex, MET_RefFinal_ey,
                                 0.0, MET_RefFinal_et);
 
-            // [z.M()] = MeV
-            
             // Drittes Lepton wählen
-            charged_particle const* p_l = 0;
-            for (particle_vector::const_iterator i = leptons_.begin();
-                 i != leptons_.end(); ++i)
-            {
-                if (i == first || i == second)
-                    continue;
-                p_l = &(*i);
-            }
-
-            const charged_particle& l = *p_l;
+            // (f(x,y) = 3-x-y = z liefert immer das fehlende aus
+            //  {0, 1, 2}, z.B. f(0,1) = 2)
+            const charged_particle& l
+                = leptons_[
+                            3
+                            - (first - leptons_.begin())
+                            - (second - leptons_.begin())
+                            ]
+                ;
             
+            // W-Boson als Summe aus dem Z⁰ und der Fehlenergie
             const charged_particle W (
                     particle::W_BOSON, l.charge,
                     l.momentum + met.momentum
@@ -167,7 +172,7 @@ namespace ba
                 );
 
 
-            // Delta Phi
+            // Winkel zwischen W* und Z⁰
             delta_phi.fill (Z.momentum.DeltaPhi(W.momentum));
         }
     }
