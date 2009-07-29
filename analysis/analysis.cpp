@@ -1,5 +1,7 @@
 #include "analysis.hpp"
 
+#include "boost/stringize.hpp"
+
 namespace ba
 {
 
@@ -17,30 +19,26 @@ namespace ba
         // Erstmal alle Zweige abschalten
         tree_.SetBranchStatus("*", 0);
 
-        // Die Zweigadressen auf die Membervariablen setzen
-        tree_.SetBranchAddress("MET_RefFinal_ex", &MET_RefFinal_ex);
-        tree_.SetBranchAddress("MET_RefFinal_ey", &MET_RefFinal_ey);
-        tree_.SetBranchAddress("MET_RefFinal_et", &MET_RefFinal_et);
-        tree_.SetBranchAddress("El_N", &El_N);
-        tree_.SetBranchAddress("Mu_N", &Mu_N);
-        tree_.SetBranchAddress("JetC4T_N", &JetC4T_N);
-        tree_.SetBranchAddress("El_E", &El_E);
-        tree_.SetBranchAddress("El_px", &El_px);
-        tree_.SetBranchAddress("El_py", &El_py);
-        tree_.SetBranchAddress("El_pz", &El_pz);
-        tree_.SetBranchAddress("El_charge", &El_charge);
-        tree_.SetBranchAddress("Mu_E", &Mu_E);
-        tree_.SetBranchAddress("Mu_px", &Mu_px);
-        tree_.SetBranchAddress("Mu_py", &Mu_py);
-        tree_.SetBranchAddress("Mu_pz", &Mu_pz);
-        tree_.SetBranchAddress("Mu_charge", &Mu_charge);
-        tree_.SetBranchAddress("JetC4T_E", &JetC4T_E);
-        tree_.SetBranchAddress("JetC4T_px", &JetC4T_px);
-        tree_.SetBranchAddress("JetC4T_py", &JetC4T_py);
-        tree_.SetBranchAddress("JetC4T_pz", &JetC4T_pz);
-        tree_.SetBranchAddress("JetC4T_charge", &JetC4T_charge);
+#define ENABLE(name) \
+        tree_.SetBranchStatus(BOOST_PP_STRINGIZE(name), 1); \
+        tree_.SetBranchAddress(BOOST_PP_STRINGIZE(name), &name);
 
-        tree_.SetBranchAddress("eventWeight", &eventWeight);
+#define ENABLE_PARTICLE(name) \
+        ENABLE(name##_N); ENABLE(name##_px); ENABLE(name##_py); \
+        ENABLE(name##_pz); ENABLE(name##_E); ENABLE(name##_charge);
+
+        // Die Zweigadressen auf die Membervariablen setzen
+        ENABLE(MET_RefFinal_ex);
+        ENABLE(MET_RefFinal_ey);
+        ENABLE(MET_RefFinal_et);
+        ENABLE_PARTICLE(El);
+        ENABLE_PARTICLE(Mu);
+        ENABLE_PARTICLE(JetC4T);
+
+        unsigned found = 0;
+        tree_.SetBranchStatus("eventWeight", 1, &found);
+        if (found)
+            tree_.SetBranchAddress("eventWeight", &eventWeight);
     }
 
 }
