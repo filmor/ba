@@ -6,7 +6,7 @@
 
 int main (int argc, char** argv)
 {
-    if (argc < 2 || argc > 4)
+    if (argc < 2 || argc > 3)
         throw std::runtime_error ("Invalid number of arguments");
 
     TFile f (argv[1]);
