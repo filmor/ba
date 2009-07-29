@@ -17,37 +17,31 @@ namespace ba
 
     namespace
     {
-        const char* make_name(std::string const& prefix,
-                              const char* name)
-        {
-            static std::string val;
-            if (prefix != "")
-                val = "[" + prefix + "] " + name;
-            else
-                val = name;
-            return val.c_str();
-        }
-        
         class histogram : TH1D
         {
         public:
-            histogram (std::string const& prefix, const char* name,
-                       unsigned count, int start, int end)
-                : th1d_(make_name(prefix, name), name, count,
-                        start, end)
+            histogram (const char* name, unsigned count,
+                       int start, int end)
+                : th1d_(name, name, count, start, end)
             {}
+
             ~histogram () { th1d_.Write(); }
 
-            void fill_mev (double value) { th1d_.Fill(value / 1000.); }
-            void fill (double value) { th1d_.Fill(value); }
+            void fill_mev (double value, double weight = 1.)
+            {
+                fill (value / 1000., weight);
+            }
+            void fill (double value, double weight = 1.)
+            {
+                th1d_.Fill(value, weight);
+            }
 
         private:
             TH1D th1d_;
         };
     }
 
-    void analysis::loop(std::string const& prefix,
-                        Long64_t begin, Long64_t end)
+    void analysis::loop(Long64_t begin, Long64_t end)
     {
         if (end < 0)
             end = tree_.GetEntriesFast ();
@@ -58,13 +52,13 @@ namespace ba
         
         // Histogramme initialisieren
         histogram
-            z_mass (prefix, "Z mass", 100, 50, 150),
-            z_pt (prefix, "Z p_t", 300, 0, 200),
-            l_pt (prefix, "lepton p_t", 300, 0, 200),
-            m_t (prefix, "transverse mass", 300, 0, 200),
-            delta_phi (prefix, "delta phi_WZ", 100, -4, 4),
-            w_pt (prefix, "W p_t", 300, 0, 200),
-            met_pt (prefix, "MET p_t", 300, 0, 200)
+            z_mass ("Z mass", 100, 50, 150),
+            z_pt ("Z p_t", 300, 0, 200),
+            l_pt ("lepton p_t", 300, 0, 200),
+            m_t ("transverse mass", 300, 0, 200),
+            delta_phi ("delta phi_WZ", 100, -4, 4),
+            w_pt ("W p_t", 300, 0, 200),
+            met_pt ("MET p_t", 300, 0, 200)
             ;
 
 #ifndef NO_PROGRESS_BAR
@@ -157,24 +151,26 @@ namespace ba
                     );
 
             // Z⁰ Masse
-            z_mass.fill_mev (Z.momentum.M());
+            z_mass.fill_mev (Z.momentum.M(), eventWeight);
 
             // Transversale Impulse
-            w_pt.fill_mev (W.momentum.Pt());
-            z_pt.fill_mev (Z.momentum.Pt());
-            l_pt.fill_mev (l.momentum.Pt());
-            met_pt.fill_mev (met.momentum.Pt());
+            w_pt.fill_mev (W.momentum.Pt(), eventWeight);
+            z_pt.fill_mev (Z.momentum.Pt(), eventWeight);
+            l_pt.fill_mev (l.momentum.Pt(), eventWeight);
+            met_pt.fill_mev (met.momentum.Pt(), eventWeight);
             
             // Transversale Masse
             m_t.fill_mev (
                 std::sqrt(
                     2 * met.momentum.Pt() * l.momentum.Pt()
                       * (1 - std::cos(met.momentum.DeltaPhi(l.momentum))
-                    ))
+                    )),
+                eventWeight
                 );
 
             // Winkel zwischen W* und Z⁰
-            delta_phi.fill (Z.momentum.DeltaPhi(W.momentum));
+            delta_phi.fill (Z.momentum.DeltaPhi(W.momentum),
+                            eventWeight);
         }
     }
 }

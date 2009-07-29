@@ -3,25 +3,19 @@
 namespace ba
 {
 
-    analysis::analysis (TTree& tree) : tree_(tree)
-    {
+    analysis::analysis (TTree& tree)
+        : tree_(tree)
         // Zeiger auf 0 setzen, damit SetBranchAddress anständig
         // funktioniert
-        El_E = 0;
-        El_px = 0;
-        El_py = 0;
-        El_pz = 0;
-        El_charge = 0;
-        Mu_E = 0;
-        Mu_px = 0;
-        Mu_py = 0;
-        Mu_pz = 0;
-        Mu_charge = 0;
-        JetC4T_E = 0;
-        JetC4T_px = 0;
-        JetC4T_py = 0;
-        JetC4T_pz = 0;
-        JetC4T_charge = 0;
+        , El_E (0), El_px (0), El_py (0), El_pz (0), El_charge (0)
+        , Mu_E (0), Mu_px (0), Mu_py (0), Mu_pz (0), Mu_charge (0)
+        , JetC4T_E (0), JetC4T_px (0), JetC4T_py (0), JetC4T_pz (0)
+        , JetC4T_charge (0)
+        // Das Gewicht mit 1 initialisieren
+        , eventWeight (1.)
+    {
+        // Erstmal alle Zweige abschalten
+        tree_.SetBranchStatus("*", 0);
 
         // Die Zweigadressen auf die Membervariablen setzen
         tree_.SetBranchAddress("MET_RefFinal_ex", &MET_RefFinal_ex);
@@ -45,6 +39,8 @@ namespace ba
         tree_.SetBranchAddress("JetC4T_py", &JetC4T_py);
         tree_.SetBranchAddress("JetC4T_pz", &JetC4T_pz);
         tree_.SetBranchAddress("JetC4T_charge", &JetC4T_charge);
+
+        tree_.SetBranchAddress("eventWeight", &eventWeight);
     }
 
 }

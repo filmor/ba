@@ -16,8 +16,7 @@ namespace ba
     public:
         analysis(TTree& tree);
 
-        void loop (std::string const& prefix = "",
-                   Long64_t begin = 0, Long64_t end = -1);
+        void loop (Long64_t begin = 0, Long64_t end = -1);
 
     private:
         void get_entry (std::size_t entry);
@@ -31,6 +30,7 @@ namespace ba
         Double_t             MET_RefFinal_ex;
         Double_t             MET_RefFinal_ey;
         Double_t             MET_RefFinal_et;
+        Double_t             eventWeight;
         Int_t                El_N;
         Int_t                Mu_N;
         Int_t                JetC4T_N;
