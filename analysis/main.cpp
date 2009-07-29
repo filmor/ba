@@ -18,9 +18,9 @@ int main (int argc, char** argv)
 
     const char* output_file = "output.root";
 
-    // Falls es ein viertes Argument ist ist dies die Ausgabedatei
-    if (argc == 4)
-        output_file = argv[3];
+    // Falls es ein drittes Argument ist ist dies die Ausgabedatei
+    if (argc == 3)
+        output_file = argv[2];
 
     // Ausgabedatei öffnen
     TFile output (output_file, "UPDATE");
@@ -29,8 +29,5 @@ int main (int argc, char** argv)
     output.cd();
 
     // Hauptschleife ausführen
-    if (argc == 3)
-        a.loop(argv[2]);
-    else
-        a.loop("");
+    a.loop();
 }

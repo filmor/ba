@@ -16,41 +16,41 @@ append_task()
 
 analyze()
 {
-    ./analyze $* >> ~/analyze_curr.log 2> ~/analyze_err.log
+    ./analyze $@ # >> ~/analyze_curr.log 2> ~/analyze_err.log
+}
 
 analyze_dir()
 {
     dir=$1
-    if [ $2x != x ]
-    then
-        out=$2
-    else
-        out=$(basename $dir)
-    fi
 
     for file in $dir/*.root
     do
-        CMD="${file} $(basename $dir) output/${out}.root"
+        CMD="${file} $2"
 
         append_task "$CMD"
     done
 }
 
-for bg in zee ztautau zmumu
-do
-    for dir in $DIR/$bg/*
-    do
-        analyze_dir $dir $bg
-    done
-done
+# for bg in zee ztautau zmumu
+# do
+#    for dir in $DIR/$bg/*
+#    do
+#        analyze_dir $dir $bg
+#    done
+# done
 
-analyze_dir data/background/ttbar
+# analyze_dir data/background/ttbar
+
+for dir in $DIR/zmumu/*
+do
+    analyze_dir $dir output/$(basename $dir).root
+done
 
 N=${#TASKS[@]}
 
-for (( i = 0; i < N; i++))
+for (( i = 1; i <= $N; i++))
 do
-    task=${TASKS[$i]}
+    task=${TASKS[$i-1]}
     echo -ne "Task $i of $N:\n\t$task\n..."
     analyze $task && echo -e "done\n" || echo -e "failed\n"
 done
