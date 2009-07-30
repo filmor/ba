@@ -12,7 +12,7 @@ int main (int argc, char** argv)
     if (argc < 3)
     {
         std::cerr << "Invalid number of arguments\n";
-        std::cout << "Use: " << argv[0] << " *input_files output_file\n";
+        std::cout << "Usage: " << argv[0] << " *input_files output_file\n";
         std::exit(1);
     }
 
