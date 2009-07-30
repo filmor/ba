@@ -1,26 +1,31 @@
+#include <cstdlib>
 #include <stdexcept>
+#include <iostream>
 
 #include <TFile.h>
+#include <TChain.h>
 
 #include "analysis.hpp"
 
 int main (int argc, char** argv)
 {
-    if (argc < 2 || argc > 4)
-        throw std::runtime_error ("Invalid number of arguments");
+    if (argc < 3)
+    {
+        std::cerr << "Invalid number of arguments\n";
+        std::cout << "Use: " << argv[0] << " *input_files output_file\n";
+        std::exit(1);
+    }
 
-    TFile f (argv[1]);
+    TChain chain ("Input");
 
-    // Analyse mit der geladenen Datei initialisieren
-    ba::analysis a (
-            *reinterpret_cast<TTree*> (gDirectory->Get("ControlSample0"))
-            );
+    for (int i = 1; i < argc - 1; ++i)
+        chain.AddFile (argv[i], TChain::kBigNumber, "ControlSample0");
 
-    const char* output_file = "output.root";
+    // Analyse mit der geladenen Kette initialisieren
+    ba::analysis a (chain);
 
-    // Falls es ein drittes Argument ist ist dies die Ausgabedatei
-    if (argc == 3)
-        output_file = argv[2];
+    // Die Ausgabedatei ist das letzte Argument
+    const char* output_file = argv[argc - 1];
 
     // Ausgabedatei öffnen
     TFile output (output_file, "UPDATE");

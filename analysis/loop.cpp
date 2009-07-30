@@ -44,12 +44,19 @@ namespace ba
     void analysis::loop(Long64_t begin, Long64_t end)
     {
         if (end < 0)
-            end = tree_.GetEntriesFast ();
+            end = tree_.GetEntries();
         else
-            end = std::min (end, tree_.GetEntriesFast ());
+            end = std::min (end, tree_.GetEntries());
 
         if (begin >= end) return;
-        
+
+        // Weil's nicht anders anständig geht wird die Anzahl der
+        // verarbeiteten Ereignisse (wie auf der ROOT-Mailing-Liste
+        // empfohlen) in der UniqueID eines TObject gespeichert
+        TObject count;
+        count.SetUniqueID (end - begin);
+        count.Write ("count");
+
         // Histogramme initialisieren
         histogram
             z_mass ("Z mass", 100, 50, 150),
@@ -71,7 +78,7 @@ namespace ba
 #ifndef NO_PROGESS_BAR
             ++show_progress;
 #endif
-            get_entry(tree_.LoadTree(entry));
+            get_entry(entry); // (tree_.LoadTree(entry));
 
             // Wir benötigen genau drei Leptonen
             if (leptons_.size() != 3) continue;
