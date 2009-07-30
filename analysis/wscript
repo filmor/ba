@@ -39,8 +39,7 @@ def configure(conf):
     conf.env['CXXFLAGS_ROOT'] = get('auxcflags')
     conf.env['LIBPATH_ROOT'] = get('libdir')
     conf.env['CPPPATH_ROOT'] = get('incdir')
-    conf.env['LINKFLAGS_ROOT'] = get('libs')
-    conf.env['LIB_ROOT'] = ['TreePlayer']
+    conf.env['LIB_ROOT'] = 'TreePlayer Physics dl'.split()
 
     env = conf.env.copy()
     env.append_unique('CXXFLAGS', ['-O0', '-g3'])
