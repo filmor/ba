@@ -52,7 +52,7 @@ def build(bld):
     task = bld.new_task_gen()
     task.features = 'cxx cprogram'
 
-    task.source = glob('*.cpp')
+    task.source = glob('src/*.cpp')
     task.target = APPNAME
     task.uselib = "ROOT CPP0X"
 
