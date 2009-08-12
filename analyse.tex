@@ -1,112 +1,48 @@
 \section{Analyse}
 Analysiert werden soll in dieser Arbeit der Prozess, der ein W-Boson im Anfangs-
-und drei gute Leptonen (also Myonen oder Elektronen) und ein Neutrino im
-Endzustand hat. Für diesen gibt es zwei Feynman-Graphen:
+und drei "`gute"' Leptonen (also Myonen oder Elektronen) und ein Neutrino im
+Endzustand hat. Im Folgenden werden mit "`Leptonen"' immer (soweit nicht anders
+angegeben) Myonen und Elektronen gemeint sein.
+
+Für den Prozess gibt es zwei Feynman-Graphen:
 
 \begin{figure}[h!]
   \begin{minipage}{0.49\textwidth}
     \centering
-    \begin{tikzpicture}[
-      level/.style={level distance=1.5cm},
-      level 2/.style={sibling distance=2.2cm},
-      level 3/.style={sibling distance=1.5cm}
-      ]
-      \coordinate
-        child[grow=left] {
-          child {
-            node {$q$}
-            edge from parent [positive, particle]
-          }
-          child {
-            node {$\bar q$}
-            edge from parent [negative, particle]
-          }
-          edge from parent [electroweak]
-          node [below=3pt] {$W^+$}
-        }
-        child[grow=right, level distance=0pt] {
-          child {
-            child {
-              node {$\nu_{\tilde l}$}
-              edge from parent [particle]
-            }
-            child {
-              node {$\tilde l$}
-              edge from parent [positive, particle]
-            }
-            edge from parent [electroweak]
-            node[below=4pt] {$W^+$}
-          }
-          child {
-            child {
-              node {$l^+$}
-              edge from parent [negative, particle]
-            }
-            child {
-              node {$l^-$}
-              edge from parent [positive, particle]
-            }
-            edge from parent [electroweak]
-            node[above=4pt] {$Z^0$}
-          }
-        };
-    \end{tikzpicture}
+    \input{grafiken/feynman_1.tikz}
   \end{minipage}
   \begin{minipage}{0.49\textwidth}
     \centering
-    \begin{tikzpicture}[
-      level/.style={level distance=1.5cm, sibling distance=1.5cm},
-      ]
-      \coordinate
-        child[grow=left] {
-          node {$q$}
-          edge from parent [positive, particle]
-        }
-        child[grow=down, level distance=2.2cm] {
-          child [grow=left] {
-            node {$\bar q$}
-            edge from parent [negative, particle]
-          }
-          child [grow=right] {
-            child {
-              node {$l^-$}
-              edge from parent [negative, particle]
-            }
-            child {
-              node {$l^+$}
-              edge from parent [positive, particle]
-            }
-            edge from parent [electroweak]
-            node [below] {$Z^0$}
-          }
-          edge from parent [electroweak]
-          node [left] {$W^+$}
-        }
-        child[grow=right] {
-          child {
-            node {$\tilde l$}
-            edge from parent [positive, particle]
-          }
-          child {
-            node {$\nu_{\tilde l}$}
-            edge from parent [particle]
-          }
-          edge from parent [electroweak]
-          node [above] {$W^+$}
-        };
-      \end{tikzpicture}
+    \input{grafiken/feynman_2.tikz}
   \end{minipage}
   \caption{Feynman-Diagramme des zu analysierenden Prozesses}
   \label{fig:feynman}
 \end{figure}
-Dabei sind mit $l$ "`gute"' Leptonen, also Myonen oder Elektronen bezeichnet,
-$l$ und $\tilde l$ sind aber nicht zwingend vom selben Flavour.
+Dabei sind mit $l$ Leptonen bezeichnet, $l$ und $\tilde l$ sind aber nicht
+zwingend vom selben Flavour. $\bar \nu_{\tilde l}$ ist das zu $\tilde l$
+gehörige Antineutrino.
+
+Die Leptonen sind sehr gut messbar, man kann im Detektor sowohl ihre Spur als
+auch ihre Energie bestimmen und daraus den Impuls und die Ladung errechnen.
+Problematisch ist dagegen das Neutrino, da Neutrinos nur mit großem Aufwand
+überhaupt experimentell nachweisbar sind\cite{needed} kann über die Energie und
+den Impuls des in diesem Zerfall auftretenden keine Aussage gemacht werden,
+weshalb entsprechend auch keine über die auftretenden W-Bosonen getroffen werden
+können.
+
+\label{cha:met}
+Man kann allerdings zumindest die sogenannte \emph{transversale Masse} des
+W-Bosons bestimmen. Sie ist definiert als:
+\begin{align}
+  m_t := m^2 + p_x^2 + p_y^2
+  \label{}
+\end{align}
 
 \subsection{Implementierung}
 Die Implementierung der zuvor beschriebenen Analyse wurde in C++ vorgenommen.
-Das Programm größtenteils aus der Klasse 'analysis'. Diese lehnt sich an die von
-ROOT automatisch mit MakeClass zu den Samples erstellte Klasse an, wurde aber
-aus Geschwindigkeitsgründen stark zurechtgestutzt.
+Das Programm größtenteils aus der Klasse \lstinline!analysis!. Diese lehnt sich
+an die von ROOT automatisch mit \lstinline!MakeClass! zu den Samples erstellte
+Klasse an, wurde aber aus Geschwindigkeitsgründen stark zurechtgestutzt.
 
 In der loop-Methode wird für jeden Eintrag im Datensample folgender Algorithmus
 benutzt:

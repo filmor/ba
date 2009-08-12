@@ -4,7 +4,7 @@
 \usepackage{amsmath, amsthm, amssymb, amsrefs}
 \usepackage[ngerman]{babel}
 \usepackage{makeidx, graphicx, tikz, units, calc, pgfplots, fancyhdr}
-\usepackage{wrapfig, subfig, caption, booktabs, floatrow, listings}
+\usepackage{wrapfig, subfig, caption, booktabs, floatrow, listings, xcolor}
 
 \usetikzlibrary{trees}
 \usetikzlibrary{decorations.pathmorphing}
@@ -12,7 +12,7 @@
 
 \pagestyle{fancy}
 \fancyhf{}
-\rhead{\scriptsize B. Sauer --- Datenanalyse für das ATLAS-Experiment}
+\rhead{\scriptsize Benedikt Sauer --- Datenanalyse für das ATLAS-Experiment}
 \rfoot{\thepage}
 \renewcommand{\headrulewidth}{0.1pt}
 
@@ -20,14 +20,25 @@
 \title{Datenanalyse für das ATLAS-Experiment}
 
 \tikzset{
-    electroweak/.style={decorate, decoration={snake}, draw=red},
+    electroweak/.style={dashed, draw=red},
     positive/.style={postaction={decorate},
             decoration={markings,mark=at position .55 with {\arrow{<}}}},
     negative/.style={postaction={decorate},
             decoration={markings,mark=at position .55 with {\arrow{>}}}},
-    particle/.style={draw=black},
-    gluon/.style={decorate, draw=green,
-        decoration={coil, amplitude=4pt, segment length=5pt}} 
+    particle/.style={solid, draw=black},
+}
+
+\lstset
+{
+  language=C++,
+  showstringspaces=false,
+  captionpos=b,
+  tabsize=4,
+  breaklines=true,
+  basicstyle=\ttfamily,
+  commentstyle=\color{Blue},
+  stringstyle=\color{Green},
+  keywordstyle=\color{Maroon}
 }
 
 \begin{document}

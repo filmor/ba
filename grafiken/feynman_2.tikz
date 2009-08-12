@@ -1,0 +1,39 @@
+\begin{tikzpicture}[level/.style={level distance=1.5cm, sibling distance=1.5cm}]
+  \coordinate
+    child[grow=left] {
+      node {$q$}
+      edge from parent [positive, particle]
+    }
+    child[grow=down, level distance=2.2cm] {
+      child [grow=left] {
+        node {$\bar q$}
+        edge from parent [negative, particle]
+      }
+      child [grow=right] {
+        child {
+          node {$l^-$}
+          edge from parent [negative, particle]
+        }
+        child {
+          node {$l^+$}
+          edge from parent [positive, particle]
+        }
+        edge from parent [electroweak]
+        node [below] {$Z^0$}
+      }
+      edge from parent [negative, particle]
+      node [left] {$\bar q$}
+    }
+    child[grow=right] {
+      child {
+        node {$\tilde l$}
+        edge from parent [positive, particle]
+      }
+      child {
+        node {$\bar \nu_{\tilde l}$}
+        edge from parent [negative, particle]
+      }
+      edge from parent [electroweak]
+      node [above] {$W^+$}
+    };
+\end{tikzpicture}
