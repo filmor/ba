@@ -42,10 +42,10 @@ namespace ba
         /// Gewichtung des Ereignisses
         double eventWeight;
 
-        /// Chi² der Myonenzuordnung
-        double_vp Mu_matchChi2;
+        /// Hat sowohl innere als auch äußere Spur
+        int_vp Mu_hasCombinedMuon;
 
-        /// Elektronensignatur
+        /// Elektronenqualität
         int_vp El_IsEM;
 
         /// Elektronendaten (Zahl, Impuls, Ladung) \{

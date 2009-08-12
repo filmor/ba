@@ -6,7 +6,7 @@
 
 namespace ba
 {
-    static const int electron_identification = egammaPID::ElectronTight;
+    static const int electron_identification = egammaPID::ElectronMedium;
 
     bool analysis::good_lepton (charged_particle const& lepton)
     {
@@ -65,7 +65,7 @@ namespace ba
             charged_particle p = PARTICLE(Mu, i, particle::MUON);
 
             // Prüfe neben den gemeinsamen Tests die Sicherheit der Zuordnung
-            if (((*Mu_matchChi2)[i] < 10)
+            if (((*Mu_hasCombinedMuon)[i] == 1)
                 && good_lepton(p))
             {
                 leptons_.push_back(p);

@@ -12,7 +12,7 @@ namespace ba
         , El_E (0), El_px (0), El_py (0), El_pz (0), El_charge (0)
         , Mu_E (0), Mu_px (0), Mu_py (0), Mu_pz (0), Mu_charge (0)
         , JetC4T_E (0), JetC4T_px (0), JetC4T_py (0), JetC4T_pz (0)
-        , JetC4T_charge (0)
+        , JetC4T_charge (0), El_IsEM (0), Mu_hasCombinedMuon (0)
         // Das Gewicht mit 1 initialisieren
         , eventWeight (1.)
     {
@@ -32,18 +32,15 @@ namespace ba
         ENABLE(MET_RefFinal_ey);
         ENABLE(MET_RefFinal_et);
         ENABLE(El_IsEM);
-        ENABLE(Mu_matchChi2);
+        ENABLE(Mu_hasCombinedMuon);
         ENABLE_PARTICLE(El);
         ENABLE_PARTICLE(Mu);
         ENABLE_PARTICLE(JetC4T);
 
-        // Sollte theoretisch dafür sorgen, dass eventWeight nur dann
-        // angeschaltet wird, wenn es auch vorhanden ist, funktioniert aber
-        // nicht so wie es soll.
-        unsigned found = 0;
-        tree_.SetBranchStatus("eventWeight", 1, &found);
-        if (found)
-            tree_.SetBranchAddress("eventWeight", &eventWeight);
+        // Sorrgt dafür, dass eventWeight nur dann angeschaltet wird, wenn der
+        // entsprechende Zweig auch vorhanden ist
+        if (tree_.FindBranch("eventWeight"))
+            tree_.SetBranchStatus("eventWeight", 1);
     }
 
 }

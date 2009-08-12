@@ -28,20 +28,17 @@ namespace ba
     struct charged_particle : particle
     {
         charged_particle (kind_type kind_, double charge_,
-                  double px, double py, double pz, double E,
-                  int index_ = -1)
+                  double px, double py, double pz, double E)
             : particle(kind_, px, py, pz, E)
             , charge(charge_)
-            , index(index_)
         {}
 
         charged_particle (kind_type kind_, double charge_,
-                          TLorentzVector const& p, int index_ = -1)
+                          TLorentzVector const& p)
             : particle(kind_, p)
             , charge(charge_)
         {}
 
-        int index;
         double charge;
     };
 
