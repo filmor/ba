@@ -10,13 +10,6 @@ namespace ba
     {
         enum kind_type { Z_BOSON, W_BOSON, UNDEFINED, ELECTRON, MUON };
 
-#ifdef HAS_VARIADIC_TEMPLATES
-        template <typename... Args>
-        particle (kind_type kind_, Args const&... args)
-            : momentum (args...)
-            , kind (kind_)
-        {}
-#else
         particle (kind_type kind_, double px, double py,
                                    double pz, double E)
             : momentum(px, py, pz, E)
@@ -27,7 +20,6 @@ namespace ba
             : momentum(p)
             , kind(kind_)
         {}
-#endif
 
         TLorentzVector momentum;
         kind_type kind;
@@ -35,31 +27,23 @@ namespace ba
 
     struct charged_particle : particle
     {
-#ifdef HAS_VARIADIC_TEMPLATES
-        template <typename... Args>
         charged_particle (kind_type kind_, double charge_,
-                          Args const&... args)
-            : particle(kind_, args...)
-            , charge(charge_)
-        {}
-#else
-        charged_particle (kind_type kind_, double charge_,
-                  double px, double py, double pz, double E)
+                  double px, double py, double pz, double E,
+                  int index_ = -1)
             : particle(kind_, px, py, pz, E)
             , charge(charge_)
+            , index(index_)
         {}
 
         charged_particle (kind_type kind_, double charge_,
-                          TLorentzVector const& p)
+                          TLorentzVector const& p, int index_ = -1)
             : particle(kind_, p)
             , charge(charge_)
         {}
-#endif
 
+        int index;
         double charge;
     };
-
-    // Make strings
 
 }
 

@@ -17,21 +17,6 @@ def set_options(opt):
 def configure(conf):
     conf.check_tool('compiler_cxx')
 
-    
-    cxx0x = conf.check_cxx(fragment="""
-                template <typename... Args> void func(Args const&...) {}
-    
-                int main() { func(1,2,3,4,5); }
-                """,
-                cxxflags=['--std=c++0x'],
-                msg='Checking for variadic templates',
-                mandatory=False,
-                )
-    if cxx0x:
-        conf.env['CXXFLAGS_CPP0X'] = ['--std=c++0x',
-                                      '-DHAS_VARIADIC_TEMPLATES']
-
-
     # Check for ROOT
     rc = conf.find_program('root-config')
     get = lambda name: \
@@ -54,8 +39,8 @@ def build(bld):
 
     task.source = glob('src/*.cpp')
     task.target = APPNAME
-    task.uselib = "ROOT CPP0X"
+    task.uselib = "ROOT"
 
-    for obj in [] + bld.all_task_gen:
-        obj.clone('debug')
+#    for obj in [] + bld.all_task_gen:
+#        obj.clone('debug')
 
