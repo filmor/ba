@@ -151,7 +151,7 @@ namespace ba
                             ]
                 ;
             
-            // W-Boson als Summe aus dem Z⁰ und der Fehlenergie
+            // W-Boson als Summe aus dem übrigen Lepton und der Fehlenergie
             const charged_particle W (
                     particle::W_BOSON, l.charge,
                     l.momentum + met.momentum

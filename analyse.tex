@@ -1,0 +1,154 @@
+\section{Analyse}
+Analysiert werden soll in dieser Arbeit der Prozess, der ein W-Boson im Anfangs-
+und drei gute Leptonen (also Myonen oder Elektronen) und ein Neutrino im
+Endzustand hat. Für diesen gibt es zwei Feynman-Graphen:
+
+\begin{figure}[h!]
+  \begin{minipage}{0.49\textwidth}
+    \centering
+    \begin{tikzpicture}[
+      level/.style={level distance=1.5cm},
+      level 2/.style={sibling distance=2.2cm},
+      level 3/.style={sibling distance=1.5cm}
+      ]
+      \coordinate
+        child[grow=left] {
+          child {
+            node {$q$}
+            edge from parent [positive, particle]
+          }
+          child {
+            node {$\bar q$}
+            edge from parent [negative, particle]
+          }
+          edge from parent [electroweak]
+          node [below=3pt] {$W^+$}
+        }
+        child[grow=right, level distance=0pt] {
+          child {
+            child {
+              node {$\nu_{\tilde l}$}
+              edge from parent [particle]
+            }
+            child {
+              node {$\tilde l$}
+              edge from parent [positive, particle]
+            }
+            edge from parent [electroweak]
+            node[below=4pt] {$W^+$}
+          }
+          child {
+            child {
+              node {$l^+$}
+              edge from parent [negative, particle]
+            }
+            child {
+              node {$l^-$}
+              edge from parent [positive, particle]
+            }
+            edge from parent [electroweak]
+            node[above=4pt] {$Z^0$}
+          }
+        };
+    \end{tikzpicture}
+  \end{minipage}
+  \begin{minipage}{0.49\textwidth}
+    \centering
+    \begin{tikzpicture}[
+      level/.style={level distance=1.5cm, sibling distance=1.5cm},
+      ]
+      \coordinate
+        child[grow=left] {
+          node {$q$}
+          edge from parent [positive, particle]
+        }
+        child[grow=down, level distance=2.2cm] {
+          child [grow=left] {
+            node {$\bar q$}
+            edge from parent [negative, particle]
+          }
+          child [grow=right] {
+            child {
+              node {$l^-$}
+              edge from parent [negative, particle]
+            }
+            child {
+              node {$l^+$}
+              edge from parent [positive, particle]
+            }
+            edge from parent [electroweak]
+            node [below] {$Z^0$}
+          }
+          edge from parent [electroweak]
+          node [left] {$W^+$}
+        }
+        child[grow=right] {
+          child {
+            node {$\tilde l$}
+            edge from parent [positive, particle]
+          }
+          child {
+            node {$\nu_{\tilde l}$}
+            edge from parent [particle]
+          }
+          edge from parent [electroweak]
+          node [above] {$W^+$}
+        };
+      \end{tikzpicture}
+  \end{minipage}
+  \caption{Feynman-Diagramme des zu analysierenden Prozesses}
+  \label{fig:feynman}
+\end{figure}
+Dabei sind mit $l$ "`gute"' Leptonen, also Myonen oder Elektronen bezeichnet,
+$l$ und $\tilde l$ sind aber nicht zwingend vom selben Flavour.
+
+\subsection{Implementierung}
+Die Implementierung der zuvor beschriebenen Analyse wurde in C++ vorgenommen.
+Das Programm größtenteils aus der Klasse 'analysis'. Diese lehnt sich an die von
+ROOT automatisch mit MakeClass zu den Samples erstellte Klasse an, wurde aber
+aus Geschwindigkeitsgründen stark zurechtgestutzt.
+
+In der loop-Methode wird für jeden Eintrag im Datensample folgender Algorithmus
+benutzt:
+\begin{description}
+  \item[Initialisierung] Die benötigten Jets, Elektronen und Myonen
+    initialisiert, wobei die Leptonen direkt in diesem Schritt nach Ladung und
+    Jet-Nähe gefiltert werden. Konkret werden Leptonen mit Ladung 0 und solche
+    mit einem $\Delta R < 0.4$ zu irgendeinem Jet aussortiert. Letzteres ist
+    % Genauer!
+    deshalb sinnvoll, weil Jets in ATLAS mit einem $\Delta R$ von $0.4$
+    rekonstruiert werden.
+
+    Weitere gute Filter wären zum Beispiel: $El_isEM$ für Elektronen, mit
+    richtigen Flags, leider nicht vorhanden $Mu_matchChi2$ gibt die statistische
+    Unsicherheit des Matches an, sollte klein sein
+
+    Von nun an sind mit "`Leptonen"' diese gefilterten Elektronen und Myonen
+    gemeint.
+
+  \item[Teste Leptonenzahl] Das Ereignis kann nur echt sein, wenn genau drei
+    Leptonen gemessen wurden. Dabei werden die bereits herausgefilterten
+    ("`falschen"') Leptonen natürlich nicht mehr berücksichtigt.
+    
+  \item[Rekonstruiere die W- und Z-Bosonen] Aus den vorhanden Leptonen wird nun
+    ein paar selber Art (SF, same flavour) und gegensätzlicher Ladung gesucht.
+    Addiert man die Viererimpulse der beiden Ladungen so kann man die Masse aus
+    dem sich ergebenden Viererimpuls ablesen. Gibt es mehrere solcher Paare, so
+    wird das verwendet, dessen Masse den geringsten Abstand zur echten Z-Masse
+    hat.
+
+    Danach wird das übrige Lepton zusammen mit der fehlenden
+    Transversalenergie (\ref{cha:met}) zu einem W-Kandidaten verrechnet.
+
+  \item[Übertragung der Daten in Histogramme] Zuletzt werden die interessanten
+    Größen in die Histogramme eingetragen. Betrachtet wurden hier
+
+    \begin{description}
+      \item[Z-Masse]
+      \item[Transversale Impulse] der Z- und W-Bosonen, des übrigen Elektrons
+        und der Fehlenergie.
+      \item[Transversale Masse] des W-Bosons
+      \item[Winkel] zwischen W- und Z-Boson.
+    \end{description}
+\end{description}
+

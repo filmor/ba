@@ -1,27 +1,52 @@
-\documentclass{scrartcl}
+\documentclass[a4paper,oneside]{scrartcl}
+
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath, amsthm, amssymb, amsrefs}
+\usepackage[ngerman]{babel}
+\usepackage{makeidx, graphicx, tikz, units, calc, pgfplots, fancyhdr}
+\usepackage{wrapfig, subfig, caption, booktabs, floatrow, listings}
+
+\usetikzlibrary{trees}
+\usetikzlibrary{decorations.pathmorphing}
+\usetikzlibrary{decorations.markings}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\scriptsize B. Sauer --- Datenanalyse für das ATLAS-Experiment}
+\rfoot{\thepage}
+\renewcommand{\headrulewidth}{0.1pt}
 
 \author{Benedikt Christian Sauer}
-\title{Datenanalyse für das ATLAS-Experiment - Test einer Grid-basierten
-Analyseumgebung}
+\title{Datenanalyse für das ATLAS-Experiment}
+
+\tikzset{
+    electroweak/.style={decorate, decoration={snake}, draw=red},
+    positive/.style={postaction={decorate},
+            decoration={markings,mark=at position .55 with {\arrow{<}}}},
+    negative/.style={postaction={decorate},
+            decoration={markings,mark=at position .55 with {\arrow{>}}}},
+    particle/.style={draw=black},
+    gluon/.style={decorate, draw=green,
+        decoration={coil, amplitude=4pt, segment length=5pt}} 
+}
 
 \begin{document}
-\section{Einführung}
-\subsection{Das ATLAS-Experiment}
-\subsection{Das Grid}
-\subsubsection{Grid-Frameworks}
-\begin{description}
-    \item[gLite]
-    \item[Ganga]
-\end{description}
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+%\subsection{Das Grid}
+%\subsubsection{Grid-Frameworks}
+%\begin{description}
+%    \item[gLite]
+%    \item[Ganga]
+%\end{description}
 
-\section{Test des Grids mit einer einfachen Analyse}
-\subsection{Die Analyseaufgabe}
+\input{einleitung.tex}
+\input{analyse.tex}
+\input{ergebnisse.tex}
 
-\begin{figure}[H]
-  \begin{tikzpicture}
+%\section{Test des Grids mit einer einfachen Analyse}
+%\subsection{Die Analyseaufgabe}
 
-  \end{tikzpicture}
-  \caption{}
-  \label{fig:fn_graph}
-\end{figure}
 \end{document}

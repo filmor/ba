@@ -35,6 +35,9 @@ namespace ba
         ENABLE_PARTICLE(Mu);
         ENABLE_PARTICLE(JetC4T);
 
+        // Sollte theoretisch dafür sorgen, dass eventWeight nur dann
+        // angeschaltet wird, wenn es auch vorhanden ist, funktioniert aber
+        // nicht so wie es soll.
         unsigned found = 0;
         tree_.SetBranchStatus("eventWeight", 1, &found);
         if (found)
