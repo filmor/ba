@@ -41,7 +41,24 @@
   keywordstyle=\color{Maroon}
 }
 
+\DeclareMathSymbol{,}{\mathpunct}{letters}{"3B}
+\DeclareMathSymbol{.}{\mathord}{letters}{"3B}
+\DeclareMathSymbol{\decimal}{\mathord}{letters}{"3A}
+
+\pgfkeys{/pgf/number format/.cd,
+    fixed,
+    precision=3,
+    set thousands separator={}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{8pt}
+
+\makeindex
+
 \begin{document}
+    \begin{titlepage}
+        \date{\vspace{1cm} Universität Bonn \\ August 2009}
+    \end{titlepage}
 \maketitle
 \newpage
 \tableofcontents
@@ -57,7 +74,11 @@
 \input{analyse.tex}
 \input{ergebnisse.tex}
 
-%\section{Test des Grids mit einer einfachen Analyse}
-%\subsection{Die Analyseaufgabe}
+\begin{appendix}
+  \section{Literatur}
+  \begin{biblist}
+    \bibselect*{quellen.bib}
+  \end{biblist}
+\end{appendix}
 
 \end{document}
