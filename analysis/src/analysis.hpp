@@ -14,41 +14,66 @@ namespace ba
     class analysis
     {
     public:
-        analysis(TTree& tree);
+        analysis (TTree& tree);
 
-        void loop (Long64_t begin = 0, Long64_t end = -1);
+        void loop ();
 
-    private:
+    protected:
         void get_entry (std::size_t entry);
         bool good_lepton (charged_particle const&);
 
+    private:
+        typedef std::vector<double>* double_vp;
+        typedef std::vector<int>* int_vp;
         typedef std::vector<charged_particle> particle_vector;
+
+        /// Teilchenvektoren
         particle_vector jets_, leptons_;
+
+        /// Referenz auf den zu untersuchenden Baum
         TTree&          tree_;  
 
-        // Declaration of leave types
-        Double_t             MET_RefFinal_ex;
-        Double_t             MET_RefFinal_ey;
-        Double_t             MET_RefFinal_et;
-        Double_t             eventWeight;
-        Int_t                El_N;
-        Int_t                Mu_N;
-        Int_t                JetC4T_N;
-        std::vector<double>  *El_E;
-        std::vector<double>  *El_px;
-        std::vector<double>  *El_py;
-        std::vector<double>  *El_pz;
-        std::vector<double>  *El_charge;
-        std::vector<double>  *Mu_E;
-        std::vector<double>  *Mu_px;
-        std::vector<double>  *Mu_py;
-        std::vector<double>  *Mu_pz;
-        std::vector<double>  *Mu_charge;
-        std::vector<double>  *JetC4T_E;
-        std::vector<double>  *JetC4T_px;
-        std::vector<double>  *JetC4T_py;
-        std::vector<double>  *JetC4T_pz;
-        std::vector<double>  *JetC4T_charge;
+        /// Komponenten der fehlenden Transversalenergie \{
+        double MET_RefFinal_ex;
+        double MET_RefFinal_ey;
+        double MET_RefFinal_et;
+        /// \}
+
+        /// Gewichtung des Ereignisses
+        double eventWeight;
+
+        /// Chi² der Myonenzuordnung
+        double_vp Mu_matchChi2;
+
+        /// Elektronensignatur
+        int_vp El_IsEM;
+
+        /// Elektronendaten (Zahl, Impuls, Ladung) \{
+        int El_N;
+        double_vp El_E;
+        double_vp El_px;
+        double_vp El_py;
+        double_vp El_pz;
+        double_vp El_charge;
+        /// \}
+
+        /// Myonendaten \{
+        int Mu_N;
+        double_vp Mu_E;
+        double_vp Mu_px;
+        double_vp Mu_py;
+        double_vp Mu_pz;
+        double_vp Mu_charge;
+        /// \}
+        
+        /// Jetdaten \{
+        int JetC4T_N;
+        double_vp JetC4T_E;
+        double_vp JetC4T_px;
+        double_vp JetC4T_py;
+        double_vp JetC4T_pz;
+        double_vp JetC4T_charge;
+        /// \}
    };
 }
 

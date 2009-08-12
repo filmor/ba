@@ -41,14 +41,10 @@ namespace ba
         };
     }
 
-    void analysis::loop(Long64_t begin, Long64_t end)
+    void analysis::loop()
     {
-        if (end < 0)
-            end = tree_.GetEntries();
-        else
-            end = std::min (end, tree_.GetEntries());
-
-        if (begin >= end) return;
+        Long64_t begin = 0;
+        Long64_t end = tree_.GetEntries();
 
         // Weil's nicht anders anständig geht wird die Anzahl der
         // verarbeiteten Ereignisse (wie auf der ROOT-Mailing-Liste

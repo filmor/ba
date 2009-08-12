@@ -31,6 +31,8 @@ namespace ba
         ENABLE(MET_RefFinal_ex);
         ENABLE(MET_RefFinal_ey);
         ENABLE(MET_RefFinal_et);
+        ENABLE(El_IsEM);
+        ENABLE(Mu_matchChi2);
         ENABLE_PARTICLE(El);
         ENABLE_PARTICLE(Mu);
         ENABLE_PARTICLE(JetC4T);
