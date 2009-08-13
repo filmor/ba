@@ -16,7 +16,8 @@ TASKS=()
 
 append_task()
 {
-    TASKS[${#TASKS[*]}]=$@
+    [ ! -e ${!#} ] && TASKS[${#TASKS[*]}]=$@
+    echo $@
 }
 
 analyze()
@@ -30,11 +31,15 @@ run_task()
     analyze $task
 }
 
-for dir in $DIR/zmumu/*
+for type in zmumu zee ztautau
 do
-    out=output/$(basename $dir).root
-    [ ! -e $out ] && append_task $(echo $dir/*) $out
+    for dir in $DIR/$type/*
+    do
+        append_task $(echo $dir/*) output/${type}_$(basename $dir).root
+    done
 done
+
+append_task $(find $DIR/ttbar | grep '\.root$' ) output/ttbar.root
 
 append_task $(echo data/new/*WmZ*.root) output/signal_minus.root
 append_task $(echo data/new/*WpZ*.root) output/signal_plus.root

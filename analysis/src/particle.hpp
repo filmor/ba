@@ -42,6 +42,11 @@ namespace ba
         double charge;
     };
 
+    inline double delta_R (particle const& p, particle const& q)
+    {
+        return p.momentum.DeltaR(q.momentum);
+    }
+
 }
 
 #endif
