@@ -1,5 +1,16 @@
 \section{Einführung}
+Diese Arbeit soll die Vorgänge zur Analyse eines Prozesses in der
+Hochenergiephysik speziell am Beispiel des ATLAS-Experimentes beschreiben.  Dazu
+wird zunächst in dieser Einleitung etwas auf das Experiment selbst, die
+Datenaufnahme und -auswertung und die Konventionen eingegangen und im Folgenden
+der zu untersuchende Prozess sowie der Grundaufbau der Analyse besprochen.
+Danach wird dann auf die genaue Implementierung mit ROOT eingegangen und sich
+mit dem Vorgehen zur Filterung des Untergrundes auseinandergesetzt. Abschließend
+wird dann noch kurz der Blick auf weitere mögliche Filtermethoden und die
+Ausführung des Programms im Grid gerichtet.
+
 \subsection{Das ATLAS-Experiment}
+
 
 \subsubsection{Datenaufnahme}
 \subsubsection{Datenauswertung}
@@ -8,14 +19,25 @@
 \subsection{Konventionen und Bezeichnungen}
 Es werden in der übrigen Arbeit durchgehend die in der Hochenergiephysik
 üblichen natürliche Einheiten verwendet. Die Raumrichtungen sind ebenfalls wir
-üblich so festgelegt, dass die z-Achse parallel zum Strahl liegt.
+üblich so festgelegt, dass die $z$-Achse parallel zum Strahl gegen den
+Uhrzeigersinn, die $x$-Achse zum Zentrum des Beschleunigerringes und entsprechend
+der Rechtshändigkeit wegen die $y$-Achse nach oben gerichtet liegt. Der Nullpunkt
+des Systems ist dabei der Mittelpunkt des Detektors, der im Idealfall (der auch
+in den Simulationen angenommen wird) genau der Kollisionspunkt ist.  Dies kann
+sich aber zumindest in $z$-Richtung im langfristigen Verlauf des Experimentes
+ändern, wenn bei der Einstellung festgestellt wird, dass für etwas andere
+Kollisionspunkte der Hintergrund geringer ist. In der $xy$-Ebene sollte aber der
+Nullpunkt möglichst immer das Detektorzentrum sein.
 
-Ein in Colliderexperimenten häufig verwendetes Koordinatensystem ist das auf den
-normalen Kugelkoordinaten aufbauende $(r, \eta, \phi)$-System. Dabei werden
-$\phi$ und $r$ wie üblich als der Polarwinkel (zu dem oben angegebenen
-kartesischen System) und Betrag gewählt. Statt des Azimutwinkels $\theta$ wird
-aber die sogenannte \emph{Pseudorapidität} $\eta$ verwendet. Diese ist definiert
-als
+Die $xy$-Ebene wird im folgenden auch häufig als \emph{Transversalebene}
+bezeichnet, entsprechend ist die Strahlrichtung die Longitudinale.
+
+Ein in Beschleunigerexperimenten häufig verwendetes Koordinatensystem ist das
+auf den normalen Kugelkoordinaten aufbauende $(r, \eta, \phi)$-System.  Dabei
+werden $\phi$ und $r$ wie (in der angelsächsischen Literatur) üblich als der
+Azimutwinkel (in dem oben angegebenen kartesischen System) und Betrag gewählt.
+Statt des Polarwinkels $\theta$ wird aber die sogenannte \emph{Pseudorapidität}
+$\eta$ verwendet. Diese ist definiert als
 \begin{align}
   \eta := -\ln{\tan{\frac \theta 2}}
 \end{align}
@@ -28,7 +50,8 @@ aber für gegen die Ruhemasse des Teilchens hohe Energien annähernd gleich der
 Pseudorapidität ist.
 
 % Bezeichnung?!
-Als wichtige abgeleitete Größe erhält man den Abstand
+Als wichtige abgeleitete Größe erhält man den Abstand in der
+Polar-Pseudorapiditäts-Ebene
 \begin{align}
   \Delta R := \sqrt{\Delta\phi^2 + \Delta\eta^2}
   \label{def:dr}
