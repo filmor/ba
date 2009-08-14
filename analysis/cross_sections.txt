@@ -1,0 +1,31 @@
+[signal]
+minus = 10.7475
+plus = 18.7041
+
+[ztautau]
+Np0 = 
+Np1 = 
+Np2 = 
+Np3 = 
+Np4 = 
+Np5 = 
+
+[zmumu]
+Np0 = 900.2
+Np1 = 205.2
+Np2 = 69.4
+Np3 = 21.6
+Np4 = 6.1
+Np5 = 1.7
+
+[zee]
+Np0 = 898.2
+Np1 = 206.6
+Np2 = 72.5
+Np3 = 21.1
+Np4 = 6
+Np5 = 1.7
+
+[ttbar]
+full_had = 164.4
+lep = 201.7

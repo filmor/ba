@@ -17,12 +17,11 @@ TASKS=()
 append_task()
 {
     [ ! -e ${!#} ] && TASKS[${#TASKS[*]}]=$@
-    echo $@
 }
 
 analyze()
 {
-    ./analyze $@
+    build/default/analyze $@
 }
 
 run_task()
