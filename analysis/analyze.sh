@@ -1,6 +1,8 @@
 #!/bin/bash
 
-DIR=data/background
+DATA_DIR=data/
+BG_DIR=${DATA_DIR}/background/
+OUTPUT_DIR=output/
 
 if ! which root-config > /dev/null
 then
@@ -19,29 +21,35 @@ append_task()
     [ ! -e ${!#} ] && TASKS[${#TASKS[*]}]=$@
 }
 
-analyze()
-{
-    build/default/analyze $@
-}
-
 run_task()
 {
     task=${TASKS[$i-1]}
-    analyze $task
+    build/default/analyze $task
+}
+
+analyze()
+{
+    out=$1
+    shift
+    append_task $@ ${OUTPUT_DIR}/$out.root
+    append_task -i $@ ${OUTPUT_DIR}/${out}_no_isem.root
+    append_task -j $@ ${OUTPUT_DIR}/${out}_no_jets.root
+    append_task -z $@ ${OUTPUT_DIR}/${out}_no_zmass.root
 }
 
 for type in zmumu zee ztautau
 do
-    for dir in $DIR/$type/*
+    for dir in $BG_DIR/$type/*
     do
-        append_task $(echo $dir/*) output/${type}_$(basename $dir).root
+        analyze ${type}_$(basename $dir) $(echo $dir/*) 
     done
 done
 
-append_task $(find $DIR/ttbar | grep '\.root$' ) output/ttbar.root
+analyze ttbar_FullHad $(echo $BG_DIR/ttbar/FullHad/*.root)
+analyze ttbar_lep $(echo $BG_DIR/ttbar/{T1*/,}*.root)
 
-append_task $(echo data/new/*WmZ*.root) output/signal_minus.root
-append_task $(echo data/new/*WpZ*.root) output/signal_plus.root
+analyze signal_minus $(echo data/new/*WmZ*.root)
+analyze signal_plus $(echo data/new/*WpZ*.root)
 
 N=${#TASKS[@]}
 
