@@ -43,14 +43,14 @@ namespace ba
           (*nm##_E)[index]
 
         particle_vector leptons, jets;
-        leptons.reserve (El_N + Mu_N);
 
         // Elektronen in den Leptonenvektor eintragen
         for (int i = 0; i < El_N; ++i)
         {
             charged_particle p (PARTICLE(El, i, particle::ELECTRON));
             // Prüfe die Güte der Identifikation
-            if ((*El_IsEM)[i] & electron_identification)
+            if (!(flags_ & flags::ISEM)
+                || (*El_IsEM)[i] & electron_identification)
                 leptons.push_back (p);
         }
         
@@ -58,22 +58,34 @@ namespace ba
         for (int i = 0; i < Mu_N; ++i)
         {
             charged_particle p (PARTICLE(Mu, i, particle::MUON));
-            // Prüfe die Sicherheit der Zuordnung
-            if ((*Mu_hasCombinedMuon)[i])
-                leptons.push_back (p);
+            leptons.push_back (p);
         }
 
         for (int i = 0; i < JetC4T_N; ++i)
-            jets.push_back(charged_particle(PARTICLE(JetC4T, i, particle::UNDEFINED)));
+            jets.push_back(
+                    charged_particle(
+                        PARTICLE(JetC4T, i, particle::UNDEFINED)
+                        )
+                    );
         
-        // Alle Jets, die näher als 0.15 an einem Lepton liegen
-        // sind vermutlich von diesem gefaket.
-        filter_by_dr (jets, leptons, jets_, 0.15);
+        if (flags_ & flags::JETS)
+        {
+            // Alle Jets, die näher als 0.15 an einem Lepton liegen
+            // sind vermutlich von diesem gefaket.
+            jets_.clear ();
+            filter_by_dr (jets, leptons, jets_, 0.15);
 
-        // Alle Leptonen, die näher als 0.4 an einem Jet liegen
-        // filtern, da in Atlas Jets mit einem Radius von 0.4
-        // rekonstruiert werden
-        filter_by_dr (leptons, jets_, leptons_, 0.4);
+            // Alle Leptonen, die näher als 0.4 an einem Jet liegen
+            // filtern, da in Atlas Jets mit einem Radius von 0.4
+            // rekonstruiert werden
+            leptons_.clear ();
+            filter_by_dr (leptons, jets_, leptons_, 0.4);
+        }
+        else
+        {
+            jets_.swap (jets);
+            leptons_.swap (leptons);
+        }
 #undef PARTICLE
     }
 

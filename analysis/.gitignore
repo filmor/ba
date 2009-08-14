@@ -1,3 +1,5 @@
 .waf*
 build/
 .*.sw[po]
+output/
+background/

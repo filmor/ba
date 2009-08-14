@@ -11,21 +11,36 @@
 namespace ba
 {
 
+    /**
+     * Analyseklasse
+     */
     class analysis
     {
     public:
-        analysis (TTree& tree);
+        struct flags
+        {
+            enum
+            {
+                Z_MASS = 1 << 0, ISEM = 1 << 1, JETS = 1 << 2,
+            };
+        };
 
+        /// Konstruktor, Argument ist der zu untersuchende Baum
+        analysis (TTree& tree, int test_flags = ~0);
+
+        /// Startet die Analyseschleife
         void loop ();
 
     protected:
+        /// Initialsiert die Daten fuer Eintrag entry
         void get_entry (std::size_t entry);
-        bool good_lepton (charged_particle const&);
 
     private:
         typedef std::vector<double>* double_vp;
         typedef std::vector<int>* int_vp;
         typedef std::vector<charged_particle> particle_vector;
+
+        int flags_;
 
         /// Teilchenvektoren
         particle_vector jets_, leptons_;

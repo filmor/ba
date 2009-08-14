@@ -10,6 +10,7 @@
 #include <string>
 
 #include <TH1D.h>
+#include <TH2I.h>
 
 namespace ba
 {
@@ -58,11 +59,13 @@ namespace ba
             z_mass ("Z mass", 100, 50, 150),
             z_pt ("Z p_t", 300, 0, 200),
             l_pt ("lepton p_t", 300, 0, 200),
-            m_t ("transverse mass", 300, 0, 200),
+            m_t ("m_t", 300, 0, 200),
             delta_phi ("delta phi_WZ", 100, -4, 4),
             w_pt ("W p_t", 300, 0, 200),
             met_pt ("MET p_t", 300, 0, 200)
             ;
+
+        TH2I el_mu_count ("El Mu N", "Count;El;Mu", 5, 0, 5, 5, 0, 5);
 
 #ifndef NO_PROGRESS_BAR
         boost::progress_display show_progress(end - begin);
@@ -71,10 +74,12 @@ namespace ba
 
         for (Long64_t entry = begin; entry < end; ++entry)
         {
-#ifndef NO_PROGESS_BAR
+#ifndef NO_PROGRESS_BAR
             ++show_progress;
 #endif
             get_entry(entry); // (tree_.LoadTree(entry));
+
+            el_mu_count.Fill (El_N, Mu_N, eventWeight);
 
             // Wir benötigen genau drei Leptonen
             if (leptons_.size() != 3) continue;
@@ -122,10 +127,14 @@ namespace ba
             }
 
             // Keine anständigen Leptonen gefunden
-            // (Schnitt an delta_m wird nicht benötigt)
             if (first == leptons_.end())
                 continue;
-
+            
+            // (Schnitt an delta_m wird nicht benötigt)
+            if (flags_ & flags::Z_MASS)
+                if (delta_m < 10e3)
+                    continue;
+            
             // Z⁰
             const particle Z (particle::Z_BOSON,
                               first->momentum + second->momentum);
@@ -175,5 +184,7 @@ namespace ba
             delta_phi.fill (Z.momentum.DeltaPhi(W.momentum),
                             eventWeight);
         }
+
+        el_mu_count.Write();
     }
 }

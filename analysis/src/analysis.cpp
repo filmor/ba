@@ -5,7 +5,7 @@
 namespace ba
 {
 
-    analysis::analysis (TTree& tree)
+    analysis::analysis (TTree& tree, int test_flags)
         : tree_(tree)
         // Zeiger auf 0 setzen, damit SetBranchAddress anständig
         // funktioniert
@@ -15,6 +15,7 @@ namespace ba
         , JetC4T_charge (0), El_IsEM (0), Mu_hasCombinedMuon (0)
         // Das Gewicht mit 1 initialisieren
         , eventWeight (1.)
+        , flags_ (test_flags)
     {
         // Erstmal alle Zweige abschalten
         tree_.SetBranchStatus("*", 0);
