@@ -3,12 +3,15 @@
 \usepackage[utf8x]{inputenc}
 \usepackage{amsmath, amsthm, amssymb, amsrefs}
 \usepackage[ngerman]{babel}
-\usepackage{makeidx, graphicx, tikz, units, calc, pgfplots, fancyhdr}
-\usepackage{wrapfig, subfig, caption, booktabs, floatrow, listings, xcolor}
+\usepackage{makeidx, graphicx, tikz, units, pgfplots, fancyhdr, verbatim}
+\usepackage{wrapfig, caption, listingsutf8, xcolor}
 
 \usetikzlibrary{trees}
 \usetikzlibrary{decorations.pathmorphing}
 \usetikzlibrary{decorations.markings}
+
+\newboolean{sources}
+\setboolean{sources}{true}
 
 \pagestyle{fancy}
 \fancyhf{}
@@ -34,14 +37,35 @@
   showstringspaces=false,
   captionpos=b,
   tabsize=4,
+  numbers=left,
+  numberstyle=\footnotesize,
+  stepnumber=5,
   breaklines=true,
-  basicstyle=\ttfamily,
-  commentstyle=\color{Blue},
-  stringstyle=\color{Green},
-  keywordstyle=\color{Maroon}
+  basicstyle=\scriptsize\ttfamily,
+  inputencoding=utf8/latin1,
+  commentstyle=\color{blue},
+  stringstyle=\color{green},
+  keywordstyle=\color{red}
 }
 
+\DeclareMathSymbol{,}{\mathpunct}{letters}{"3B}
+\DeclareMathSymbol{.}{\mathord}{letters}{"3B}
+\DeclareMathSymbol{\decimal}{\mathord}{letters}{"3A}
+
+\pgfkeys{/pgf/number format/.cd,
+    fixed,
+    precision=3,
+    set thousands separator={}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{8pt}
+
+\makeindex
+
 \begin{document}
+    \begin{titlepage}
+        \date{\vspace{1cm} Universität Bonn \\ August 2009}
+    \end{titlepage}
 \maketitle
 \newpage
 \tableofcontents
@@ -57,7 +81,45 @@
 \input{analyse.tex}
 \input{ergebnisse.tex}
 
-%\section{Test des Grids mit einer einfachen Analyse}
-%\subsection{Die Analyseaufgabe}
+\begin{appendix}
+  \section{Literatur}
+  \begin{biblist}
+    \bibselect*{quellen.bib}
+  \end{biblist}
+
+  \ifsources
+  \section{Kommentierte Quelltexte}
+  \subsection{Hauptprogramm}
+    \foreach \file/\desc in {
+      analysis.hpp/Hauptanalyseklasse,
+      analysis.cpp/Implementierung des Konstruktors, 
+      filter.cpp/Implementierung der frühen Filterungen,
+      loop.cpp/Implementierung der Hauptschleife,
+      main.cpp/Hauptprogramm,
+      particle.hpp/Hilfsklassen zur Handhabung der Teilchentypen
+      }
+    {
+      \subsubsection{\file -- \desc}
+      \label{file:\file}
+      \lstinputlisting[language=C++]{analysis/src/\file}
+    }
+
+    Des Weiteren wurden im Programm der Header \verb'egammaPIDdefs.h' aus dem
+    Athena-Projekt\cite{addr:athena} für die Auswertung der Elektronenqualität
+    (zu finden im Unterverzeichnis \verb'athena') und aus
+    Boost\cite{addr:boost} die Header \verb'progress.hpp', \verb'timer.hpp' und
+    \verb'stringize.hpp' für eine nützlichere Ausgabe bzw.\ zur Vereinfachung
+    des Codes verwendet, die wiederum \verb'noncopyable.hpp' benötigen, alles zu
+    finden im Unterverzeichnis Boost.
+
+  \subsection{Auswertungen}
+    \subsubsection{analyze.py}
+    Führt das Programm auf allen relevanten Datensätzen aus und vereinigt die
+    Hintergründe sowie normiert auf die Luminosität des Signals für negative
+    W-Bosonen.
+    \lstinputlisting[language=Python]{analysis/join_background.py}
+    \fi
+
+\end{appendix}
 
 \end{document}

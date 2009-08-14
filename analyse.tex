@@ -1,11 +1,10 @@
 \section{Analyse}
 Analysiert werden soll in dieser Arbeit der Prozess, der ein W-Boson im Anfangs-
-und drei "`gute"' Leptonen (also Myonen oder Elektronen) und ein Neutrino im
+und drei gute Leptonen (also Myonen oder Elektronen) und ein Neutrino im
 Endzustand hat. Im Folgenden werden mit "`Leptonen"' immer (soweit nicht anders
 angegeben) Myonen und Elektronen gemeint sein.
 
 Für den Prozess gibt es zwei Feynman-Graphen:
-
 \begin{figure}[h!]
   \begin{minipage}{0.49\textwidth}
     \centering
@@ -20,7 +19,7 @@ Für den Prozess gibt es zwei Feynman-Graphen:
 \end{figure}
 Dabei sind mit $l$ Leptonen bezeichnet, $l$ und $\tilde l$ sind aber nicht
 zwingend vom selben Flavour. $\bar \nu_{\tilde l}$ ist das zu $\tilde l$
-gehörige Antineutrino.
+gehörige Antineutrino. Den linken Prozess nennt man 
 
 Die Leptonen sind sehr gut messbar, man kann im Detektor sowohl ihre Spur als
 auch ihre Energie bestimmen und daraus den Impuls und die Ladung errechnen.
@@ -34,9 +33,25 @@ können.
 Man kann allerdings zumindest die sogenannte \emph{transversale Masse} des
 W-Bosons bestimmen. Sie ist definiert als:
 \begin{align}
-  m_t := m^2 + p_x^2 + p_y^2
-  \label{}
+  m_t := \sqrt{m^2 + p_x^2 + p_y^2}
+  \label{def:trans}
 \end{align}
+
+Um die transversale Masse des W-Bosons zu berechnen stellen wir die Annahme auf,
+dass die gesamte fehlende Transversalenergie (Missing Energy T) zu dem Neutrino
+des Zerfalls gehört. Die fehlende Transversalenergie ergibt sich aus der
+Energieerhaltung indem die Energieanteile in allen Detektoren gerichtet aufsummiert
+werden. Die Transversalenergie des eintreffenden Pakets ist $0$, daher ist die
+fehlende Energie betragsmäßig ebenso groß wie diese Summe und zu ihr
+antiparallel.
+
+Mit folgender Formel erhalten wir dann die transversale Masse des Elektrons:
+\begin{align}
+  m_t = \sqrt{2 p_{t,\nu} p_{t,l} (1 - \cos{\Delta\phi}}
+  \label{eqn:trans}
+\end{align}
+wobei $p_{t,*}$ die transversale Impulskomponente des Neutrinos respektive des
+dritten Leptons ist.
 
 \subsection{Implementierung}
 Die Implementierung der zuvor beschriebenen Analyse wurde in C++ vorgenommen.
