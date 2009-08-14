@@ -4,11 +4,14 @@
 \usepackage{amsmath, amsthm, amssymb, amsrefs}
 \usepackage[ngerman]{babel}
 \usepackage{makeidx, graphicx, tikz, units, pgfplots, fancyhdr, verbatim}
-\usepackage{wrapfig, caption, listings, xcolor}
+\usepackage{wrapfig, caption, listingsutf8, xcolor}
 
 \usetikzlibrary{trees}
 \usetikzlibrary{decorations.pathmorphing}
 \usetikzlibrary{decorations.markings}
+
+\newboolean{sources}
+\setboolean{sources}{true}
 
 \pagestyle{fancy}
 \fancyhf{}
@@ -34,9 +37,12 @@
   showstringspaces=false,
   captionpos=b,
   tabsize=4,
+  numbers=left,
+  numberstyle=\footnotesize,
+  stepnumber=5,
   breaklines=true,
-  basicstyle=\ttfamily,
-  extendedchars=false,
+  basicstyle=\scriptsize\ttfamily,
+  inputencoding=utf8/latin1,
   commentstyle=\color{blue},
   stringstyle=\color{green},
   keywordstyle=\color{red}
@@ -81,6 +87,7 @@
     \bibselect*{quellen.bib}
   \end{biblist}
 
+  \ifsources
   \section{Kommentierte Quelltexte}
   \subsection{Hauptprogramm}
     \foreach \file/\desc in {
@@ -94,7 +101,7 @@
     {
       \subsubsection{\file -- \desc}
       \label{file:\file}
-      % \lstinputlisting[language=C++]{analysis/src/\file}
+      \lstinputlisting[language=C++]{analysis/src/\file}
     }
 
     Des Weiteren wurden im Programm der Header \verb'egammaPIDdefs.h' aus dem
@@ -110,7 +117,8 @@
     Führt das Programm auf allen relevanten Datensätzen aus und vereinigt die
     Hintergründe sowie normiert auf die Luminosität des Signals für negative
     W-Bosonen.
-    % \lstinputlisting[language=Python]{analysis/src/analyze.py}
+    \lstinputlisting[language=Python]{analysis/join_background.py}
+    \fi
 
 \end{appendix}
 
