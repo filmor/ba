@@ -1,6 +1,12 @@
 #!/usr/bin/env python
 
+# ROOT glaubt, es kann meine Parameter parsen ...
+import sys, os
+argv = sys.argv
+sys.argv = []
 from ROOT import TH1D, TH2I, TFile
+sys.argv = argv
+
 from ConfigParser import ConfigParser
 from optparse import OptionParser
 
@@ -42,8 +48,11 @@ process = options.process_type
 cross_sections = ConfigParser()
 cross_sections.read(options.cross_sections)
 
+inputs = {}
 # Parse input_files
-input_files = [ i.split(':', 1) for i in input_files ]
+for i in input_files:
+    els = os.basename(i).split('.')
+    inputs[i] = els[els.index(process)+1]
 
 # Resultierende Histogramme
 merged = dict(
@@ -51,7 +60,7 @@ merged = dict(
                 for name, i in objects.iteritems()
             )
 
-for filename, variant in input_files:
+for filename, variant in inputs.iteritems():
     cross_section = cross_sections.getfloat(process, variant)
     cross_section *= k_factor
     
