@@ -1,8 +1,8 @@
 #!/bin/bash
 
-DATA_DIR=data/
-BG_DIR=${DATA_DIR}/background/
-OUTPUT_DIR=output/
+DATA_DIR=data
+BG_DIR=${DATA_DIR}/background
+OUTPUT_DIR=output
 TESTS="isem jets zmass"
 
 if ! which root-config > /dev/null
@@ -38,23 +38,6 @@ analyze()
     done
 }
 
-normalize()
-{
-    process=$1
-    [ $# -lt 2 ] && k_factor=1.0 || k_factor=$2 ]
-
-    cmd=./normalize.py -u -t $1 -k $k_factor
-
-    prefix=$OUTPUT_DIR/${process}
-    
-    $cmd $prefix.[^.]*.root -o $OUTPUT_DIR/result.root
-
-    for t in $TESTS
-    do
-        $cmd $prefix.[^.]*.no_${t}.root -o $OUTPUT_DIR/result.${t}.root
-    done
-}
-
 for type in zmumu zee ztautau
 do
     for dir in $BG_DIR/$type/*
@@ -76,12 +59,3 @@ do
     echo -ne "Analysis $i of $N:\n..."
     run_task $i && echo -e "done\n" || echo -e "failed\n"
 done
-
-for type in zmumu zee ztautau
-do
-    normalize ${type} 1.22
-done
-
-normalize ttbar
-normalize signal.plus
-normalize signal.minus

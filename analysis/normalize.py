@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 
 # ROOT glaubt, es kann meine Parameter parsen ...
-import sys, os
+import sys
 argv = sys.argv
 sys.argv = []
 from ROOT import TH1D, TH2I, TFile
 sys.argv = argv
 
+from os.path import basename, normpath
 from ConfigParser import ConfigParser
 from optparse import OptionParser
 
@@ -15,7 +16,7 @@ objects = {
         'Z mass': (TH1D, (100, 50, 150)),
         'Z p_t': (TH1D, (300, 0, 200)),
         'lepton p_t': (TH1D, (300, 0, 200)),
-        'transverse mass': (TH1D, (300, 0, 200)),
+        'm_t': (TH1D, (300, 0, 200)),
         'delta phi_WZ': (TH1D, (100, -4, 4)),
         'W p_t': (TH1D, (300, 0, 200)),
         'MET p_t': (TH1D, (300, 0, 200)),
@@ -49,10 +50,14 @@ cross_sections = ConfigParser()
 cross_sections.read(options.cross_sections)
 
 inputs = {}
+
 # Parse input_files
 for i in input_files:
-    els = os.basename(i).split('.')
-    inputs[i] = els[els.index(process)+1]
+    try:
+        els = basename(i).split('.')
+        inputs[normpath(i)] = els[els.index(process)+1]
+    except ValueError:
+        pass
 
 # Resultierende Histogramme
 merged = dict(
@@ -67,11 +72,15 @@ for filename, variant in inputs.iteritems():
     root_file = TFile(filename)
 
     luminosity = get_count(root_file) / cross_section
+    if luminosity == 0:
+        continue
     
     factor = target_luminosity / luminosity
 
-    for name in merged:
-        merged[name].Add(root_file.Get(name), factor)
+    for name in merged.iterkeys():
+        hist = root_file.Get(name)
+        if hist:
+            merged[name].Add(hist, factor)
 
 out = TFile(options.output_file, options.update and "UPDATE" or "RECREATE")
 out.cd()

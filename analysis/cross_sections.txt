@@ -3,12 +3,12 @@ minus = 10.7475
 plus = 18.7041
 
 [ztautau]
-Np0 = 
-Np1 = 
-Np2 = 
-Np3 = 
-Np4 = 
-Np5 = 
+Np0 = 902.71
+Np1 = 209.26
+Np2 = 70.16
+Np3 = 21.07
+Np4 = 6.04
+Np5 = 1.71
 
 [zmumu]
 Np0 = 900.2
@@ -27,5 +27,5 @@ Np4 = 6
 Np5 = 1.7
 
 [ttbar]
-full_had = 164.4
+fullhad = 164.4
 lep = 201.7
