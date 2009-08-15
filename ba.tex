@@ -11,13 +11,15 @@
 \usetikzlibrary{decorations.markings}
 
 \newboolean{sources}
-\setboolean{sources}{true}
+\setboolean{sources}{false}
 
 \pagestyle{fancy}
 \fancyhf{}
 \rhead{\scriptsize Benedikt Sauer --- Datenanalyse für das ATLAS-Experiment}
 \rfoot{\thepage}
 \renewcommand{\headrulewidth}{0.1pt}
+
+\newcommand{\src}[1]{\texttt{#1}\ref{src:#1}}
 
 \author{Benedikt Christian Sauer}
 \title{Datenanalyse für das ATLAS-Experiment}
@@ -84,7 +86,7 @@
 \begin{appendix}
   \section{Literatur}
   \begin{biblist}
-    \bibselect*{quellen.bib}
+    \bibselect*{quellen.ltb}
   \end{biblist}
 
   \ifsources
@@ -100,7 +102,7 @@
       }
     {
       \subsubsection{\file -- \desc}
-      \label{file:\file}
+      \label{src:\file}
       \lstinputlisting[language=C++]{analysis/src/\file}
     }
 
@@ -113,12 +115,16 @@
     finden im Unterverzeichnis Boost.
 
   \subsection{Auswertungen}
-    \subsubsection{analyze.py}
-    Führt das Programm auf allen relevanten Datensätzen aus und vereinigt die
-    Hintergründe sowie normiert auf die Luminosität des Signals für negative
-    W-Bosonen.
-    \lstinputlisting[language=Python]{analysis/join_background.py}
-    \fi
+    \subsubsection{analyze.sh}
+    Führt das Programm auf allen relevanten Datensätzen mit verschiedenen
+    Testkonfigurationen aus.
+    \label{src:analyze.sh}
+    \lstinputlisting[language=Bash]{analysis/analyze.sh}
+
+    \subsubsection{normalize.py}
+    Vereinigt und normiert die Datensätze auf eine feste Luminosität.
+    \lstinputlisting[language=Python]{analysis/normalize.py}
+  \fi
 
 \end{appendix}
 
