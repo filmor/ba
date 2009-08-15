@@ -1,10 +1,13 @@
 \section{Analyse}
-Analysiert werden soll in dieser Arbeit der Prozess, der ein W-Boson im Anfangs-
-und drei gute Leptonen (also Myonen oder Elektronen) und ein Neutrino im
-Endzustand hat. Im Folgenden werden mit "`Leptonen"' immer (soweit nicht anders
-angegeben) Myonen und Elektronen gemeint sein.
+Analysiert werden soll in dieser Arbeit der Diboson-Prozess, der ein W-Boson im
+Anfangs- und drei gute Leptonen (also Myonen oder Elektronen) und ein Neutrino
+im Endzustand hat. Im Folgenden werden mit "`Leptonen"' immer (soweit nicht
+anders angegeben) Myonen und Elektronen gemeint sein. Ich habe die Filter
+unabhängig von denen in der Diboson-Note vorgeschlagenen
+Parametern\cite{diboson-ana} ermittelt, werde aber im Abschluss noch mit diesen
+vergleichen.
 
-Für den Prozess gibt es zwei Feynman-Graphen:
+Für diesen Prozess existieren in erster Ordnung zwei Feynman-Diagramme:
 \begin{figure}[h!]
   \begin{minipage}{0.49\textwidth}
     \centering
@@ -19,15 +22,19 @@ Für den Prozess gibt es zwei Feynman-Graphen:
 \end{figure}
 Dabei sind mit $l$ Leptonen bezeichnet, $l$ und $\tilde l$ sind aber nicht
 zwingend vom selben Flavour. $\bar \nu_{\tilde l}$ ist das zu $\tilde l$
-gehörige Antineutrino. Den linken Prozess nennt man 
+gehörige Antineutrino. Den linken Prozess nennt man den s-Kanal, während der
+rechte t-Kanal genannt wird. Besonders die Kopplung dreier Eichbosonen
+(TGC, \emph{triple gauge coupling}) soll auf Anomalien untersucht werden.
+Allgemein dient die Analyse der Beobachtung elektroschwacher Kopplungen bei sehr
+hohen Energien.
 
-Die Leptonen sind sehr gut messbar, man kann im Detektor sowohl ihre Spur als
-auch ihre Energie bestimmen und daraus den Impuls und die Ladung errechnen.
-Problematisch ist dagegen das Neutrino, da Neutrinos nur mit großem Aufwand
-überhaupt experimentell nachweisbar sind\cite{needed} kann über die Energie und
-den Impuls des in diesem Zerfall auftretenden keine Aussage gemacht werden,
-weshalb entsprechend auch keine über die auftretenden W-Bosonen getroffen werden
-können.
+Die Leptonen des Endzustandes sind sehr gut messbar, man kann im Detektor sowohl
+ihre Spur als auch ihre Energie bestimmen und daraus den Impuls und die Ladung
+errechnen.  Problematisch ist dagegen das Neutrino, da Neutrinos nur mit großem
+Aufwand überhaupt experimentell nachweisbar sind\cite{needed} kann über die
+Energie und den Impuls des in diesem Zerfall auftretenden keine Aussage gemacht
+werden, weshalb entsprechend auch keine über die auftretenden W-Bosonen
+getroffen werden können.
 
 \label{cha:met}
 Man kann allerdings zumindest die sogenannte \emph{transversale Masse} des
@@ -40,18 +47,48 @@ W-Bosons bestimmen. Sie ist definiert als:
 Um die transversale Masse des W-Bosons zu berechnen stellen wir die Annahme auf,
 dass die gesamte fehlende Transversalenergie (Missing Energy T) zu dem Neutrino
 des Zerfalls gehört. Die fehlende Transversalenergie ergibt sich aus der
-Energieerhaltung indem die Energieanteile in allen Detektoren gerichtet aufsummiert
-werden. Die Transversalenergie des eintreffenden Pakets ist $0$, daher ist die
-fehlende Energie betragsmäßig ebenso groß wie diese Summe und zu ihr
-antiparallel.
+Energieerhaltung indem die Energieanteile in allen Detektoren gerichtet
+aufsummiert werden. Die Transversalenergie des eintreffenden Pakets ist $0$,
+daher ist die fehlende Energie betragsmäßig ebenso groß wie diese Summe und zu
+ihr antiparallel.
 
-Mit folgender Formel erhalten wir dann die transversale Masse des Elektrons:
+Mit folgender Formel erhalten wir dann die transversale Masse des W-Bosons: 
 \begin{align}
-  m_t = \sqrt{2 p_{t,\nu} p_{t,l} (1 - \cos{\Delta\phi}}
+  m_t = \sqrt{2 p_{t,\nu}\; p_{t,l} (1 - \cos{\Delta\phi})}
   \label{eqn:trans}
 \end{align}
 wobei $p_{t,*}$ die transversale Impulskomponente des Neutrinos respektive des
 dritten Leptons ist.
+
+% Jets erklären
+
+\subsection{Hintergrundprozesse}
+Die relevanten Hintergründe für diesen Prozess sind $Z\to\tau\tau + X$, $Z\to e
+e + X$, $Z\to\mu\mu$ sowie $t\bar{t}$. Ein Hintergrundprozess zeichnet sich
+dadurch aus, dass er die wichtigen Hauptannahmen der Analyse erfüllt, nämlich
+dass es es genau drei Leptonen gibt wovon zwei gegensätzliche Ladung und
+gleichen Flavour haben. Bei den $Z\to l l$-Prozessen bedeutet das, dass das
+dritte Lepton fehlerhaft erkannt werden muss bzw.\ im Fall der Tauonen so
+zerstrahlt, dass genau ein leichteres Lepton gemessen wird.
+
+
+Die ersten drei entsprechen dabei dem
+Feynmandiagramm
+\begin{figure}[h!]
+  \begin{center}
+%    \input{grafiken/feynman_3.tikz}
+  \end{center}
+\end{figure}
+wobei $l \in {e,\mu,\tau}$. 
+
+%ttbar
+Der Prozess mit einem Top- und einem Antitop-Quark \dots
+
+Prozesse mit nur einem leichten Lepton im Endzustand wie leptonische Zerfälle
+von W-Bosonen sind mit der Überlegung, dass in diesem Fall sogar zwei Leptonen
+gefaket werden müssten (und der stichprobenartigen Untersuchung) nicht von
+größerer Bedeutung und werden in die weitere Hintergrundbehandlung nicht
+eingehen.
 
 \subsection{Implementierung}
 Die Implementierung der zuvor beschriebenen Analyse wurde in C++ vorgenommen.
@@ -60,40 +97,33 @@ an die von ROOT automatisch mit \lstinline!MakeClass! zu den Samples erstellte
 Klasse an, wurde aber aus Geschwindigkeitsgründen stark zurechtgestutzt.
 
 In der loop-Methode wird für jeden Eintrag im Datensample folgender Algorithmus
-benutzt:
+benutzt (die Tests sind weiter unten näher beschrieben):
 \begin{description}
   \item[Initialisierung] Die benötigten Jets, Elektronen und Myonen
-    initialisiert, wobei die Leptonen direkt in diesem Schritt nach Ladung und
-    Jet-Nähe gefiltert werden. Konkret werden Leptonen mit Ladung 0 und solche
-    mit einem $\Delta R < 0.4$ zu irgendeinem Jet aussortiert. Letzteres ist
-    % Genauer!
-    deshalb sinnvoll, weil Jets in ATLAS mit einem $\Delta R$ von $0.4$
-    rekonstruiert werden.
-
-    Weitere gute Filter wären zum Beispiel: $El_isEM$ für Elektronen, mit
-    richtigen Flags, leider nicht vorhanden $Mu_matchChi2$ gibt die statistische
-    Unsicherheit des Matches an, sollte klein sein
+    initialisiert und direkt mit den vorhandenen Informationen gefiltert.
 
     Von nun an sind mit "`Leptonen"' diese gefilterten Elektronen und Myonen
     gemeint.
 
   \item[Teste Leptonenzahl] Das Ereignis kann nur echt sein, wenn genau drei
     Leptonen gemessen wurden. Dabei werden die bereits herausgefilterten
-    ("`falschen"') Leptonen natürlich nicht mehr berücksichtigt.
+    ("`falschen"') Leptonen natürlich nicht mehr berücksichtigt
     
   \item[Rekonstruiere die W- und Z-Bosonen] Aus den vorhanden Leptonen wird nun
     ein paar selber Art (SF, same flavour) und gegensätzlicher Ladung gesucht.
     Addiert man die Viererimpulse der beiden Ladungen so kann man die Masse aus
     dem sich ergebenden Viererimpuls ablesen. Gibt es mehrere solcher Paare, so
     wird das verwendet, dessen Masse den geringsten Abstand zur echten Z-Masse
-    hat.
+    von $\unit[91.1876 \pm 0.0021]{GeV}$\cite{pdg-booklet} aufweist.
+
+    Anhand dieser Massendifferenz wird dann wiederum gefiltert um den
+    $t\bar{t}$-Hintergrund zu reduzieren.
 
     Danach wird das übrige Lepton zusammen mit der fehlenden
-    Transversalenergie (\ref{cha:met}) zu einem W-Kandidaten verrechnet.
+    Transversalenergie (\ref{cha:conv}) zu einem W-Kandidaten verrechnet.
 
   \item[Übertragung der Daten in Histogramme] Zuletzt werden die interessanten
-    Größen in die Histogramme eingetragen. Betrachtet wurden hier
-
+    Größen in die Histogramme eingetragen. Die betrachteten Größen waren:
     \begin{description}
       \item[Z-Masse]
       \item[Transversale Impulse] der Z- und W-Bosonen, des übrigen Elektrons
@@ -103,3 +133,106 @@ benutzt:
     \end{description}
 \end{description}
 
+Das Hauptprogramm nimmt eine (im Rahmen der verfügbaren Ressourcen und
+technischen Grenzen) beliebige Anzahl von ROOT-Dateien als Eingabe sowie
+gegebenenfalls Schalter für die Filter entgegen, prozessiert diese mit dem oben
+angegebenen Verfahren und schreibt die erstellten Histogramme in die ebenfalls
+zu übergebene Ausgabedatei.
+
+Um den Vorgang der Erstellung der Hintergrund- und Signalhistogramme zu
+automatisiseren habe ich die dazugehörigen Schritte in ein Skript
+zusammengeschrieben (\verb'analyze.sh', siehe \ref{src:analyze.sh}). In einem
+zusätzlichen, in diesem verwendeten Skript werden die Daten auf eine feste
+Luminosität normiert, damit sie vergleichbar sind, da sich die
+Wirkungsquerschnitte zum Teil stark unterscheiden (\verb'normalize.py', siehe
+\ref{src:normalize.py}).
+
+\subsection{Vorauswahl}
+Eine (wichtige) Vorauswahl der später zu verarbeitenden Daten wird in der
+Methode \lstinline'get_entry' aus \src{filter.cpp} getroffen. In dieser werden
+zunächst die Daten mit der ROOT-Funktion \lstinline'GetEntry' für den
+übergebenen Eintrag geladen und danach die Vektoren \lstinline'jets_' und
+\lstinline'leptons_' initialisiert, die in den darauffolgenden Schritten
+verwendet werden.
+
+Zunächst werden alle Leptonen mit einer Ladung von $0$ ignoriert.
+% Erklären. Photonen?
+
+Eine weitere Vorauswahl die getroffen werden könnte wäre mit der Variable
+\lstinline'Mu_hasCombinedMuon', die angibt, ob das entsprechende Myon sowohl im
+inneren als auch im äußeren Detektor eine Spur hat. Da dies aber für praktisch
+jedes Muon in den Samples gegeben ist, eignet sich diese Auswahl nicht
+besonderes um die Qualität zu steigern.
+
+Was dagegen tatsächlich zu sichtbaren Ergebnissen führt ist die Variable
+\lstinline'El_IsEM', für jedes Elektron Flags enthält, die Aussagen über die
+Güte der Zuordnung macht. Das Problem bei der Zuordnung besteht darin, dass in
+sehr vielen Detektoren die Photonenspuren denen des Elektrons gleichen und somit
+falsch als Elektron gemessen werden. Die genauen Möglichkeiten dafür müssen
+nicht bekannt sein, es genügt aus dem Header \texttt{egammaPIDdefs.h} eine der
+vordefinierten Masken zu wählen. In diesem Programm wird die
+\lstinline'Medium'-Variante verwendet, da mit der auch vorhandenen
+\lstinline'Tight'-Version das Signal zu stark reduziert ohne gegen irgendeinen
+Untergrund zu helfen.
+
+% bla
+% Code
+
+Die zweite getroffene Vorauswahl betrifft die Jets. Zum ersten ist bekannt, dass
+jedes Elektron auch einen Jet hervorruft, da beides im elektromagnetischen
+Kaloriemeter detektiert wird. Die Myonen dagegen werden erst in den speziellen
+Myonendetektoren aufgenommen. Da wir die Jets im folgenden Arbeitsschritt
+benötigen, werden diese also zunächst über ihren Abstand zu den Elektronenspuren
+gefiltert. Gilt
+\begin{align}
+  \Delta R_{\text{Jet},e} < 0.15
+\end{align}
+so nehmen wir an, dass der Jet das Elektron ist (\emph{overlap}) und lassen ihn
+nicht in die weitere Bearbeitung eingehen.
+
+% Welche Mesonenart?!
+Bei den Hadronenzerfällen im Jet (insbesondere beim Zerfall von B-Mesonen)
+werden Elektronen erzeugt, die allerdings naturgemäß nicht weit von dem Jet
+entfernt detektiert werden können. In dieser Analyse wird die Grenze
+\begin{align}
+  \Delta R = 0.4
+\end{align}
+verwendet. Dies entspricht genau dem $\Delta R$, mit dem in ATLAS Jets
+rekonstruiert werden\cite{jet-recon}, daher die Wahl. Ist also ein Lepton näher
+als $0.4$ in der $(\phi, \eta)$-Ebene an einem Jet, so wird es verworfen.
+
+% Code
+
+\subsection{Rekonstruktion der Bosonen}
+Nachdem nun die Leptonen gefiltert wurden betrachten wir zunächst ihre Anzahl.
+Für Zahlen $< 3$ gelingt die Rekonstruktion des $W$-Bosons nicht, da uns zu
+wenig Informationen zur Verfügung stehen, ist sie $> 3$ ist nicht klar, welches
+übrige Lepton tatsächlich beiträgt. Da wir außerdem zuvor bereits Elektronen
+anhand der Güte ihrer Zuordnung gefiltert haben und Myonenzuordnungen generell
+sehr genau sind (siehe \cite{myon-zuordnung}), sollte dieser Fall für den echten
+Prozess nicht auftreten. Deshalb filtern wir scharf auf $\text{Leptonenzahl} =
+3$. Aufgrund der beschriebenen Probleme ist es auch nicht möglich, das Programm
+ohne diesen Test auszuführen. Um dennoch zu verdeutlichen, wieviel Hintergrund
+damit bereits herausfällt sind hier die Histogramme, bei denen die
+Elektronenanzahl gegen die Myonenanzahl aufgetragen ist dargestellt, wobei die
+Blöcke mit einer Gesamtleptonenzahl von 3 farblich hervorgehoben sind.
+
+Im nächsten Schritt wird ein Paar mit gegensätzlicher Ladung und gleichem
+Flavour gesucht. Existieren zwei solcher Paare, so wird immer das genommen,
+dessen Masse näher an der bekannten $Z$-Masse liegt.
+
+% code
+
+\subsubsection{Schnitt an der $Z$-Masse}
+Mit der aus dem vorigen Schritt bekannten minimalen Differenz zur $Z$-Masse kann
+nun ein Großteil des $t\bar{t}$-Untergrundes herausgeschnitten werden. Man sieht
+in dem Histogramm, dass die "`$Z$-Masse"' für diesen Hintergrund sehr breit ist
+während sie für Prozesse, die tatsächlich ein $Z$ enthalten sehr schmal ist. Ich
+habe für diese Analyse (nach etwas Ausprobieren) den Schnitt mit
+\begin{align}
+  \Delta m = \unit[10]{GeV}
+\end{align}
+gewählt. Dieser lässt das Signal praktisch unbehelligt (Ereignisse, deren
+$Z$-Masse außerhalb dieses Bereiches liegen wurden wohl eh falsch analysiert),
+schneidet aber etwa $\frac{3}{4}$ des $t\bar{t}$-Untergrundes weg, wie in den
+foglenden Histogrammen zu sehen ist.
