@@ -132,7 +132,7 @@ namespace ba
             
             // (Schnitt an delta_m wird nicht benötigt)
             if (flags_ & flags::Z_MASS)
-                if (delta_m < 10e3)
+                if (delta_m > 10e3)
                     continue;
             
             // Z⁰

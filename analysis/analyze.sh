@@ -55,6 +55,6 @@ N=${#TASKS[@]}
 
 for (( i = 1; i <= $N; i++))
 do
-    echo -ne "Task $i of $N:\n\t$task\n..."
+    echo -ne "Task $i of $N:\n..."
     run_task $i && echo -e "done\n" || echo -e "failed\n"
 done
