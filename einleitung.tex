@@ -10,12 +10,29 @@ wird dann noch kurz der Blick auf weitere mögliche Filtermethoden und die
 Ausführung des Programms im Grid gerichtet.
 
 \subsection{Das ATLAS-Experiment}
+\hyphenation{Ha-dro-nen-spei-cher-ring}
 Das ATLAS-Experiment ist eines der großen Experimente am Großen
-Hadronen-Speicherring (LHC, \emph{Large Hadron Collider}).
+Hadronenspeicherring (LHC, \emph{Large Hadron Collider}). Im (für diese Arbeit
+relevanten) Protonenmodus werden in der Maschine Protonen in verschiedenen
+Beschleunigungsstufen schließlich in gegenläufigen Vakuumröhren auf eine
+Schwerpunktsenergie von $\sqrt{s} = \unit[14]{TeV}$ beschleunigt und dann an
+definierten Kreuzungspunkten zur Kollision gebracht.  Dabei entsteht eine große
+Anzahl zu detektierender Teilchen (siehe \ref{cha:aufnahme}) aus deren Energien,
+Impulsen und Ladungen man auf die Zwischenprodukte schließen kann.
 
-Um dies möglichst genau messen zu können wurden folgende Designentscheidungen
-für ATLAS getroffen\cite{atlas-tp} (siehe auch Abschnitt \ref{cha:conv} für die
-Bezeichungen):
+Im Experiment soll vor allem der Hauptfrage nach der Existenz des
+Higgs-Bosons nachgegangen werden, allerdings sollen auch weitere Bereiche der
+Physik untersucht werden. Zum Beispiel ist der LHC der erste Beschleuniger, der
+ausreichend Top-Quarks für genauere Untersuchungen liefern kann. Auch B-Physik
+(also Physik zu Beauty- bzw.\ Bottom-Quarks) ist mit ihm möglich.
+
+Abgesehen davon ist aber auch von Interesse, ob und wenn ja welche Anomalien der
+elektroschwachen Wechselwirkung bei solch hohen Energien auftreten können (siehe
+dazu Abschnitt \ref{cha:analyse}).
+
+Um die auftretenden Teilchen möglichst genau messen zu können wurden folgende
+Designentscheidungen für ATLAS getroffen\cite{atlas-tp} (siehe auch Abschnitt
+\ref{cha:conv} für die Bezeichungen):
 \begin{itemize}
   \item Sehr gute elektromagnetische Kaloriemetrie zur genauen Messung von
     Photonen und Elektronenenenergie
@@ -26,8 +43,12 @@ Bezeichungen):
 \end{itemize}
 
 \subsubsection{Datenaufnahme}
-\subsubsection{Datenauswertung}
+\label{cha:aufnahme}
+Die Datenaufnahme erfolgt über verschiedene Klassen von Detektoren
 \subsubsection{Datenanalyse}
+Die Analyse soll schließlich im LHC Grid erfolgen. Dies ist ein Zusammenschluss
+verschiedener Cluster, auf denen die Analyseprogramme (wie das in dieser Arbeit
+entwickelte) ausgeführt werden.
 
 \subsection{Konventionen und Bezeichnungen}
 \label{cha:conv}
@@ -70,3 +91,7 @@ Polar-Pseudorapiditäts-Ebene
   \Delta R := \sqrt{\Delta\phi^2 + \Delta\eta^2}
   \label{def:dr}
 \end{align}
+
+Wenn im Folgenden (insbesondere im Implementierungsteil) vom Addieren von
+Teilchen die Rede ist, so ist die Addition ihrer Viererimpulse und Ladungen
+gemeint.
