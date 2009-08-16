@@ -1,4 +1,5 @@
 \section{Analyse}
+\label{cha:analyse}
 Analysiert werden soll in dieser Arbeit der Diboson-Prozess, der ein W-Boson im
 Anfangs- und drei gute Leptonen (also Myonen oder Elektronen) und ein Neutrino
 im Endzustand hat. Im Folgenden werden mit "`Leptonen"' immer (soweit nicht
@@ -61,6 +62,9 @@ wobei $p_{t,*}$ die transversale Impulskomponente des Neutrinos respektive des
 dritten Leptons ist.
 
 % Jets erklären
+
+Die in diesem und dem darauffolgenden Abschnitt dargestellten Histogramme sind
+auf eine Luminosität von $\unit[2000]{fb^{-1}}$ normiert.
 
 \subsection{Hintergrundprozesse}
 Die relevanten Hintergründe für diesen Prozess sind $Z\to\tau\tau + X$, $Z\to e
@@ -217,6 +221,7 @@ damit bereits herausfällt sind hier die Histogramme, bei denen die
 Elektronenanzahl gegen die Myonenanzahl aufgetragen ist dargestellt, wobei die
 Blöcke mit einer Gesamtleptonenzahl von 3 farblich hervorgehoben sind.
 
+\subsubsection{Rekonstruktion des $Z$-Bosons}
 Im nächsten Schritt wird ein Paar mit gegensätzlicher Ladung und gleichem
 Flavour gesucht. Existieren zwei solcher Paare, so wird immer das genommen,
 dessen Masse näher an der bekannten $Z$-Masse liegt.
@@ -235,4 +240,48 @@ habe für diese Analyse (nach etwas Ausprobieren) den Schnitt mit
 gewählt. Dieser lässt das Signal praktisch unbehelligt (Ereignisse, deren
 $Z$-Masse außerhalb dieses Bereiches liegen wurden wohl eh falsch analysiert),
 schneidet aber etwa $\frac{3}{4}$ des $t\bar{t}$-Untergrundes weg, wie in den
-foglenden Histogrammen zu sehen ist.
+folgenden Histogrammen zu sehen ist.
+
+% hist
+
+\subsubsection{Schnitt an dem Transversalimpuls des dritten Leptons}
+
+\subsubsection{Rekonstruktion des $W$-Bosons}
+Für die (teilweise) Rekonstruktion des $W$-Bosons nehmen wir an, dass das
+Neutrino aus dem Zerfall komplett die fehlende Transversalenergie ausmacht. Da
+wir zu dieser auch entsprechende $x$- und $y$-Impulse zur Verfügung haben können
+wir ein Pseudoteilchen mit diesen konstruieren. Dieses addieren wir zu dem
+vorhandenen dritten Lepton.
+
+Da allerdings die Longitudinalkomponenten des fehlenden Energie naturgemäß nicht
+verfügbar sind, führt die Methode \lstinline'Mt()' der in \lstinline'particle'
+verwendeten Klasse \lstinline'TLorentzVector' nicht zum gewünschten Ergebnis.
+Stattdessen verwenden wir die alternative Formel (siehe \ref{eqn:mt}) für die
+Bestimmung der transversalen Masse:
+% Code
+
+\subsection{Zusammenführung der Daten}
+\label{cha:normierung}
+Um die oben beschriebenen Schnitte zu finden und zu testen mussten die Daten
+vereinigt werden. Die Hintergründe der $Z\to ll + X$-Klasse standen dabei mit
+verschiedenen $X$, also verschiedenen Anzahlen von Jets zur Verfügung, deren
+Prozesse alle einen unterschiedlichen Wirkungsquerschnitt aufweisen. Desweiteren
+musste die Anzahl der Ereignisse berücksichtigt werden um dann schließlich die
+Luminosität zu erhalten.
+
+\begin{table}
+  \centering
+%  \begin{tabular}{<+dimensions+>}
+%    <++>
+%  \end{tabular}
+  \caption{Wirkungsquerschnitte der Hintergründe}
+  \label{tab:wqs}
+\end{table}
+
+Die Luminosität muss je nach Prozess noch mit einem $k$-Faktor korrigiert
+werden.
+% Entstehung, ref
+
+Ist die Luminosität bestimmt, so kann der Normierungsfaktor ausgerechnet werden
+und die Histogramme können entsprechend aufsummiert werden. Diese werden dann in
+eine gemeinsame Datei pro Testkonfiguration eingetragen.
