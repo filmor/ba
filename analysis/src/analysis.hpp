@@ -21,7 +21,7 @@ namespace ba
         {
             enum
             {
-                Z_MASS = 1 << 0, ISEM = 1 << 1, JETS = 1 << 2,
+                Z_MASS = 1 << 0, ISEM = 1 << 1, JETS = 1 << 2, L_PT = 1 << 3,
             };
         };
 
