@@ -3,7 +3,7 @@
 DATA_DIR=data
 BG_DIR=${DATA_DIR}/background
 OUTPUT_DIR=output
-TESTS="isem jets zmass"
+TESTS="isem jets zmass lpt"
 
 normalize()
 {

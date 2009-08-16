@@ -20,6 +20,7 @@ static argp_option options[] = {
     {"disable-jets-test", 'j', 0, 0, "Disable Jet-dependent tests"},
     {"disable-isem-test", 'i', 0, 0, "Disable IsEM tests"},
     {"disable-zmass-test", 'z', 0, 0, "Disable Z mass test"},
+    {"disable-lpt-test", 'p', 0, 0, "Disable Lepton p_t test"},
     { 0 }
 };
 
@@ -43,6 +44,7 @@ static error_t parse_opt (int key, char* arg, struct argp_state* state)
         FLAG('j', JETS);
         FLAG('i', ISEM);
         FLAG('z', Z_MASS);
+        FLAG('p', L_PT);
 #undef FLAG
 
     case ARGP_KEY_ARG:

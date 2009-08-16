@@ -130,7 +130,7 @@ namespace ba
             if (first == leptons_.end())
                 continue;
             
-            // (Schnitt an delta_m wird nicht benötigt)
+            // Schnitt an der Z Masse (gegen ttbar)
             if (flags_ & flags::Z_MASS)
                 if (delta_m > 10e3)
                     continue;
@@ -155,6 +155,12 @@ namespace ba
                             - (second - leptons_.begin())
                             ]
                 ;
+
+
+            // Schnitt am pt des Leptons (gegen Zll+X)
+            if (flags_ & flags::L_PT)
+                if (l.momentum.Pt() < 20e3)
+                    continue;
             
             // W-Boson als Summe aus dem übrigen Lepton und der Fehlenergie
             const charged_particle W (
