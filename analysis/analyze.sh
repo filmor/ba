@@ -31,7 +31,7 @@ analyze()
 {
     out=${OUTPUT_DIR}/$1
     shift
-    append_task $@ $out.root
+    append_task $@ ${out}.normal.root
     for t in $TESTS
     do
         append_task --disable-${t}-test $@ ${out}.no_${t}.root

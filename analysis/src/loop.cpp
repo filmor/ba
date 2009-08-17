@@ -44,15 +44,7 @@ namespace ba
 
     void analysis::loop()
     {
-        Long64_t begin = 0;
-        Long64_t end = tree_.GetEntries();
-
-        // Weil's nicht anders anständig geht wird die Anzahl der
-        // verarbeiteten Ereignisse (wie auf der ROOT-Mailing-Liste
-        // empfohlen) in der UniqueID eines TObject gespeichert
-        TObject count;
-        count.SetUniqueID (end - begin);
-        count.Write ("count");
+        const Long64_t n_entries = tree_.GetEntries();
 
         // Histogramme initialisieren
         histogram
@@ -61,6 +53,8 @@ namespace ba
             l_pt ("lepton p_t", 300, 0, 200),
             m_t ("m_t", 300, 0, 200),
             delta_phi ("delta phi_WZ", 100, -4, 4),
+            w_phi ("phi_W", 100, -4, 4),
+            z_phi ("phi_Z", 100, -4, 4),
             w_pt ("W p_t", 300, 0, 200),
             met_pt ("MET p_t", 300, 0, 200)
             ;
@@ -68,16 +62,21 @@ namespace ba
         TH2I el_mu_count ("El Mu N", "Count;El;Mu", 5, 0, 5, 5, 0, 5);
 
 #ifndef NO_PROGRESS_BAR
-        boost::progress_display show_progress(end - begin);
+        boost::progress_display show_progress(n_entries);
         boost::progress_timer timer;
 #endif
 
-        for (Long64_t entry = begin; entry < end; ++entry)
+        int count = 0;
+        for (Long64_t entry = 0; entry < n_entries; ++entry)
         {
 #ifndef NO_PROGRESS_BAR
             ++show_progress;
 #endif
             get_entry(entry); // (tree_.LoadTree(entry));
+
+            // Ist eventWeight vorhanden, so ist die Anzahl fuer die
+            // integrierte Luminositaet eine andere
+            count += (eventWeight < 0.0 ? -1 : +1);
 
             el_mu_count.Fill (El_N, Mu_N, eventWeight);
 
@@ -159,7 +158,7 @@ namespace ba
 
             // Schnitt am pt des Leptons (gegen Zll+X)
             if (flags_ & flags::L_PT)
-                if (l.momentum.Pt() < 20e3)
+                if (l.momentum.Pt() < 25e3)
                     continue;
             
             // W-Boson als Summe aus dem übrigen Lepton und der Fehlenergie
@@ -189,7 +188,16 @@ namespace ba
             // Winkel zwischen W* und Z⁰
             delta_phi.fill (Z.momentum.DeltaPhi(W.momentum),
                             eventWeight);
+            w_phi.fill (W.momentum.Phi(), eventWeight);
+            z_phi.fill (Z.momentum.Phi(), eventWeight);
         }
+
+        // Weil's nicht anders anständig geht wird die Anzahl der
+        // verarbeiteten Ereignisse (wie auf der ROOT-Mailing-Liste
+        // empfohlen) in der UniqueID eines TObject gespeichert
+        TObject count_obj;
+        count_obj.SetUniqueID (count);
+        count_obj.Write ("count");
 
         el_mu_count.Write();
     }
