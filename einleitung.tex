@@ -1,20 +1,20 @@
 \section{Einführung}
-Diese Arbeit soll die Vorgänge zur Analyse eines Prozesses in der
-Hochenergiephysik speziell am Beispiel des ATLAS-Experimentes beschreiben.  Dazu
-wird zunächst in dieser Einleitung etwas auf das Experiment selbst, die
-Datenaufnahme und -auswertung und die Konventionen eingegangen und im Folgenden
-der zu untersuchende Prozess sowie der Grundaufbau der Analyse besprochen.
-Danach wird dann auf die genaue Implementierung mit ROOT eingegangen und sich
-mit dem Vorgehen zur Filterung des Untergrundes auseinandergesetzt. Abschließend
-wird dann noch kurz der Blick auf weitere mögliche Filtermethoden und die
-Ausführung des Programms im Grid gerichtet.
+Diese Arbeit beschreibt das Vorgehen zur Erstellung der Analyse eines Prozesses
+in der Hochenergiephysik speziell am Beispiel des ATLAS-Experimentes
+beschreiben. Dazu wird zunächst in dieser Einleitung etwas auf das Experiment
+selbst, die Datenaufnahme und -auswertung und die Konventionen eingegangen und
+im Folgenden der zu untersuchende Prozess sowie der Grundaufbau der Analyse
+besprochen.  Danach wird dann die genaue Implementierung mit ROOT ausgeführt und
+sich mit dem Vorgehen zur Filterung des Untergrundes auseinandergesetzt.
+Abschließend wird dann noch kurz der Blick auf weitere mögliche Filtermethoden
+und die Ausführung des Programms im Grid gerichtet.
 
 \subsection{Das ATLAS-Experiment}
 \hyphenation{Ha-dro-nen-spei-cher-ring}
 Das ATLAS-Experiment ist eines der großen Experimente am Großen
 Hadronenspeicherring (LHC, \emph{Large Hadron Collider}). Im (für diese Arbeit
 relevanten) Protonenmodus werden in der Maschine Protonen in verschiedenen
-Beschleunigungsstufen schließlich in gegenläufigen Vakuumröhren auf eine
+Beschleunigungsstufen in zuletzt gegenläufigen Vakuumröhren auf eine
 Schwerpunktsenergie von bis zu $\sqrt{s} = \unit[14]{TeV}$ beschleunigt und dann
 an definierten Kreuzungspunkten zur Kollision gebracht (die in dieser Arbeit
 verwendeten Samples wurden allerdings für eine Schwerpunktsenergie von $\sqrt s
@@ -22,18 +22,20 @@ verwendeten Samples wurden allerdings für eine Schwerpunktsenergie von $\sqrt s
 Teilchen (siehe \ref{cha:aufnahme}) aus deren Energien, Impulsen und Ladungen
 man auf die Zwischenprodukte schließen kann.
 
-Im Experiment soll vor allem der Hauptfrage nach der Existenz des
+In dem Experiment soll vor allem der Hauptfrage nach der Existenz des
 Higgs-Bosons nachgegangen werden, allerdings sollen auch weitere Bereiche der
 Physik untersucht werden. Zum Beispiel ist der LHC der erste Beschleuniger, der
-ausreichend Top-Quarks für genauere Untersuchungen liefern kann. Auch B-Physik
-(also Physik zu Beauty- bzw.\ Bottom-Quarks) ist mit ihm möglich.
+ausreichend Top-Quarks für genauere Untersuchungen liefern kann. Auch die
+Untersuchung der Physik von Beauty- bzw.\ Bottom-Quarks (B-Physik) ist mit ihm
+möglich.
 
 Abgesehen davon ist aber auch von Interesse, ob und wenn ja welche Anomalien der
 elektroschwachen Wechselwirkung bei solch hohen Energien auftreten können (siehe
 dazu Abschnitt \ref{cha:analyse}).
 
-Um die auftretenden Teilchen möglichst genau messen zu können wurden folgende
-Designentscheidungen für ATLAS getroffen\cite{atlas-tp} (siehe auch Abschnitt
+Um die auftretenden Teilchen möglichst genau im Hinblick auf Ladung, Impuls und
+Art vermessen zu können wurden folgende Designentscheidungen für ATLAS
+getroffen\cite{atlas-tp} (siehe auch Abschnitt
 \ref{cha:conv} für die Bezeichungen):
 \begin{itemize}
   \item Sehr gute elektromagnetische Kaloriemetrie zur genauen Messung von
@@ -72,16 +74,17 @@ Storage-Elementen gespeichert und \dots
 \subsection{Konventionen und Bezeichnungen}
 \label{cha:conv}
 Es werden in der übrigen Arbeit durchgehend die in der Hochenergiephysik
-üblichen natürliche Einheiten verwendet. Die Raumrichtungen sind ebenfalls wir
+üblichen, natürlichen Einheiten verwendet. Die Raumrichtungen sind ebenfalls wir
 üblich so festgelegt, dass die $z$-Achse parallel zum Strahl gegen den
-Uhrzeigersinn, die $x$-Achse zum Zentrum des Beschleunigerringes und entsprechend
-der Rechtshändigkeit wegen die $y$-Achse nach oben gerichtet liegt. Der Nullpunkt
-des Systems ist dabei der Mittelpunkt des Detektors, der im Idealfall (der auch
-in den Simulationen angenommen wird) genau der Kollisionspunkt ist.  Dies kann
-sich aber zumindest in $z$-Richtung im langfristigen Verlauf des Experimentes
-ändern, wenn bei der Einstellung festgestellt wird, dass für etwas andere
-Kollisionspunkte der Hintergrund geringer ist. In der $xy$-Ebene sollte aber der
-Nullpunkt möglichst immer das Detektorzentrum sein.
+Uhrzeigersinn, die $x$-Achse zum Zentrum des Beschleunigerringes und
+entsprechend der Rechtshändigkeit wegen die $y$-Achse nach oben gerichtet liegt.
+Der Nullpunkt des Systems ist dabei der Mittelpunkt des Detektors, der im
+Idealfall, welcher in den Simulationen angenommen wird, genau der
+Kollisionspunkt ist.  Dies kann sich aber zumindest in $z$-Richtung im
+langfristigen Verlauf des Experimentes ändern, wenn bei der Einstellung
+festgestellt wird, dass für etwas andere Kollisionspunkte der Hintergrund
+geringer ist. In der $xy$-Ebene sollte aber der Nullpunkt möglichst immer das
+Detektorzentrum sein.
 
 Die $xy$-Ebene wird im folgenden auch häufig als \emph{Transversalebene}
 bezeichnet, entsprechend ist die Strahlrichtung die Longitudinale.
@@ -95,17 +98,14 @@ $\eta$ verwendet. Diese ist definiert als
 \begin{align}
   \eta := -\ln{\tan{\frac \theta 2}}
 \end{align}
-Der Vorteil dieser Definition ist, dass ein differentielle Wirkungsquerschnitt:
-
-
+Der Vorteil dieser Definition ist, dass ein differentieller Wirkungsquerschnitt
 bezüglich der Pseudorapidität im Gegensatz zum Azimutwinkel (annähernd)
 invariant unter Boosts entlang der z-Achse ist.  Tatsächlich invariant ist der
 differentielle Wirkungsquerschnitt bezüglich der Rapidität ($y := \frac12
-\frac{E + p_L}{E - p_L}$, wobei $p_L = p_z$ der Longitudinalimpuls ist), die
-aber für gegen die Ruhemasse des Teilchens hohe Energien annähernd gleich der
-Pseudorapidität ist.
+\frac{E + p_L}{E - p_L}$, wobei $p_L = p_z$ der Longitudinalimpuls ist). Diese
+ist aber für Energien, die gegen die Ruhemasse des Teilchens groß sind,
+annähernd gleich der Pseudorapidität ist.
 
-% Bezeichnung?!
 Als wichtige abgeleitete Größe erhält man den Abstand in der
 Polar-Pseudorapiditäts-Ebene
 \begin{align}
@@ -116,3 +116,5 @@ Polar-Pseudorapiditäts-Ebene
 Wenn im Folgenden (insbesondere im Implementierungsteil) vom Addieren von
 Teilchen die Rede ist, so ist die Addition ihrer Viererimpulse und Ladungen
 gemeint.
+
+% Luminosität

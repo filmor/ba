@@ -1,10 +1,11 @@
 \documentclass[a4paper,oneside]{scrartcl}
 
 \usepackage[utf8x]{inputenc}
-\usepackage{amsmath, amsthm, amssymb, amsrefs}
+\usepackage{amsmath, amsthm, amssymb, amsrefs, booktabs}
+\usepackage[scale=0.8]{geometry}
 \usepackage[ngerman]{babel}
 \usepackage{makeidx, graphicx, tikz, units, gnuplot-lua-tikz, fancyhdr, verbatim}
-\usepackage{wrapfig, caption, listingsutf8, xcolor}
+\usepackage{wrapfig, caption, listingsutf8, xcolor, xspace}
 
 \usetikzlibrary{trees}
 \usetikzlibrary{decorations.pathmorphing}
@@ -15,14 +16,12 @@
 
 \pagestyle{fancy}
 \fancyhf{}
-\rhead{\scriptsize Benedikt Sauer --- Datenanalyse für das ATLAS-Experiment}
+\rhead{\scriptsize Benedikt Sauer -- Datenanalyse für das ATLAS-Experiment}
 \rfoot{\thepage}
 \renewcommand{\headrulewidth}{0.1pt}
 
 \newcommand{\src}[1]{\texttt{#1}\ref{src:#1}}
 
-\author{Benedikt Christian Sauer}
-\title{Datenanalyse für das ATLAS-Experiment}
 
 \tikzset{
     electroweak/.style={dashed, draw=red},
@@ -63,17 +62,38 @@
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{8pt}
 
-\newcommand{\Z}{\ensuremath{Z^0}}
+\newcommand{\Z}{\ensuremath{Z^0\xspace}}
 
 \makeindex
 
+\author{Benedikt Christian Sauer}
+\title{Datenanalyse für das ATLAS-Experiment}
+
 \begin{document}
-    \begin{titlepage}
-        \date{\vspace{1cm} Universität Bonn \\ August 2009}
-    \end{titlepage}
-\maketitle
+\begin{titlepage}
+  \begin{center}
+    \vspace{12cm}
+    \Huge{\bf\textsf{Datenanalyse für das ATLAS-Experiment}} \\
+    \vspace{2cm}
+    \Large Bachelorarbeit im Fach Physik \\
+    \vspace{1cm}
+    \normalsize angefertigt am Physikalischen Institut von \\
+    \vspace{1cm}
+    \large{\bf Benedikt Christian Sauer} \\
+    \vspace{2cm}
+    \normalsize vorgelegt der Mathematisch-Naturwissenschaftlichen Fakultät der Universität
+    Bonn \\
+    \vspace{1cm}
+    \large August 2009
+  \end{center}
+\end{titlepage}
 \newpage
 \tableofcontents
+\vspace{4cm}
+\begin{center}
+  \large 1.\ Gutachter: Klaus Desch \\
+  \large 2.\ Gutachter: Peter Wienemann
+\end{center}
 \newpage
 %\subsection{Das Grid}
 %\subsubsection{Grid-Frameworks}
@@ -92,7 +112,6 @@
     \bibselect*{quellen.ltb}
   \end{biblist}
 
-  \ifsources
   \section{Kommentierte Quelltexte}
   \subsection{Hauptprogramm}
     \foreach \file/\desc in {
@@ -106,7 +125,9 @@
     {
       \subsubsection{\file -- \desc}
       \label{src:\file}
-      \lstinputlisting[language=C++]{analysis/src/\file}
+      \ifsources
+        \lstinputlisting[language=C++]{analysis/src/\file}
+      \fi
     }
 
     Des Weiteren wurden im Programm der Header \verb'egammaPIDdefs.h' aus dem
@@ -122,17 +143,21 @@
     Führt das Programm auf allen relevanten Datensätzen mit verschiedenen
     Testkonfigurationen aus.
     \label{src:analyze.sh}
-    \lstinputlisting[language=Bash]{analysis/analyze.sh}
+    \ifsources
+      \lstinputlisting[language=Bash]{analysis/analyze.sh}
+    \fi
 
     \subsubsection{normalize.py}
+    \label{src:normalize.py}
     Vereinigt und normiert die Datensätze auf eine feste Luminosität.
-    \lstinputlisting[language=Python]{analysis/normalize.py}
-  \fi
+    \ifsources
+      \lstinputlisting[language=Python]{analysis/normalize.py}
+    \fi
 
 \end{appendix}
 
 \newpage
-\Large{Ich versichere, dass ich diese Arbeit selbständig verfasst und keine
+\huge{Ich versichere, dass ich diese Arbeit selbstständig verfasst und keine
 anderen als die angegebenen Quellen und Hilfsmittel benutzt sowie die Zitate
 kenntlich gemacht habe.}
 

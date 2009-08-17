@@ -29,5 +29,5 @@ do
     normalize ${type} 1.22
 done
 
-normalize ttbar
+normalize ttbar 1.06
 normalize signal
