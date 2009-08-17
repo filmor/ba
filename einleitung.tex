@@ -15,10 +15,12 @@ Das ATLAS-Experiment ist eines der großen Experimente am Großen
 Hadronenspeicherring (LHC, \emph{Large Hadron Collider}). Im (für diese Arbeit
 relevanten) Protonenmodus werden in der Maschine Protonen in verschiedenen
 Beschleunigungsstufen schließlich in gegenläufigen Vakuumröhren auf eine
-Schwerpunktsenergie von $\sqrt{s} = \unit[14]{TeV}$ beschleunigt und dann an
-definierten Kreuzungspunkten zur Kollision gebracht.  Dabei entsteht eine große
-Anzahl zu detektierender Teilchen (siehe \ref{cha:aufnahme}) aus deren Energien,
-Impulsen und Ladungen man auf die Zwischenprodukte schließen kann.
+Schwerpunktsenergie von bis zu $\sqrt{s} = \unit[14]{TeV}$ beschleunigt und dann
+an definierten Kreuzungspunkten zur Kollision gebracht (die in dieser Arbeit
+verwendeten Samples wurden allerdings für eine Schwerpunktsenergie von $\sqrt s
+= \unit[10]{TeV}$ erzeugt). Dabei entsteht eine große Anzahl zu detektierender
+Teilchen (siehe \ref{cha:aufnahme}) aus deren Energien, Impulsen und Ladungen
+man auf die Zwischenprodukte schließen kann.
 
 Im Experiment soll vor allem der Hauptfrage nach der Existenz des
 Higgs-Bosons nachgegangen werden, allerdings sollen auch weitere Bereiche der
@@ -44,7 +46,22 @@ Designentscheidungen für ATLAS getroffen\cite{atlas-tp} (siehe auch Abschnitt
 
 \subsubsection{Datenaufnahme}
 \label{cha:aufnahme}
-Die Datenaufnahme erfolgt über verschiedene Klassen von Detektoren
+Die Datenaufnahme erfolgt (sehr grob) über drei verschiedene Klassen von
+Detektoren.
+
+\subsection{Spursystem}
+Die innerste Schicht des Detektors wird von Siliziumpixeldetektoren ausgemacht.
+
+\subsection{Kaloriemeter}
+% hadronisches und elektromagnetisches Kaloriemeter,
+% Elektronen/Photonen-Schauer, e⁺ + e⁻ -> gamma und zurück
+
+Für diese Analyse werden vier wichtige Sätze von Messdaten benötigt:
+\begin{description}
+  \item[Elektronen] % Energie, Impuls, Ladung, Tagging
+  \item[Myonen] % Energie, Impuls, Ladung, spezielle Myonenkammer
+  \item[Teilchenjets] % Energie
+\end{description}
 \subsubsection{Datenanalyse}
 Die Analyse soll schließlich im LHC Grid erfolgen. Dies ist ein Zusammenschluss
 verschiedener Cluster, auf denen die Analyseprogramme (wie das in dieser Arbeit
@@ -78,7 +95,9 @@ $\eta$ verwendet. Diese ist definiert als
 \begin{align}
   \eta := -\ln{\tan{\frac \theta 2}}
 \end{align}
-Der Vorteil dieser Definition ist, dass ein differentielle Wirkungsquerschnitt
+Der Vorteil dieser Definition ist, dass ein differentielle Wirkungsquerschnitt:
+
+
 bezüglich der Pseudorapidität im Gegensatz zum Azimutwinkel (annähernd)
 invariant unter Boosts entlang der z-Achse ist.  Tatsächlich invariant ist der
 differentielle Wirkungsquerschnitt bezüglich der Rapidität ($y := \frac12

@@ -3,7 +3,7 @@
 \usepackage[utf8x]{inputenc}
 \usepackage{amsmath, amsthm, amssymb, amsrefs}
 \usepackage[ngerman]{babel}
-\usepackage{makeidx, graphicx, tikz, units, pgfplots, fancyhdr, verbatim}
+\usepackage{makeidx, graphicx, tikz, units, gnuplot-lua-tikz, fancyhdr, verbatim}
 \usepackage{wrapfig, caption, listingsutf8, xcolor}
 
 \usetikzlibrary{trees}
@@ -26,6 +26,7 @@
 
 \tikzset{
     electroweak/.style={dashed, draw=red},
+    gamma/.style={decorate, decoration={snake}, draw=red},
     positive/.style={postaction={decorate},
             decoration={markings,mark=at position .55 with {\arrow{<}}}},
     negative/.style={postaction={decorate},
@@ -54,13 +55,15 @@
 \DeclareMathSymbol{.}{\mathord}{letters}{"3B}
 \DeclareMathSymbol{\decimal}{\mathord}{letters}{"3A}
 
-\pgfkeys{/pgf/number format/.cd,
-    fixed,
-    precision=3,
-    set thousands separator={}}
+%\pgfkeys{/pgf/number format/.cd,
+%    fixed,
+%    precision=3,
+%    set thousands separator={}}
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{8pt}
+
+\newcommand{\Z}{\ensuremath{Z^0}}
 
 \makeindex
 
@@ -127,5 +130,10 @@
   \fi
 
 \end{appendix}
+
+\newpage
+\Large{Ich versichere, dass ich diese Arbeit selbständig verfasst und keine
+anderen als die angegebenen Quellen und Hilfsmittel benutzt sowie die Zitate
+kenntlich gemacht habe.}
 
 \end{document}

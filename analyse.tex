@@ -1,14 +1,13 @@
 \section{Analyse}
 \label{cha:analyse}
 Analysiert werden soll in dieser Arbeit der Diboson-Prozess, der ein W-Boson im
-Anfangs- und drei gute Leptonen (also Myonen oder Elektronen) und ein Neutrino
-im Endzustand hat. Im Folgenden werden mit "`Leptonen"' immer (soweit nicht
-anders angegeben) Myonen und Elektronen gemeint sein. Ich habe die Filter
-unabhängig von denen in der Diboson-Note vorgeschlagenen
-Parametern\cite{diboson-ana} ermittelt, werde aber im Abschluss noch mit diesen
-vergleichen.
+Anfangs- und drei Myonen oder Elektronen und ein Neutrino im Endzustand hat. Im
+Folgenden werden mit "`Leptonen"' immer (soweit nicht anders angegeben) Myonen
+und Elektronen gemeint sein. Ich habe die Filter unabhängig von denen in der
+Diboson-Note vorgeschlagenen Parametern\cite{diboson-ana} ermittelt, werde aber
+im Abschluss noch mit diesen vergleichen.
 
-Für diesen Prozess existieren in erster Ordnung zwei Feynman-Diagramme:
+Für diesen Prozess existieren in führender Ordnung zwei Feynman-Diagramme:
 \begin{figure}[h!]
   \begin{minipage}{0.49\textwidth}
     \centering
@@ -65,11 +64,11 @@ Die in diesem und dem darauffolgenden Abschnitt dargestellten Histogramme sind
 auf eine Luminosität von $\unit[2000]{fb^{-1}}$ normiert.
 
 \subsection{Hintergrundprozesse}
-Die relevanten Hintergründe für diesen Prozess sind $Z\to\tau\tau + X$, $Z\to e
-e + X$, $Z\to\mu\mu$ sowie $t\bar{t}$. Ein Hintergrundprozess zeichnet sich
+Die relevanten Hintergründe für diesen Prozess sind $\Z\to\tau\tau + X$, $\Z\to e
+e + X$, $\Z\to\mu\mu$ sowie $t\bar{t}$. Ein Hintergrundprozess zeichnet sich
 dadurch aus, dass er die wichtigen Hauptannahmen der Analyse erfüllt, nämlich
 dass es es genau drei Leptonen gibt wovon zwei gegensätzliche Ladung und
-gleichen Flavour haben. Bei den $Z\to l l$-Prozessen bedeutet das, dass das
+gleichen Flavour haben. Bei den $\Z\to l l$-Prozessen bedeutet das, dass das
 dritte Lepton fehlerhaft erkannt werden muss bzw.\ im Fall der Tauonen so
 zerstrahlt, dass genau ein leichteres Lepton gemessen wird.
 
@@ -150,8 +149,8 @@ zu übergebene Ausgabedatei.
 Um den Vorgang der Erstellung der Hintergrund- und Signalhistogramme zu
 automatisiseren habe ich die dazugehörigen Schritte in ein Skript
 zusammengeschrieben (\verb'analyze.sh', siehe \ref{src:analyze.sh}). In einem
-zusätzlichen, in diesem verwendeten Skript werden die Daten auf eine feste
-Luminosität normiert, damit sie vergleichbar sind, da sich die
+zusätzlichen Skript, dass in \verb'analyze.sh' verwendet wird, werden die Daten
+auf eine feste Luminosität normiert, damit sie vergleichbar sind, da sich die
 Wirkungsquerschnitte zum Teil stark unterscheiden (\verb'normalize.py', siehe
 \ref{src:normalize.py}).
 
@@ -184,7 +183,6 @@ vordefinierten Masken zu wählen. In diesem Programm wird die
 Untergrund zu helfen.
 
 % bla
-% Code
 
 Die zweite getroffene Vorauswahl betrifft die Jets. Zum ersten ist bekannt, dass
 jedes Elektron auch einen Jet hervorruft, da beides im elektromagnetischen
@@ -209,8 +207,6 @@ verwendet. Dies entspricht genau dem $\Delta R$, mit dem in ATLAS Jets
 rekonstruiert werden\cite{jet-recon}, daher die Wahl. Ist also ein Lepton näher
 als $0.4$ in der $(\phi, \eta)$-Ebene an einem Jet, so wird es verworfen.
 
-% Code
-
 \subsection{Rekonstruktion der Bosonen}
 Nachdem nun die Leptonen gefiltert wurden betrachten wir zunächst ihre Anzahl.
 Für Zahlen $< 3$ gelingt die Rekonstruktion des $W$-Bosons nicht, da uns zu
@@ -225,30 +221,87 @@ damit bereits herausfällt sind hier die Histogramme, bei denen die
 Elektronenanzahl gegen die Myonenanzahl aufgetragen ist dargestellt, wobei die
 Blöcke mit einer Gesamtleptonenzahl von 3 farblich hervorgehoben sind.
 
-\subsubsection{Rekonstruktion des $Z$-Bosons}
-Im nächsten Schritt wird ein Paar mit gegensätzlicher Ladung und gleichem
-Flavour gesucht. Existieren zwei solcher Paare, so wird immer das genommen,
-dessen Masse näher an der bekannten $Z$-Masse liegt.
+\subsubsection{Rekonstruktion des \Z-Bosons}
+Im nächsten Schritt wird ein Paar von Leptonen mit gegensätzlicher Ladung und
+gleichem Flavour gesucht. Existieren zwei solcher Paare, so wird immer das
+genommen, dessen Masse näher an der bekannten \Z-Masse liegt. Dies funktioniert
+auch sehr gut, wie in Abbildung \ref{fig:signal_zmasse} für das Signal zu sehen
+ist.
+\begin{figure}[h]
+  \begin{center}
+    \input{grafiken/signal/zmass.tikz}
+  \end{center}
+  \caption{Masse des rekonstruierten \Z-Bosons}
+  \label{fig:signal_zmasse}
+\end{figure}
 
-% code
+Die leichte Asymmetrie im Graphen kommt von einem Hintergrundprozess, der
+ebenfalls zwei Leptonen erzeugt und nicht direkt von dem Signal eines
+leptonischen \Z-Zerfalls unterscheidbar ist, dem sogenannten
+\textsc{Drell}-\textsc{Yan}-Prozess. Dieser hat das folgende Feynmandiagramm:
+\begin{figure}[h!]
+  \begin{center}
+    \input{grafiken/feynman_drellyan.tikz}
+  \end{center}
+  \caption{Feynmandiagramm des \textsc{Drell}-\textsc{Yan}-Prozesses}
+  \label{fig:drellyan}
+\end{figure}
+Dabei sind $h_1$ und $h_2$ zwei beliebige Hadronen, von denen jeweils ein Quark
+bzw.\ das zugehörige Antiquark abgehen, $\tilde{h}$ die Hadronen ohne diese
+Quarks und $l^\pm$ zwei Leptonen gleichen Flavours. Die beiden Quarks
+annihilieren sich zu einem Photon, das dann wiederum ein Lepton/Antilepton-Paar
+erzeugt. Dieser Prozess hat einen in etwa exponentiellen Abfall und wäre somit
+eigentlich deutlich stärker im Spektrum zu sehen, wenn dieses nicht im Generator
+abgeschnitten würde. Im Histogramm ist deutlich zu erkennen, dass dies wohl etwa
+im Bereich von $\unit[75]{GeV}$ geschieht, da dort die Anzahl recht steil auf
+das Niveau auf der anderen Seite der Resonanz abfällt.
 
-\subsubsection{Schnitt an der $Z$-Masse}
-Mit der aus dem vorigen Schritt bekannten minimalen Differenz zur $Z$-Masse kann
+\subsubsection{Schnitt an der \Z-Masse}
+Mit der aus dem vorigen Schritt bekannten minimalen Differenz zur \Z-Masse kann
 nun ein Großteil des $t\bar{t}$-Untergrundes herausgeschnitten werden. Man sieht
-in dem Histogramm, dass die "`$Z$-Masse"' für diesen Hintergrund sehr breit ist
-während sie für Prozesse, die tatsächlich ein $Z$ enthalten sehr schmal ist. Ich
+in dem Histogramm, dass die "`\Z-Masse"' für diesen Hintergrund sehr breit ist
+während sie für Prozesse, die tatsächlich ein \Z enthalten sehr schmal ist. Ich
 habe für diese Analyse (nach etwas Ausprobieren) den Schnitt mit
 \begin{align}
   \Delta m = \unit[10]{GeV}
 \end{align}
 gewählt. Dieser lässt das Signal praktisch unbehelligt (Ereignisse, deren
-$Z$-Masse außerhalb dieses Bereiches liegen wurden wohl eh falsch analysiert),
+\Z-Masse außerhalb dieses Bereiches liegen wurden wohl eh falsch analysiert),
 schneidet aber etwa $\frac{3}{4}$ des $t\bar{t}$-Untergrundes weg, wie in den
 folgenden Histogrammen zu sehen ist.
 
+\begin{figure}[htbp]
+  \begin{center}
+    \input{grafiken/ztautau/zmass_vs_no_zmass.tikz}
+    \input{grafiken/ttbar/zmass_vs_no_zmass.tikz}
+    \input{grafiken/signal/zmass_vs_no_zmass.tikz}
+  \end{center}
+  \caption{}
+  \label{fig:<+label+>}
+\end{figure}
+
+Darin ist 
 % hist
 
+Außerdem fällt auch der $\Z \to \tau\tau$-Hintergrund in diesem Schritt weg, da
+für diesen die Leptonen, die das \Z ausmachen nicht rekonstruiert werden.  Die
+Tauonen zerfallen in über $\unit[36]{\%}$ der Fälle in ein Tau-Neutrino bzw.\
+-Antineutrino sowie ein Elektron (oder Myon) mit entsprechendem Neutrino und
+entsprechender Ladung. Das \Z wie es hier rekonstruiert wird hat aber nur dann
+einen halbwegs korrekten Impuls (und entsprechend korrekte Masse), wenn das
+Lepton fast die gesamte Energie aufnehmen würde.
+
 \subsubsection{Schnitt an dem Transversalimpuls des dritten Leptons}
+Um die übrigen $\Z\to ll$-Hintergründe, bei denen die \Z-Bosonen korrekt
+rekonstruiert werden können (also bei $l\in {\mu, e}$) herauszufiltern schneiden
+wir an dem Transversalimpuls des dritten Leptons. Für die $\Z\to ll$-Prozesse
+muss dieses gefaket sein, fällt also entweder bereits in der Vorauswahl weg oder
+hat einen relativ geringen Transversalimpuls:
+%hist Zmumu, Zee l p_t nach vorauswahl und z-masse
+
+In dieser Analyse wurde die Grenze bei $p_t = \unit[25]{GeV}$ gewählt. Damit
+wird ein sehr großer Teil des Untergrundes herausgeschnitten und das Signal
+bleibt dennoch groß.
 
 \subsubsection{Rekonstruktion des $W$-Bosons}
 Für die (teilweise) Rekonstruktion des $W$-Bosons nehmen wir an, dass das
@@ -267,7 +320,7 @@ Bestimmung der transversalen Masse:
 \subsection{Zusammenführung der Daten}
 \label{cha:normierung}
 Um die oben beschriebenen Schnitte zu finden und zu testen mussten die Daten
-vereinigt werden. Die Hintergründe der $Z\to ll + X$-Klasse standen dabei mit
+vereinigt werden. Die Hintergründe der $\Z\to ll + X$-Klasse standen dabei mit
 verschiedenen $X$, also verschiedenen Anzahlen von Jets zur Verfügung, deren
 Prozesse alle einen unterschiedlichen Wirkungsquerschnitt aufweisen. Desweiteren
 musste die Anzahl der Ereignisse berücksichtigt werden um dann schließlich die
@@ -283,7 +336,7 @@ Luminosität zu erhalten.
 \end{table}
 
 Die Luminosität muss je nach Prozess noch mit einem $k$-Faktor korrigiert
-werden.
+werden. Diesen benötigt man, da man in den 
 % Entstehung, ref
 
 Ist die Luminosität bestimmt, so kann der Normierungsfaktor ausgerechnet werden
