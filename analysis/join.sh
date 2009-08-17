@@ -15,7 +15,7 @@ normalize()
 
     prefix=$OUTPUT_DIR/${process}
     
-    $cmd $prefix.[^.]*.root -o $OUTPUT_DIR/result.root
+    $cmd $prefix.[^.]*.normal.root -o $OUTPUT_DIR/result.normal.root
 
     for t in $TESTS
     do
