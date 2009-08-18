@@ -1,0 +1,43 @@
+\begin{tikzpicture}[
+  level/.style={level distance=1.5cm},
+  level 2/.style={sibling distance=2.2cm},
+  level 3/.style={sibling distance=1.5cm}
+  ]
+  \coordinate
+    child[grow=left] {
+      child {
+        child[grow=left] {
+          node {$h_1$}  
+          edge from parent [particle]
+        }
+        child[grow=right] {
+          node {$\tilde{h}_1$}
+          edge from parent [particle]
+        }
+        edge from parent [positive, particle]
+      }
+      child {
+        child[grow=left] {
+          node {$h_2$}
+          edge from parent [particle]
+        }
+        child[grow=right] {
+          node {$\tilde{h}_2$}
+          edge from parent [particle]
+        }
+        edge from parent [negative, particle]
+      }
+      edge from parent [gamma]
+      node [below=3pt] {$\gamma$}
+    }
+    child[grow=right, level distance=0pt] {
+      child {
+        node {$l^+$}
+        edge from parent [negative, particle]
+      }
+      child {
+        node {$l^-$}
+        edge from parent [positive, particle]
+      }
+    };
+\end{tikzpicture}
