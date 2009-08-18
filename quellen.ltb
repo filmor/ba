@@ -1,2 +1,45 @@
-% http://pdg.lbl.gov/2005/reviews/kinemarpp.pdf
-% https://twiki.cern.ch/twiki/bin/view/AtlasProtected/TopReferences10TeV#Event_weights
+
+\bib{atlas-tp}{book}{
+    title={ATLAS Technical Design Report},
+    subtitle={Overview, System and Combined Performance},
+    pages={3-30},
+    volume={I},
+    author={I. Hinchliffe},
+    author={P. Eerola},
+    year={1999}
+}
+
+\bib{diboson-ana}{report}{
+    publisher={European Laboratory for Particle Physics (CERN)},
+    number={CERN-OPEN-2008-020},
+    author={The ATLAS Collaboration},
+    title={Diboson Physics Studies},
+    year={2009},
+    pages={8--10}
+}
+
+\bib{pdg-booklet}{article}{
+    author={C. Amsler et al. (Particle Data Group)},
+    journal={Physics Letters},
+    year={2009},
+    number={B667},
+}
+
+\bib{10tev}{misc}{
+    title={TopReferences10TeV},
+    date={2009-8},
+    note={https://twiki.cern.ch/twiki/bin/view/AtlasProtected/TopReferences10TeV},
+}
+
+\bib{transv}{article}{
+    title={Kinematics},
+    author={J.D. Jackson},
+    publisher={Particle Data Group},
+    date={2004},
+    note={http://pdg.lbl.gov/2005/reviews/kinemarpp.pdf},
+}
+
+\bib{addr:boost}{misc}{
+    note={http://www.boost.org},
+}
+

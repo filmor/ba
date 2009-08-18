@@ -68,15 +68,17 @@
 
 \makeindex
 
+\newcommand{\mytitle}{Analyse von Di-Boson-Ereignissen mit leptonischen
+Endzuständen am ATLAS-Experiment}
+
 \author{Benedikt Christian Sauer}
-\title{Datenanalyse für das ATLAS-Experiment}
+\title{\mytitle}
 
 \begin{document}
 \begin{titlepage}
   \begin{center}
-    \vspace{12cm}
-    \Huge{\bf\textsf{Datenanalyse für das ATLAS-Experiment}} \\
-    \vspace{2cm}
+    \Huge{\bf\textsf{\mytitle}} \\
+    \vspace{3cm}
     \Large Bachelorarbeit im Fach Physik \\
     \vspace{1cm}
     \normalsize angefertigt am Physikalischen Institut von \\
@@ -95,6 +97,9 @@
 \begin{center}
   \large 1.\ Gutachter: Klaus Desch \\
   \large 2.\ Gutachter: Peter Wienemann
+  \vfill
+%  \textit{\Large Gedankt sei meinen Bürokollegen Detlef und Robert, dem
+%  Drei-Büros-weiter-Kollegen Till und Lena für ihre tatkräftige Unterstützung}
 \end{center}
 \newpage
 %\subsection{Das Grid}
@@ -111,7 +116,7 @@
 \begin{appendix}
   \section{Literatur}
   \begin{biblist}
-    \bibselect*{quellen.ltb}
+    \bibselect*{quellen}
   \end{biblist}
 
   \section{Kommentierte Quelltexte}
@@ -132,13 +137,13 @@
       \fi
     }
 
-    Des Weiteren wurden im Programm der Header \verb'egammaPIDdefs.h' aus dem
-    Athena-Projekt\cite{addr:athena} für die Auswertung der Elektronenqualität
-    (zu finden im Unterverzeichnis \verb'athena') und aus
-    Boost\cite{addr:boost} die Header \verb'progress.hpp', \verb'timer.hpp' und
-    \verb'stringize.hpp' für eine nützlichere Ausgabe bzw.\ zur Vereinfachung
-    des Codes verwendet, die wiederum \verb'noncopyable.hpp' benötigen, alles zu
-    finden im Unterverzeichnis Boost.
+    Desweiteren wurden im Programm der Header \verb'egammaPIDdefs.h' aus dem
+    Athena-Projekt für die Auswertung der Elektronenqualität (zu finden im
+    Unterverzeichnis \verb'athena') und aus Boost\cite{addr:boost} die Header
+    \verb'progress.hpp', \verb'timer.hpp' und \verb'stringize.hpp' für eine
+    nützlichere Ausgabe bzw.\ zur Vereinfachung des Codes verwendet, die
+    wiederum \verb'noncopyable.hpp' benötigen, alles zu finden im
+    Unterverzeichnis Boost.
 
   \subsection{Auswertungen}
     \subsubsection{analyze.sh}
@@ -149,13 +154,16 @@
       \lstinputlisting[language=Bash]{analysis/analyze.sh}
     \fi
 
-    \subsubsection{normalize.py}
-    \label{src:normalize.py}
+    \subsubsection{join.sh}
+    \label{src:join.sh}
     Vereinigt und normiert die Datensätze auf eine feste Luminosität.
     \ifsources
+      \lstinputlisting[language=Bash]{analysis/join.sh}
       \lstinputlisting[language=Python]{analysis/normalize.py}
     \fi
-
+  \section*{Weitere verwendete Hilfsmittel}
+  Es wurden desweiteren die Programme gnuplot, Latex sowie ein Skript, das aus
+  den ROOT-Dateien für gnuplot lesbare ASCII-Dateien erstellt benutzt.
 \end{appendix}
 
 \newpage

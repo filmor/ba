@@ -18,19 +18,19 @@ in der Analyse nicht unterscheidbar sind: \\
 Dabei sind mit $l$ Leptonen bezeichnet, $l$ und $\tilde l$ sind aber nicht
 zwingend vom selben Flavour. $\bar \nu_{\tilde l}$ ist das zu $\tilde l$
 gehörige Antineutrino. Den linken Prozess nennt man den s-Kanal, während der
-rechte t-Kanal genannt wird. Besonders die Kopplung dreier Eichbosonen
-(TGC, \emph{triple gauge coupling}) soll auf Anomalien untersucht werden.
-Allgemein dient die Analyse der Beobachtung elektroschwacher Kopplungen bei sehr
-hohen Energien.
+rechte t-Kanal genannt wird. Besonders die Kopplung dreier Eichbosonen (TGC,
+\emph{triple gauge coupling}) soll auf Anomalien untersucht werden.  Allgemein
+dient die Analyse der Beobachtung elektroschwacher Kopplungen bei sehr hohen
+Energien.
 
 Die Leptonen des Endzustandes sind sehr gut messbar, man kann im Detektor sowohl
 ihre Spur als auch ihre Energie bestimmen und daraus den Impuls und die Ladung
 errechnen.
 
 Problematisch ist dagegen das Neutrino. Da Neutrinos nur mit großem Aufwand
-überhaupt experimentell nachweisbar sind\cite{needed} kann über die Energie und
-den Impuls des in diesem Zerfall auftretenden keine Aussage gemacht werden.
-Daher können entsprechend auch keine Aussagen über die auftretenden $W$-Bosonen
+überhaupt experimentell nachweisbar sind kann über die Energie und den Impuls
+des in diesem Zerfall auftretenden keine Aussage gemacht werden.  Daher können
+entsprechend auch nur wenige Aussagen über die auftretenden $W$-Bosonen
 getroffen werden.
 
 \label{cha:met}
@@ -68,17 +68,17 @@ Die relevanten Hintergründe für diesen Prozess sind $\Z\to\tau\tau + X$, $\Z\t
 e e + X$, $\Z\to\mu\mu$ sowie $t\bar{t}$. Ein Hintergrundprozess zeichnet sich
 dadurch aus, dass er die wichtigen Hauptannahmen der Analyse erfüllt, nämlich
 dass es genau drei Leptonen gibt wovon zwei gegensätzliche Ladung und gleichen
-Flavour haben. Bei den $\Z\to ll$-Prozessen bedeutet das, dass das ein drittes
+Flavour haben. Bei den $\Z\to ll$-Prozessen bedeutet das, dass ein drittes
 Lepton fehlerhaft erkannt ("`gefaket"') werden muss.
 
 Das $X$ steht jeweils für eine Anzahl von Hadronenjets. Gehören zu diesen Jets
-zum Beispiel B-Mesonen, so zerfallen diese über den Kanal $\dots$ zu leichten
-Leptonen, die dann wiederum gemessen werden und möglicherweise dem Prozess
-zugeordnet werden.
+zum Beispiel B-Mesonen, so zerfallen diese über den Kanal $b\bar{b}\to e\nu D$
+zu leichten Leptonen, die dann wiederum gemessen werden und möglicherweise dem
+Prozess zugeordnet werden.
 
 Der $t\bar{t}$-Prozess ist die Wechselwirkung zwischen zwei Topquarks. Ein
-Zerfallskanal wäre beispielsweise $t\bar t\to ll\nu\nu bb$ wobei aus den
-Bottom-Quarks ein B-Meson entstehen kann, welches dann weiter zu $e\nu D$
+Zerfallskanal wäre beispielsweise $t\bar t\to l^+l^-\nu\nu b\bar{b}$ wobei aus
+den Bottom-Quarks ein B-Meson entstehen kann, welches dann weiter zu $e\nu D$
 zerfällt. Das Elektron aus diesem Zerfall würde dann das benötigte dritte Lepton
 ausmachen.
 
@@ -99,7 +99,8 @@ In der loop-Methode wird für jeden Eintrag im Datensample folgender Algorithmus
 benutzt (die Tests sind weiter unten näher beschrieben):
 \begin{description}
   \item[Initialisierung] Die benötigten Jets, Elektronen und Myonen werden
-    initialisiert und direkt mit den vorhandenen Informationen gefiltert.
+    initialisiert und direkt mit den vorhandenen Informationen gefiltert (siehe
+    Abschnitt \ref{cha:vorauswahl}).
 
     Von nun an sind mit "`Leptonen"' diese gefilterten Elektronen und Myonen
     gemeint.
@@ -110,10 +111,10 @@ benutzt (die Tests sind weiter unten näher beschrieben):
     
   \item[Rekonstruiere die W- und Z-Bosonen] Aus den vorhanden Leptonen wird nun
     ein paar selber Art (SF, same flavour) und gegensätzlicher Ladung gesucht.
-    Addiert man die Viererimpulse der beiden Ladungen, so kann man die Masse aus
+    Addiert man die Viererimpulse der beiden Leptonen, so kann man die Masse aus
     dem sich ergebenden Viererimpuls ablesen. Gibt es mehrere solcher Paare, so
     wird das verwendet, dessen Masse den geringsten Abstand zur echten Z-Masse
-    von $\unit[91.1876 \pm 0.0021]{GeV}$\cite{pdg-booklet} aufweist.
+    von $\unit[(91.1876 \pm 0.0021)]{GeV}$\cite{pdg-booklet} aufweist.
 
     Anhand dieser Massendifferenz wird dann wiederum gefiltert um den
     $t\bar{t}$-Hintergrund zu reduzieren. Auch der letzte Filterschritt erfolgt
@@ -150,11 +151,13 @@ Wirkungsquerschnitte zum Teil stark unterscheiden (\verb'join.sh', siehe
 \ref{src:join.sh}).
 
 \subsection{Vorauswahl}
+\label{cha:vorauswahl}
 Eine wichtige Vorauswahl der später zu verarbeitenden Daten wird in der Methode
-\lstinline'get_entry' aus \src{filter.cpp} getroffen. In dieser werden zunächst
-die Daten mit der ROOT-Funktion \lstinline'GetEntry' für den übergebenen Eintrag
-geladen und danach die Vektoren \lstinline'jets_' und \lstinline'leptons_'
-initialisiert, die in den darauffolgenden Schritten verwendet werden.
+\lstinline'get_entry' aus \verb'filter.cpp' (siehe \ref{src:filter.cpp})
+getroffen. In dieser werden zunächst die Daten mit der ROOT-Funktion
+\lstinline'GetEntry' für den übergebenen Eintrag geladen und danach die Vektoren
+\lstinline'jets_' und \lstinline'leptons_' initialisiert, die in den
+darauffolgenden Schritten verwendet werden.
 
 Zunächst werden alle Leptonen mit einer Ladung von $0$ ignoriert. Diese sollten
 theoretisch gar nicht auftreten, da meist bereits für die kleinste Krümmung in
@@ -168,6 +171,7 @@ inneren als auch im äußeren Detektor eine Spur hat. Da dies aber für praktisc
 jedes Muon in den Samples gegeben ist, eignet sich diese Auswahl nicht
 besonderes um die Qualität zu steigern.
 
+\label{cha:isem}
 Was dagegen tatsächlich zu sichtbaren Ergebnissen führt ist die Variable
 \lstinline'El_IsEM', die für jedes Elektron Flags enthält, die Aussagen über die
 Güte der Zuordnung machen. Das Problem bei der Zuordnung besteht darin, dass in
@@ -203,9 +207,9 @@ entfernt detektiert werden können. In dieser Analyse wird die Grenze
   \Delta R = 0.4
 \end{align}
 verwendet. Dies entspricht genau dem $\Delta R$, mit dem in ATLAS Jets
-rekonstruiert werden\cite{jet-recon}, daher wurde diese Schwelle gewählt. Ist
-also ein Lepton näher als $0.4$ in der $(\phi, \eta)$-Ebene an einem Jet, so
-wird es verworfen.
+rekonstruiert werden (siehe Abschnitt \ref{jet-recon}), daher wurde diese
+Schwelle gewählt. Ist also ein Lepton näher als $0.4$ in der $(\phi,
+\eta)$-Ebene an einem Jet, so wird es verworfen.
 
 \subsection{Rekonstruktion der Bosonen}
 Nachdem nun die Leptonen gefiltert wurden betrachten wir zunächst ihre Anzahl.
@@ -213,13 +217,13 @@ Für Zahlen $< 3$ gelingt die Rekonstruktion des $W$-Bosons nicht, da uns zu
 wenig Informationen zur Verfügung stehen, ist sie $> 3$ ist nicht klar, welches
 übrige Lepton tatsächlich beiträgt. Da wir außerdem zuvor bereits Elektronen
 anhand der Güte ihrer Zuordnung gefiltert haben und Myonenzuordnungen generell
-sehr genau sind (siehe \cite{myon-zuordnung}), sollte dieser Fall für den echten
-Prozess nicht auftreten. Deshalb filtern wir scharf auf $\text{Leptonenzahl} =
-3$. Aufgrund der beschriebenen Probleme ist es nicht möglich, das Programm ohne
-diesen Test auszuführen. Die im Folgenden dargestellten Histogramme
-verdeutlichen, wie viel Hintergrund damit bereits herausgefiltert wird. Die
-Elektronenanzahl ist dabei gegen die Myonenanzahl aufgetragen. Die Blöcke mit
-einer Gesamtleptonenzahl von 3 liegen auf einer Gerade von $(0, 3)$ zu $(3,0)$.
+sehr genau sind, sollte dieser Fall für den echten Prozess nicht auftreten.
+Deshalb filtern wir scharf auf $\text{Leptonenzahl} = 3$. Aufgrund der
+beschriebenen Probleme ist es nicht möglich, das Programm ohne diesen Test
+auszuführen. Die in Abbildung~\ref{fig:el_mu_n} dargestellten Histogramme verdeutlichen, wie viel
+Hintergrund damit bereits herausgefiltert wird. Die Elektronenanzahl ist dabei
+gegen die Myonenanzahl aufgetragen. Die Blöcke mit einer Gesamtleptonenzahl von
+3 liegen auf einer Gerade von $(0, 3)$ zu $(3,0)$.
 
 \begin{figure}
   \input{grafiken/signal/el_mu_n.tikz}
@@ -227,6 +231,8 @@ einer Gesamtleptonenzahl von 3 liegen auf einer Gerade von $(0, 3)$ zu $(3,0)$.
   \input{grafiken/zee/el_mu_n.tikz}
   \input{grafiken/zmumu/el_mu_n.tikz}
   \input{grafiken/ztautau/el_mu_n.tikz}
+  \caption{Darstellung der Elektronen- gegen die Myonenzahl je Ereignis}
+  \label{fig:el_mu_n}
 \end{figure}
 
 \subsubsection{Rekonstruktion des \Z-Bosons}
@@ -234,7 +240,7 @@ Im nächsten Schritt wird ein Paar von Leptonen mit gegensätzlicher Ladung und
 gleichem Flavour gesucht. Existieren zwei solcher Paare, so wird immer das
 genommen, dessen Masse näher an der bekannten \Z-Masse liegt. Dies funktioniert
 sehr gut, wie in Abbildung \ref{fig:signal_zmasse} für das Signal zu sehen ist.
-\begin{figure}[h]
+\begin{figure}
   \begin{center}
     \input{grafiken/signal/zmass.tikz}
   \end{center}
@@ -246,22 +252,20 @@ Die leichte Asymmetrie im Graphen kommt von einem Hintergrundprozess, der
 ebenfalls zwei Leptonen erzeugt und nicht direkt von dem Signal eines
 leptonischen \Z-Zerfalls unterscheidbar ist, dem sogenannten
 \textsc{Drell}-\textsc{Yan}-Prozess. Dieser hat das folgende Feynmandiagramm:
-\begin{figure}[h!]
-  \begin{center}
-    \input{grafiken/feynman_drellyan.tikz}
-  \end{center}
-  \caption{Feynmandiagramm des \textsc{Drell}-\textsc{Yan}-Prozesses}
-  \label{fig:drellyan}
-\end{figure}
+\begin{center}
+  \input{grafiken/feynman_drellyan.tikz}
+\end{center}
+
 Dabei sind die $h_*$ zwei beliebige Hadronen, von denen jeweils ein Quark bzw.\
 das zugehörige Antiquark abgehen. $\tilde{h}_*$ sind die Hadronen ohne diese
 Quarks und $l^\pm$ zwei Leptonen gleichen Flavours. Die beiden Quarks
 annihilieren sich zu einem Photon, das dann wiederum ein Lepton/Antilepton-Paar
-erzeugt. Dieser Prozess hat einen in etwa exponentiellen Abfall und wäre somit
-eigentlich deutlich stärker im Spektrum zu sehen, wenn dieses nicht im Generator
-abgeschnitten würde. Im Histogramm ist deutlich zu erkennen, dass dies wohl etwa
-im Bereich von $\unit[75]{GeV}$ geschieht, da dort die Anzahl recht steil auf
-das Niveau auf der anderen Seite der Resonanz abfällt.
+erzeugt. Die Wahrscheinlichkeit für diesen Vorgang fällt in etwa exponentiellen
+mit der Energie und wäre somit eigentlich deutlich stärker im Spektrum zu sehen,
+wenn dieses nicht im Generator abgeschnitten würde. Im Histogramm ist deutlich
+zu erkennen, dass dies wohl etwa im Bereich von $\unit[75]{GeV}$ geschieht, da
+dort die Anzahl recht steil auf das Niveau auf der anderen Seite der Resonanz
+abfällt.
 
 \subsubsection{Schnitt an der \Z-Masse}
 Mit der aus dem vorigen Schritt bekannten minimalen Differenz zur \Z-Masse kann
@@ -273,7 +277,7 @@ habe für diese Analyse, nach einigen Tests den Schnitt mit
   \Delta m = \unit[10]{GeV}
 \end{align}
 gewählt. Ereignisse, deren
-\Z-Masse außerhalb dieses Bereiches liegt wurden wohl falsch analysiert, daher
+\Z-Masse außerhalb dieses Bereiches liegt wurden wohl falsch zugeordnet, daher
 lässt der Schnitt das echte Signal praktisch unbehelligt, schneidet aber etwa
 $\frac{3}{4}$ des $t\bar{t}$-Untergrundes weg, wie in den folgenden Histogrammen
 (Abbildung \ref{fig:zmass_cut}) zu sehen ist.
@@ -301,12 +305,12 @@ Lepton fast die gesamte Energie aufnehmen würde.
 
 \subsubsection{Schnitt an dem Transversalimpuls des dritten Leptons}
 Um die übrigen $\Z\to ll$-Hintergründe, bei denen die \Z-Bosonen korrekt
-rekonstruiert werden können (also bei $l\in {\mu, e}$) herauszufiltern schneiden
-wir an dem Transversalimpuls des dritten Leptons. Für die $\Z\to ll$-Prozesse
-muss dieses gefaket sein, fällt also entweder bereits in der Vorauswahl weg oder
-hat einen relativ geringen Transversalimpuls.
+rekonstruiert werden können (also bei $l\in {\mu, e}$) herauszufiltern,
+schneiden wir an dem Transversalimpuls des dritten Leptons. Für die $\Z\to
+ll$-Prozesse muss dieses gefaket sein, fällt also entweder bereits in der
+Vorauswahl weg oder hat einen relativ geringen Transversalimpuls.
 
-\begin{figure}[htbp]
+\begin{figure}
   \begin{center}
     \foreach \x in {signal, zee, zmumu}{%
       \input{grafiken/\x/lpt_vs_no_lpt.tikz}
@@ -314,13 +318,13 @@ hat einen relativ geringen Transversalimpuls.
     }
   \end{center}
   \caption{Schnitt an dem Transversalimpuls. Wiederum ist das grüne der nicht
-  geschnittene Teil}
+  geschnittene Teil.}
   \label{fig:lpt_cut}
 \end{figure}
 
 In dieser Analyse wurde die Grenze bei $p_t = \unit[25]{GeV}$ gewählt. Damit
 wird ein sehr großer Teil des Untergrundes herausgeschnitten, dennoch bleibt das
-Signal groß.
+Signal groß (siehe Abbildung \ref{fig:lpt_cut}).
 
 \subsubsection{Rekonstruktion des $W$-Bosons}
 Für die (teilweise) Rekonstruktion des W-Bosons nehmen wir an, dass das Neutrino
@@ -342,7 +346,8 @@ vereinigt werden. Die Hintergründe der $\Z\to ll + X$-Klasse standen dabei mit
 verschiedenen $X$, also verschiedenen Anzahlen von Jets zur Verfügung, deren
 Prozesse alle einen unterschiedlichen Wirkungsquerschnitt aufweisen. Desweiteren
 musste die Anzahl der Ereignisse berücksichtigt werden um dann schließlich die
-Luminosität zu erhalten.
+Luminosität zu erhalten. Die Wirkungsquerschnitte sind in Tabelle \ref{tab:wqs}
+zu finden.
 
 \begin{table}
   \centering
