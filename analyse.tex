@@ -3,10 +3,10 @@
 Analysiert wird in dieser Arbeit der Diboson-Prozess $q\bar{q}\to WZ\to ll\nu
 l$. Bei diesem besteht der Anfangszustand aus einem $W$- und einem \Z-Boson, der
 Endzustand aus drei Leptonen und einem Neutrino.  Hier und im Folgenden sind mit
-"`Leptonen"' immer (soweit nicht anders angegeben) Myonen und Elektronen gemeint
-sein. Ich habe die Filter unabhängig von den in der Diboson-Note vorgeschlagenen
-Parametern\cite{diboson-ana} ermittelt, werde sie jedoch im Abschluss noch mit
-diesen vergleichen.
+"`Leptonen"' immer (soweit nicht anders angegeben) Myonen und Elektronen
+gemeint. Ich habe die Filter unabhängig von den in der Diboson-Note
+vorgeschlagenen Parametern\cite{diboson-ana} ermittelt, werde sie jedoch im
+Abschluss noch mit diesen vergleichen.
 
 Für diesen Prozess existieren in führender Ordnung zwei Feynman-Diagramme, die
 in der Analyse nicht unterscheidbar sind: \\
@@ -35,13 +35,13 @@ getroffen werden.
 
 \label{cha:met}
 Man kann allerdings zumindest die sogenannte \emph{transversale Masse} des
-W-Bosons bestimmen. Sie ist definiert als:
+$W$-Bosons bestimmen. Sie ist definiert als:
 \begin{align}
   m_t := \sqrt{m^2 + p_x^2 + p_y^2}
   \label{def:trans}
 \end{align}
 
-Um die transversale Masse des W-Bosons zu berechnen stellen wir die Annahme auf,
+Um die transversale Masse des $W$-Bosons zu berechnen stellen wir die Annahme auf,
 dass die gesamte fehlende Transversalenergie ($E_t^\text{miss}$, oft "`Missing
 Energy T"') zu dem Neutrino des Zerfalls gehört. Die fehlende Transversalenergie
 ergibt sich aus der Energieerhaltung indem die Energieanteile in allen
@@ -52,7 +52,7 @@ Transversalenergie des eintreffenden Pakets ist $0$, daher ist die fehlende
 Energie betragsmäßig ebenso groß wie die Summe der Energien und antiparallel zu
 ihr.
 
-Mit folgender Formel erhalten wir dann die transversale Masse des W-Bosons: 
+Mit folgender Formel erhalten wir dann die transversale Masse des $W$-Bosons: 
 \begin{align}
   m_t = \sqrt{2 p_{t,\nu}\; p_{t,l} (1 - \cos{\Delta\phi})}
   \label{eqn:trans}
@@ -61,7 +61,7 @@ wobei $p_{t,*}$ die transversale Impulskomponente des Neutrinos respektive des
 dritten Leptons und $\Delta\phi$ der Winkel zwischen den beiden Teilchen ist.
 
 Die in diesem und dem darauffolgenden Abschnitt dargestellten Histogramme sind
-auf eine Luminosität von $\unit[2000]{fb^{-1}}$ normiert.
+auf eine Luminosität von $\unit[2]{fb^{-1}}$ normiert.
 
 \subsection{Hintergrundprozesse}
 Die relevanten Hintergründe für diesen Prozess sind $\Z\to\tau\tau + X$, $\Z\to
@@ -82,18 +82,18 @@ den Bottom-Quarks ein B-Meson entstehen kann, welches dann weiter zu $e\nu D$
 zerfällt. Das Elektron aus diesem Zerfall würde dann das benötigte dritte Lepton
 ausmachen.
 
-Prozesse mit nur einem leichten Lepton im Endzustand wie leptonische Zerfälle
-von W-Bosonen sind mit der Überlegung, dass in diesem Fall sogar zwei Leptonen
-gefaket werden müssten (und der stichprobenartigen Untersuchung) nicht von
-größerer Bedeutung und werden in die weitere Hintergrundbehandlung nicht
-eingehen.
+Prozesse mit nur einem leichten Lepton im Endzustand, wie leptonische Zerfälle
+von $W$-Bosonen, sind mit der Überlegung, dass in diesem Fall sogar zwei
+Leptonen gefaket werden müssten nicht von größerer Bedeutung. Dies wurde auch in
+einer stichprobenartigen Überprüfung bestätigt. Diese Prozesse werden daher in
+die weitere Hintergrundbehandlung nicht eingehen.
 
 \subsection{Implementierung}
 Die Implementierung der zuvor beschriebenen Analyse wurde in C++ vorgenommen.
 Das Programm besteht größtenteils aus der Klasse \lstinline!analysis!. Diese
 lehnt sich an die von ROOT automatisch mit \lstinline!MakeClass! zu den Samples
 erstellte Klasse an, wurde aber aus Geschwindigkeitsgründen auf die benötigten
-Variablen und Methoden reduziert wurde.
+Variablen und Methoden reduziert.
 
 In der loop-Methode wird für jeden Eintrag im Datensample folgender Algorithmus
 benutzt (die Tests sind weiter unten näher beschrieben):
@@ -109,7 +109,7 @@ benutzt (die Tests sind weiter unten näher beschrieben):
     Leptonen gemessen wurden. Dabei werden die bereits herausgefilterten
     ("`falschen"') Leptonen natürlich nicht mehr berücksichtigt
     
-  \item[Rekonstruiere die W- und Z-Bosonen] Aus den vorhanden Leptonen wird nun
+  \item[Rekonstruiere die $W$- und \Z-Bosonen] Aus den vorhanden Leptonen wird nun
     ein paar selber Art (SF, same flavour) und gegensätzlicher Ladung gesucht.
     Addiert man die Viererimpulse der beiden Leptonen, so kann man die Masse aus
     dem sich ergebenden Viererimpuls ablesen. Gibt es mehrere solcher Paare, so
@@ -129,10 +129,10 @@ benutzt (die Tests sind weiter unten näher beschrieben):
     Größen in die Histogramme eingetragen. Die betrachteten Größen waren:
     \begin{description}
       \item[Z-Masse]
-      \item[Transversale Impulse] der Z- und W-Bosonen, des übrigen Elektrons
+      \item[Transversale Impulse] der \Z- und $W$-Bosonen, des übrigen Elektrons
         und der Fehlenergie.
-      \item[Transversale Masse] des W-Bosons
-      \item[Winkel] zwischen W- und Z-Boson.
+      \item[Transversale Masse] des $W$-Bosons
+      \item[Winkel] zwischen $W$- und \Z-Boson.
     \end{description}
 \end{description}
 
@@ -168,28 +168,28 @@ Leptonen ignoriert.
 Eine weitere Vorauswahl die getroffen werden könnte wäre mit der Variable
 \lstinline'Mu_hasCombinedMuon', die angibt, ob das entsprechende Myon sowohl im
 inneren als auch im äußeren Detektor eine Spur hat. Da dies aber für praktisch
-jedes Muon in den Samples gegeben ist, eignet sich diese Auswahl nicht
+jedes Myon in den Samples gegeben ist, eignet sich diese Auswahl nicht
 besonderes um die Qualität zu steigern.
 
 \label{cha:isem}
-Was dagegen tatsächlich zu sichtbaren Ergebnissen führt ist die Variable
+Was dagegen tatsächlich zu sichtbaren Ergebnissen führt, ist die Variable
 \lstinline'El_IsEM', die für jedes Elektron Flags enthält, die Aussagen über die
 Güte der Zuordnung machen. Das Problem bei der Zuordnung besteht darin, dass in
 den elektromagnetischen Kalorimetern die Photonenspuren von denen des Elektrons
 konstruktionsbedingt nicht zu unterscheiden sind (siehe Abschnitt
 \ref{cha:kalorimeter}) und somit falsch als Elektron erkannt werden. Eine
 einfache erste Einordnung erhält man, indem geprüft wird ob sich zu dem
-Kaloriemeterereignis eine Spur im inneren Detektor finden lässt, in welchem Fall
-das elektromagnetische Teilchen als Elektron markiert wird. Die genauen
+Kalorimeterereignis eine Spur im inneren Detektor finden lässt. In diesem Fall
+wird das elektromagnetische Teilchen als Elektron markiert. Die genauen
 Möglichkeiten müssen aber nicht bekannt sein, es genügt aus dem Header
 \texttt{egammaPIDdefs.h} eine der vordefinierten Masken zu wählen. In diesem
 Programm wird die \lstinline'Medium'-Variante verwendet, da mit der auch
 vorhandenen \lstinline'Tight'-Version das Signal wie die Hintergründe
-gleichermaßen reduziert und somit nur die Luminosität verringert.
+gleichermaßen reduziert werden und somit nur die Luminosität verringert wird.
 
 Die zweite getroffene Vorauswahl betrifft die Jets. Zum ersten ist bekannt, dass
 jedes Elektron auch einen Jet hervorruft, da beides im elektromagnetischen
-Kaloriemeter detektiert wird. Die Myonen dagegen werden erst in den speziellen
+Kalorimeter detektiert wird. Die Myonen dagegen werden erst in den speziellen
 Myonendetektoren aufgenommen. Da wir die Jets im folgenden Arbeitsschritt
 benötigen, werden diese also zunächst über ihren Abstand zu den Elektronenspuren
 gefiltert. Gilt
@@ -270,7 +270,7 @@ abfällt.
 \subsubsection{Schnitt an der \Z-Masse}
 Mit der aus dem vorigen Schritt bekannten minimalen Differenz zur \Z-Masse kann
 nun ein Großteil des $t\bar{t}$-Untergrundes herausgeschnitten werden. Man sieht
-in dem Histogramm, dass die "`\Z-Masse"' für diesen Hintergrund sehr breit ist
+in dem Histogramm, dass die "`\Z-Masse"' für diesen Hintergrund sehr breit ist,
 während sie für Prozesse, die tatsächlich ein \Z enthalten sehr schmal ist. Ich
 habe für diese Analyse, nach einigen Tests den Schnitt mit
 \begin{align}
@@ -299,7 +299,7 @@ Außerdem fällt auch der $\Z\to\tau\tau$-Hintergrund in diesem Schritt weg, da
 für diesen die Leptonen, die das \Z ausmachen nicht rekonstruiert werden.  Die
 Tauonen zerfallen in über $\unit[36]{\%}$ der Fälle in ein Tau-Neutrino bzw.\
 -Antineutrino sowie ein Elektron (oder Myon) mit entsprechendem Neutrino und
-entsprechender Ladung. Das \Z wie es hier rekonstruiert wird hat aber nur dann
+entsprechender Ladung. Das \Z wie es hier rekonstruiert wird hätte aber nur dann
 einen halbwegs korrekten Impuls (und entsprechend korrekte Masse), wenn das
 Lepton fast die gesamte Energie aufnehmen würde.
 
@@ -327,7 +327,7 @@ wird ein sehr großer Teil des Untergrundes herausgeschnitten, dennoch bleibt da
 Signal groß (siehe Abbildung \ref{fig:lpt_cut}).
 
 \subsubsection{Rekonstruktion des $W$-Bosons}
-Für die (teilweise) Rekonstruktion des W-Bosons nehmen wir an, dass das Neutrino
+Für die (teilweise) Rekonstruktion des $W$-Bosons nehmen wir an, dass das Neutrino
 aus dem Zerfall vollständig die fehlende Transversalenergie ausmacht. Da wir zu
 dieser auch entsprechende x- und y-Impulse zur Verfügung haben, können wir ein
 Pseudoteilchen mit diesen konstruieren.  Dieses addieren wir zu dem vorhandenen
@@ -382,7 +382,7 @@ zu finden.
 \end{table}
 
 Die Luminosität muss je nach Prozess noch mit einem $k$-Faktor korrigiert
-werden. Diesen benötigt man, um alle Prozess auf die nächstführende Ordnung
+werden. Diesen benötigt man, um alle Prozesse auf die nächstführende Ordnung
 (NLO, \emph{next-to-leading order}, also führende Ordnung mit einer weiteren
 Schleife oder Abstrahlung im Feynman-Diagramm) zu normieren, auch wenn sie
 teilweise nur in führender Ordnung berechnet sind. Da allerdings dafür die

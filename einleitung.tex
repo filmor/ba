@@ -2,7 +2,7 @@
 Diese Arbeit beschreibt das Vorgehen zur Erstellung der Analyse eines Prozesses
 in der Hochenergiephysik speziell am Beispiel des ATLAS-Experimentes. Dazu wird
 zunächst in dieser Einleitung etwas auf das Experiment selbst, die Datenaufnahme
-und -auswertung und die Konventionen eingegangen und im Folgenden der zu
+und -auswertung und die Konventionen eingegangen. Im Folgenden wird der zu
 untersuchende Prozess sowie der Grundaufbau der Analyse besprochen.  Danach wird
 dann die genaue Implementierung mit ROOT, einem Softwareframework zur Analyse
 großer Datenmengen, ausgeführt und sich mit dem Vorgehen zur Filterung des
@@ -25,7 +25,7 @@ man auf die Zwischenprodukte schließen kann.
 In dem Experiment soll vor allem der Hauptfrage nach der Existenz des
 Higgs-Bosons nachgegangen werden, allerdings sollen auch weitere Bereiche der
 Physik, insbesondere Physik jenseits des Standardmodells (zum Beispiel
-supersymmetrische Theorien) untersucht werden. Zum Beispiel ist der LHC der
+supersymmetrische Theorien) untersucht werden. Beispielsweise ist der LHC der
 erste Beschleuniger, der ausreichend Top-Quarks für genauere Untersuchungen
 liefern kann. Auch die Untersuchung der Physik von Beauty- bzw.\ Bottom-Quarks
 (B-Physik) ist mit ihm möglich.
@@ -35,7 +35,7 @@ elektroschwachen Wechselwirkung bei solch hohen Energien auftreten können (sieh
 dazu Abschnitt \ref{cha:analyse}).
 
 Um die auftretenden Teilchen möglichst genau im Hinblick auf Ladung, Impuls und
-Art vermessen zu können wurden folgende Designentscheidungen für ATLAS
+Art vermessen zu können, wurden folgende Designentscheidungen für ATLAS
 getroffen\cite{atlas-tp} (siehe auch Abschnitt \ref{cha:conv} für die
 Bezeichungen):
 \begin{itemize}
@@ -52,7 +52,7 @@ Bezeichungen):
 Werden im Beschleuniger zwei Teilchenpakete zur Kollision gebracht, so entsteht
 eine Vielzahl von anderen Teilchen. Um die Teilchen zu messen werden grob drei
 verschiedene Klassen von Detektoren benutzt. Da die Datenmengen deutlich zu groß
-sind um sie zu jeder Zeit auszulesen, werden Trigger benutzt.  Diese werden
+sind um sie zu jeder Zeit auszulesen, werden Trigger verwendet.  Diese werden
 permanent ausgelesen und liefern Ereignisauswahldaten. Anhand dieser können dann
 Ereignisse selektiert und ausgelesen werden.
 
@@ -66,7 +66,7 @@ gesamte Tracker befindet sich in einem zylindrischen Magnetfeld mit einer
 Flussdichte von $\unit[2]{T}$ um mit der durch die Lorentzkraft auftretenden
 Bahnkrümmung die Ladung der Teilchen vermessen zu können. Die Trackerdetektoren
 dienen der Spurrekonstruktion und damit der Ladungs- und Impulsmessung der
-Teilchen sowie dem Finden von Vertices, also Punkte der Wechselwirkung. Außerdem
+Teilchen sowie dem Finden von Vertices, also Punkten der Wechselwirkung. Außerdem
 liefern sie bereits wichtige Kriterien zur Erkennung von Elektronen.
 
 \paragraph{Kalorimeter}
@@ -131,8 +131,7 @@ weltweiter Zusammenschluss verschiedener Rechnerverbünde, auf denen die
 Analyseprogramme (wie das in dieser Arbeit entwickelte) ausgeführt werden. Dazu
 werden die benötigten Daten je nach Größe entweder mit dem Programm mitgeschickt
 oder im Grid selbst auf sogenannten Storage-Elementen gespeichert und über
-entsprechende Anweisung in den Grid-Job-Informationen zur Verfügung gestellt
-werden.
+entsprechende Anweisung in den Grid-Job-Informationen zur Verfügung gestellt.
 
 Das Grid wurde auch zur Erstellung der für diese Analyse verwendeten Samples
 verwendet. Da diese aber auf keinem Storage-Element mehr gespeichert waren,
@@ -143,10 +142,10 @@ konnte die Analyse nicht im Grid getestet werden.
 Es werden in der übrigen Arbeit durchgehend die in der Hochenergiephysik
 üblichen, natürlichen Einheiten verwendet. Die Raumrichtungen sind ebenfalls wir
 üblich so festgelegt, dass die $z$-Achse parallel zum Strahl gegen den
-Uhrzeigersinn, die $x$-Achse zum Zentrum des Beschleunigerringes und
-entsprechend der Rechtshändigkeit wegen die $y$-Achse nach oben gerichtet liegt.
-Der Nullpunkt des Systems ist dabei der Mittelpunkt des Detektors, der im
-Idealfall, welcher in den Simulationen angenommen wird, genau der
+Uhrzeigersinn, die $x$-Achse zum Zentrum des Beschleunigerringes und der
+Rechtshändigkeit des Koordinatensystems wegen die $y$-Achse nach oben gerichtet
+liegt.  Der Nullpunkt des Systems ist dabei der Mittelpunkt des Detektors, der
+im Idealfall, welcher in den Simulationen angenommen wird, genau der
 Kollisionspunkt ist.  Dies kann sich aber zumindest in $z$-Richtung im
 langfristigen Verlauf des Experimentes ändern, wenn bei der Einstellung
 festgestellt wird, dass für etwas andere Kollisionspunkte der Hintergrund
@@ -170,8 +169,8 @@ bezüglich der Pseudorapidität im Gegensatz zum Azimutwinkel (annähernd)
 invariant unter Boosts entlang der z-Achse ist.  Tatsächlich invariant ist der
 differentielle Wirkungsquerschnitt bezüglich der Rapidität ($y := \frac12
 \frac{E + p_L}{E - p_L}$, wobei $p_L = p_z$ der Longitudinalimpuls ist). Diese
-ist aber für Energien, die gegen die Ruhemasse des Teilchens groß sind,
-annähernd gleich der Pseudorapidität ist.
+ist aber für Energien, die im Vergleich zur Ruhemasse des Teilchens groß sind,
+annähernd gleich der Pseudorapidität.
 
 Als wichtige abgeleitete Größe erhält man den Abstand in der
 Polar-Pseudorapiditäts-Ebene
