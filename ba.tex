@@ -1,11 +1,11 @@
-\documentclass[a4paper,oneside]{scrartcl}
+\documentclass[a4paper,twoside]{scrartcl}
 
 \usepackage[utf8x]{inputenc}
 \usepackage{amsmath, amsthm, amssymb, amsrefs, booktabs}
 \usepackage[scale=0.8]{geometry}
 \usepackage[ngerman]{babel}
 \usepackage{makeidx, graphicx, tikz, units, gnuplot-lua-tikz, fancyhdr, verbatim}
-\usepackage{wrapfig, caption, listingsutf8, xcolor, xspace}
+\usepackage{wrapfig, caption, listingsutf8, xcolor, xspace, gnuplottex}
 
 \usetikzlibrary{trees}
 \usetikzlibrary{decorations.pathmorphing}
@@ -16,8 +16,10 @@
 
 \pagestyle{fancy}
 \fancyhf{}
-\rhead{\scriptsize Benedikt Sauer -- Datenanalyse für das ATLAS-Experiment}
-\rfoot{\thepage}
+\fancyhead[EL]{\scriptsize\leftmark}
+\fancyhead[OR]{\scriptsize\rightmark}
+\fancyfoot[EL]{\thepage}
+\fancyfoot[OR]{\thepage}
 \renewcommand{\headrulewidth}{0.1pt}
 
 \newcommand{\src}[1]{\texttt{#1}\ref{src:#1}}

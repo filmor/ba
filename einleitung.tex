@@ -1,13 +1,13 @@
 \section{Einführung}
 Diese Arbeit beschreibt das Vorgehen zur Erstellung der Analyse eines Prozesses
-in der Hochenergiephysik speziell am Beispiel des ATLAS-Experimentes
-beschreiben. Dazu wird zunächst in dieser Einleitung etwas auf das Experiment
-selbst, die Datenaufnahme und -auswertung und die Konventionen eingegangen und
-im Folgenden der zu untersuchende Prozess sowie der Grundaufbau der Analyse
-besprochen.  Danach wird dann die genaue Implementierung mit ROOT ausgeführt und
-sich mit dem Vorgehen zur Filterung des Untergrundes auseinandergesetzt.
-Abschließend wird dann noch kurz der Blick auf weitere mögliche Filtermethoden
-und die Ausführung des Programms im Grid gerichtet.
+in der Hochenergiephysik speziell am Beispiel des ATLAS-Experimentes. Dazu wird
+zunächst in dieser Einleitung etwas auf das Experiment selbst, die Datenaufnahme
+und -auswertung und die Konventionen eingegangen und im Folgenden der zu
+untersuchende Prozess sowie der Grundaufbau der Analyse besprochen.  Danach wird
+dann die genaue Implementierung mit ROOT ausgeführt und sich mit dem Vorgehen
+zur Filterung des Untergrundes auseinandergesetzt. Abschließend wird dann noch
+kurz der Blick auf weitere mögliche Filtermethoden und die Ausführung des
+Programms im Grid gerichtet.
 
 \subsection{Das ATLAS-Experiment}
 \hyphenation{Ha-dro-nen-spei-cher-ring}
@@ -24,10 +24,11 @@ man auf die Zwischenprodukte schließen kann.
 
 In dem Experiment soll vor allem der Hauptfrage nach der Existenz des
 Higgs-Bosons nachgegangen werden, allerdings sollen auch weitere Bereiche der
-Physik untersucht werden. Zum Beispiel ist der LHC der erste Beschleuniger, der
-ausreichend Top-Quarks für genauere Untersuchungen liefern kann. Auch die
-Untersuchung der Physik von Beauty- bzw.\ Bottom-Quarks (B-Physik) ist mit ihm
-möglich.
+Physik, insbesondere Physik jenseits des Standardmodells (zum Beispiel
+supersymmetrische Theorien) untersucht werden. Zum Beispiel ist der LHC der
+erste Beschleuniger, der ausreichend Top-Quarks für genauere Untersuchungen
+liefern kann. Auch die Untersuchung der Physik von Beauty- bzw.\ Bottom-Quarks
+(B-Physik) ist mit ihm möglich.
 
 Abgesehen davon ist aber auch von Interesse, ob und wenn ja welche Anomalien der
 elektroschwachen Wechselwirkung bei solch hohen Energien auftreten können (siehe
@@ -35,8 +36,8 @@ dazu Abschnitt \ref{cha:analyse}).
 
 Um die auftretenden Teilchen möglichst genau im Hinblick auf Ladung, Impuls und
 Art vermessen zu können wurden folgende Designentscheidungen für ATLAS
-getroffen\cite{atlas-tp} (siehe auch Abschnitt
-\ref{cha:conv} für die Bezeichungen):
+getroffen\cite{atlas-tp} (siehe auch Abschnitt \ref{cha:conv} für die
+Bezeichungen):
 \begin{itemize}
   \item Sehr gute elektromagnetische Kaloriemetrie zur genauen Messung von
     Photonen und Elektronenenenergie
@@ -48,28 +49,82 @@ getroffen\cite{atlas-tp} (siehe auch Abschnitt
 
 \subsubsection{Datenaufnahme}
 \label{cha:aufnahme}
-Die Datenaufnahme erfolgt (sehr grob) über drei verschiedene Klassen von
-Detektoren.
+Werden im Beschleuniger zwei Teilchenpakete zur Kollision gebracht, so entsteht
+eine Vielzahl von anderen Teilchen. Um die Teilchen zu messen werden (sehr grob)
+über drei verschiedene Klassen von Detektoren benutzt. Da die Datenmengen
+deutlich zu groß sind um sie zu jeder Zeit auszulesen, werden Trigger benutzt.
+Diese werden permanent ausgelesen2
 
-\subsection{Spursystem}
-Die innerste Schicht des Detektors wird von Siliziumpixeldetektoren ausgemacht.
+\paragraph{Tracker}
+Die innerste Detektorschicht besteht aus einer hochauflösenden Anordnung von
+Siliziumpixeldetektoren. Die nächste Schicht wird durch den Halbleitertracker
+(SCT, \emph{semi-conductor tracker}) gebildet. Die äußerste Trackerschicht ist
+der Übergangsstrahlungsdetektor (kombiniert mit einigen sogenannten \emph{straw
+chamber}, die vom Prinzip her ähnlich wie Driftkammern). Der gesamte Tracker
+befindet sich in einem zylindrischen Magnetfeld mit einer Flussdichte von
+$\unit[2]{T}$ um mit der durch die Lorentzkraft auftretenden Bahnkrümmung die
+Ladung der Teilchen vermessen zu können. Die Trackerdetektoren dienen der
+Spurrekonstruktion und damit der Ladungs- und Impulsmessung der Teilchen sowie
+dem Finden von Vertices, also Punkte der Wechselwirkung. Außerdem liefern sie
+bereits wichtige Kriterien zur Erkennung von Elektronen.
 
-\subsection{Kaloriemeter}
-% hadronisches und elektromagnetisches Kaloriemeter,
-% Elektronen/Photonen-Schauer, e⁺ + e⁻ -> gamma und zurück
+\paragraph{Kalorimeter}
+Die nächste Schicht des Detektors, die nicht mehr im Magnetfeld liegt besteht
+aus den Kalorimetern. Diese messen die Energie der Teilchen und liefern dazu
+auch noch Ortsinformationen. Zusammen mit den Trackerdaten können damit bereits
+leichte elektromagnetische Teilchen wie Elektronen oder Photonen gemessen
+werden. Zwischen ebendiesen kann im Kalorimeter aber nicht unterschieden
+werden, da das Kalorimeter gerade mit der Umwandlung des Elektrons in einen
+Photonenschauer bzw.\ des Photons in ein Elektron-Positron-Paar arbeitet. Die
+entstandenen Teilchen bewirken natürlich wieder entsprechende Reaktionen
+(solange ihre Energien noch ausreichen). Dadurch ist bei der letztlichen
+Energiemessung nicht mehr auszumachen, welches Teilchen nun der Ausgangspunkt
+war.
 
-Für diese Analyse werden vier wichtige Sätze von Messdaten benötigt:
-\begin{description}
-  \item[Elektronen] % Energie, Impuls, Ladung, Tagging
-  \item[Myonen] % Energie, Impuls, Ladung, spezielle Myonenkammer
-  \item[Teilchenjets] % Energie
-\end{description}
+Man unterscheidet noch zwischen elektromagnetischem und hadronischem
+Kalorimeter. Ersteres liegt näher am Strahlrohr und detektiert praktisch alle
+Photonen und Elektronen, die darin komplett in messbare Energie umgewandelt
+werden. Die meisten Hadronen passieren dieses ohne vollständigen Energieverlust
+und werden erst im dahinterliegenden hadronischen Kalorimeter detektiert. Beide
+Anteile werden größtenteils von Flüssigargondetektoren ausgemacht, ein Teil des
+hadronischen Kalorimeters besteht aber aus einem Szintillationsdetektor.
+
+\paragraph{Myondetektor}
+Die Myonen werden normalerweise im Kalorimeter nicht detektiert, weshalb die
+äußerste Detektorschicht aus dem Myonspektrometer. Bei ATLAS hat dieses (im
+Gegensatz zu den meisten anderen Detektoren) sein eigenes Magnetsystem und ist
+so in der Lage, sehr genaue Messungen zum Myonimpuls durchzuführen. Desweiteren
+enthält diese Schicht Triggerkammern.
+
+Für diese Analyse werden drei wichtige Sätze von Messdaten benötigt, nämlich
+Angaben über 
+\begin{itemize}
+  \item Anzahl
+  \item Impuls
+  \item Energie
+  \item und Ladung
+\end{itemize} von Elektronen, Myonen und Jets.
+
+Mit Jets sind hier Teilchenströme gemeint, die aus wiederholten Zerfällen von
+Teilchen mit sehr hoher Masse entstehen und im Kalorimeter einen bestimmten
+Abdruck hinterlassen. In den Kalorimeterdaten werden sogenenannte Cluster
+gesucht, also eine Menge von aneinander angrenzenden Detektoren, die einen
+erhöhten Energiewert gemessen haben. Sind nun mehrere dieser Cluster nah genug
+aneinander, so wird zu dieser Stelle (an der offenbar viele Teilchen ankamen)
+ein Jet in die Daten geschrieben. Zu bemerken ist, dass ein Elektron
+\emph{immer} einen Jet erzeugt.
+
+Zu den Elektronen werden noch zusätzlich viele Informationen über die Zuordnung
+in die Daten geschrieben, die in dieser Analyse für die Filterung mit
+\lstinline'El_IsEM' verwendet werden, siehe Abschnitt~\ref{cha:isem}.
+
 \subsubsection{Datenanalyse}
 Die Analyse soll schließlich im LHC Grid erfolgen. Dies ist ein Zusammenschluss
-verschiedener Cluster, auf denen die Analyseprogramme (wie das in dieser Arbeit
-entwickelte) ausgeführt werden. Dazu werden die benötigten Daten je nach Größe
-entweder mit dem Programm mitgeschickt oder im Grid selbst auf sogenannten
-Storage-Elementen gespeichert und \dots
+verschiedener Rechnerverbünde, auf denen die Analyseprogramme (wie das in dieser
+Arbeit entwickelte) ausgeführt werden. Dazu werden die benötigten Daten je nach
+Größe entweder mit dem Programm mitgeschickt oder im Grid selbst auf sogenannten
+Storage-Elementen gespeichert und über entsprechende Anweisung in den
+Grid-Job-Informationen zur Verfügung gestellt werden.
 
 \subsection{Konventionen und Bezeichnungen}
 \label{cha:conv}

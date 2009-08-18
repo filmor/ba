@@ -171,9 +171,9 @@ besonderes um die Qualität zu steigern.
 Was dagegen tatsächlich zu sichtbaren Ergebnissen führt ist die Variable
 \lstinline'El_IsEM', die für jedes Elektron Flags enthält, die Aussagen über die
 Güte der Zuordnung machen. Das Problem bei der Zuordnung besteht darin, dass in
-den elektromagnetischen Kaloriemetern die Photonenspuren von denen des Elektrons
+den elektromagnetischen Kalorimetern die Photonenspuren von denen des Elektrons
 konstruktionsbedingt nicht zu unterscheiden sind (siehe Abschnitt
-\ref{cha:kaloriemeter} und somit falsch als Elektron erkannt werden. Eine
+\ref{cha:kalorimeter}) und somit falsch als Elektron erkannt werden. Eine
 einfache erste Einordnung erhält man, indem geprüft wird ob sich zu dem
 Kaloriemeterereignis eine Spur im inneren Detektor finden lässt, in welchem Fall
 das elektromagnetische Teilchen als Elektron markiert wird. Die genauen
@@ -221,13 +221,13 @@ verdeutlichen, wie viel Hintergrund damit bereits herausgefiltert wird. Die
 Elektronenanzahl ist dabei gegen die Myonenanzahl aufgetragen. Die Blöcke mit
 einer Gesamtleptonenzahl von 3 liegen auf einer Gerade von $(0, 3)$ zu $(3,0)$.
 
-\begin{center}
+\begin{figure}
   \input{grafiken/signal/el_mu_n.tikz}
   \input{grafiken/ttbar/el_mu_n.tikz}
   \input{grafiken/zee/el_mu_n.tikz}
   \input{grafiken/zmumu/el_mu_n.tikz}
   \input{grafiken/ztautau/el_mu_n.tikz}
-\end{center}
+\end{figure}
 
 \subsubsection{Rekonstruktion des \Z-Bosons}
 Im nächsten Schritt wird ein Paar von Leptonen mit gegensätzlicher Ladung und
@@ -308,11 +308,10 @@ hat einen relativ geringen Transversalimpuls.
 
 \begin{figure}[htbp]
   \begin{center}
-    \input{grafiken/zee/lpt_vs_no_lpt.tikz}
-    \vfill
-    \input{grafiken/zee/lpt_vs_no_lpt.tikz}
-    \vfill
-    \input{grafiken/zee/lpt_vs_no_lpt.tikz}
+    \foreach \x in {signal, zee, zmumu}{%
+      \input{grafiken/\x/lpt_vs_no_lpt.tikz}
+      \vfill
+    }
   \end{center}
   \caption{Schnitt an dem Transversalimpuls. Wiederum ist das grüne der nicht
   geschnittene Teil}
@@ -371,6 +370,7 @@ Luminosität zu erhalten.
     + 3 Jets &  $21.07$  & & \\
     + 4 Jets &  $6.04$  & & \\
     + 5 Jets &  $1.17$  & & \\
+    \bottomrule
   \end{tabular}
   \caption{Wirkungsquerschnitte der Hintergründe}
   \label{tab:wqs}
