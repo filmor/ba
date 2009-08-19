@@ -31,6 +31,15 @@ analyze()
 {
     out=${OUTPUT_DIR}/$1
     shift
+    if [ $(echo $1 | sed -e 's/\..*//') = 'zee' ]
+    then
+        append_task $@ ${out}.normal.root
+        for t in $TESTS
+        do
+            append_task --disable-${t}-test --disable-isem-test \
+                $@ ${out}.no_${t}.root
+        done
+    fi
     append_task $@ ${out}.normal.root
     for t in $TESTS
     do
@@ -38,7 +47,7 @@ analyze()
     done
 }
 
-for type in zmumu zee ztautau
+for type in zmumu ztautau zee
 do
     for dir in $BG_DIR/$type/*
     do

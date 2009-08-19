@@ -22,8 +22,6 @@ for prefix in prefixes:
         assert hist != None
         dim = hist.GetDimension()
 
-        bins = hist.GetNbinsX()
-
         out = file(join(out_dir, prefix, hist_name + '.txt'), 'w')
         assert out
 
