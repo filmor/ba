@@ -29,6 +29,7 @@
     title={TopReferences10TeV},
     date={2009-8},
     note={https://twiki.cern.ch/twiki/bin/view/AtlasProtected/TopReferences10TeV},
+    author={}
 }
 
 \bib{transv}{article}{
@@ -41,5 +42,6 @@
 
 \bib{addr:boost}{misc}{
     note={http://www.boost.org},
+    author={}
 }
 

@@ -226,11 +226,17 @@ gegen die Myonenanzahl aufgetragen. Die Blöcke mit einer Gesamtleptonenzahl von
 3 liegen auf einer Gerade von $(0, 3)$ zu $(3,0)$.
 
 \begin{figure}
-  \input{grafiken/signal/el_mu_n.tikz}
-  \input{grafiken/ttbar/el_mu_n.tikz}
-  \input{grafiken/zee/el_mu_n.tikz}
-  \input{grafiken/zmumu/el_mu_n.tikz}
-  \input{grafiken/ztautau/el_mu_n.tikz}
+  \begin{center}
+    \input{grafiken/ztautau/el_mu_n.tikz}
+    \input{grafiken/ttbar/el_mu_n.tikz}
+  \end{center}
+  \begin{center}
+    \input{grafiken/zee/el_mu_n.tikz}
+    \input{grafiken/zmumu/el_mu_n.tikz}
+  \end{center}
+  \begin{center}
+    \input{grafiken/signal/el_mu_n.tikz}
+  \end{center}
   \caption{Darstellung der Elektronen- gegen die Myonenzahl je Ereignis}
   \label{fig:el_mu_n}
 \end{figure}
@@ -284,10 +290,10 @@ $\frac{3}{4}$ des $t\bar{t}$-Untergrundes weg, wie in den folgenden Histogrammen
 
 \begin{figure}[htbp]
   \begin{center}
-    \input{grafiken/ztautau/zmass_vs_no_zmass.tikz}
-    \vfill
-    \input{grafiken/ttbar/zmass_vs_no_zmass.tikz}
-    \vfill
+    \input{grafiken/ztautau/zmass_vs_no_zmass.tikz} \\
+    \vspace{1cm}
+    \input{grafiken/ttbar/zmass_vs_no_zmass.tikz} \\
+    \vspace{1cm}
     \input{grafiken/signal/zmass_vs_no_zmass.tikz}
   \end{center}
     \caption{Schnitt an der \Z-Masse. Dabei ist jeweils der grüne Teil
@@ -312,13 +318,15 @@ Vorauswahl weg oder hat einen relativ geringen Transversalimpuls.
 
 \begin{figure}
   \begin{center}
-    \foreach \x in {signal, zee, zmumu}{%
-      \input{grafiken/\x/lpt_vs_no_lpt.tikz}
-      \vfill
+    \foreach \x in {signal, zmumu, zee}{%
+      \input{grafiken/\x/lpt_vs_no_lpt.tikz} \\
+      \vspace{1cm}
     }
   \end{center}
   \caption{Schnitt an dem Transversalimpuls. Wiederum ist das grüne der nicht
-  geschnittene Teil.}
+  geschnittene Teil. Für $Z\to ee$ ist zudem die Vorauswahl mit
+  \lstinline'El_IsEM' deaktiviert um ein genaueres Bild von der Wirkung des
+  Schnitts zu erhalten}
   \label{fig:lpt_cut}
 \end{figure}
 

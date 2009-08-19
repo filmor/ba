@@ -12,7 +12,7 @@
 \usetikzlibrary{decorations.markings}
 
 \newboolean{sources}
-\setboolean{sources}{false}
+\setboolean{sources}{true}
 
 \pagestyle{fancy}
 \fancyhf{}
@@ -21,9 +21,6 @@
 \fancyfoot[EL]{\thepage}
 \fancyfoot[OR]{\thepage}
 \renewcommand{\headrulewidth}{0.1pt}
-
-\newcommand{\src}[1]{\texttt{#1}\ref{src:#1}}
-
 
 \tikzset{
     electroweak/.style={dashed, draw=red},
@@ -93,13 +90,15 @@ Endzuständen am ATLAS-Experiment}
 \end{titlepage}
 \newpage
 \tableofcontents
-\vspace{4cm}
+\vfill
 \begin{center}
   \large 1.\ Gutachter: Klaus Desch \\
-  \large 2.\ Gutachter: Peter Wienemann
-  \vfill
-%  \textit{\Large Gedankt sei meinen Bürokollegen Detlef und Robert, dem
-%  Drei-Büros-weiter-Kollegen Till und Lena für ihre tatkräftige Unterstützung}
+  \large 2.\ Gutachter: Peter Wienemann \\
+  \vspace{2cm}
+  \textit{\Large Ich danke meinem Bürokollegen Detlef und dem
+  Drei-Büros-weiter-Kollegen Till für die Beantwortung einer ganzen Menge von
+  Fragen und insbesondere Lena und Robert für ihre tatkräftige Unterstützung und
+  zeitaufwendiges Korrekturlesen}
 \end{center}
 \newpage
 %\subsection{Das Grid}
