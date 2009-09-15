@@ -19,25 +19,29 @@ leptonischen Endzuständen am ATLAS-Experiment
 
 \author[B. Sauer]{Benedikt Christian Sauer}
 
-\institute{Physikalisches Institut der Universität Bonn}
+\institute{Bachelorarbeit am Physikalischen Institut der Universität Bonn}
 
 \date{22.09.2009}
 
 \subject{Physik}
 
-% Falls eine Logodatei namens "university-logo-filename.xxx" vorhanden
-% ist, wobei xxx ein von latex bzw. pdflatex lesbares Graphikformat
-% ist, so kann man wie folgt ein Logo einfuegen:
-
 \pgfdeclareimage[height=0.5cm]{university-logo}{uni-bonn}
 \logo{\pgfuseimage{university-logo}}
 
-% \beamerdefaultoverlayspecification{<+->}
-
 \begin{document}
-
 \begin{frame}
   \titlepage
+  % Erzählen zur Einführung:
+  % 
+% Diese Arbeit beschreibt das Vorgehen zur Erstellung der Analyse eines Prozesses
+% in der Hochenergiephysik speziell am Beispiel des ATLAS-Experimentes. Dazu wird
+%zunächst in dieser Einleitung etwas auf das Experiment selbst, die Datenaufnahme
+%und -auswertung und die Konventionen eingegangen. Im Folgenden wird der zu
+%untersuchende Prozess sowie der Grundaufbau der Analyse besprochen.  Danach wird
+%dann die genaue Implementierung mit ROOT, einem Softwareframework zur Analyse
+%großer Datenmengen, ausgeführt und sich mit dem Vorgehen zur Filterung des
+%Untergrundes auseinandergesetzt. Abschließend wird dann noch kurz der Blick auf
+%weitere mögliche Filtermethoden gerichtet.
 \end{frame}
 
 \begin{frame}{Gliederung}
@@ -46,31 +50,35 @@ leptonischen Endzuständen am ATLAS-Experiment
 
 \section{Einführung}
 \subsection{Das ATLAS-Experiment}
-\begin{frame}{Aufbau}
+
+\begin{frame}{Konventionen}
   \begin{itemize}
-    \item Materieverteilung
-    \item $\Rightarrow$ kosmische Parameter ($\Lambda$, etc.)
+    \item Orientierung der Raumachsen
       \pause
-      \vskip10pt
-    \begin{block}{Boltzmanngleichung}
+    \item Koordinatensystem
+      \pause
       \begin{align}
-        \frac{\mathrm df}{\mathrm dt} = \frac{\partial f}{\partial t} + \vec v
-        \frac{\partial f}{\partial r} - \frac{\partial \varphi}{\partial \vec
-        r}\frac{\partial f}{\partial \vec v} = 0
+        \eta := -\ln{\tan{\frac \theta 2}}
       \end{align}
-    \end{block}
       \pause
-    \item Phasenraumvolumen konstant
-      \pause
-    \item verwenden Monte-Carlo-Ansatz mit Tracerkörpern
+      % Lorentzinvariant
+    \item Abstände in der Transversalebene
+      \begin{align}
+        \Delta R^2 := \Delta\eta^2 + \Delta\phi^2
+      \end{align}
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Detektortypen}
+\begin{frame}{Aufbau}
+  % Erzählen zum Experiment
+  \begin{description}
+    \item[Strahlrohr] \dots
+    \item[Tracker] \dots
+    \item[Kalorimeter]
+    \item[Myondetektor]
+  \end{description}
 \end{frame}
 
-\begin{frame}{Konventionen}
-\end{frame}
 
 \section{Implementierung einer Analyse}
 \subsection{Vorüberlegungen}
@@ -110,14 +118,15 @@ leptonischen Endzuständen am ATLAS-Experiment
 \end{frame}
 
 \begin{frame}{}
-  Vielen Dank für Ihre Aufmerksamkeit.
+  \begin{center}\Large Vielen Dank für Ihre Aufmerksamkeit.\end{center}
+  \vskip10pt
 
   Die Quelltexte der Bachelorarbeit und insbesondere der dafür geschriebenen
-  Programme (also auch der Analyse) sind unter den Bedingungen der GPL zu finden
+  Programme (also auch der Analyse) sind unter den Bedingungen der GPLv3 zu finden
   unter:
+  \vskip10pt
 
-
-  \href{http://www.github.com/filmor/ba}
+  \begin{center}http://www.github.com/filmor/ba\end{center}
 \end{frame}
 \end{document}
 
