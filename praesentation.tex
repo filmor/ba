@@ -1,0 +1,371 @@
+\documentclass{beamer}
+
+\mode<presentation>
+{
+  \usetheme{Singapore}
+  \usefonttheme{professionalfonts}
+  \setbeamercovered{transparent}
+  \setbeamertemplate{footline}[frame number]
+}
+
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{units, tikz, gnuplot-lua-tikz, listingsutf8, xspace}
+
+\tikzset{
+    electroweak/.style={dashed, draw=red},
+    gamma/.style={decorate, decoration={snake}, draw=red},
+    positive/.style={postaction={decorate},
+            decoration={markings,mark=at position .55 with {\arrow{<}}}},
+    negative/.style={postaction={decorate},
+            decoration={markings,mark=at position .55 with {\arrow{>}}}},
+    particle/.style={solid, draw=black},
+}
+
+\newcommand{\Z}{\ensuremath{Z^0\xspace}}
+\newcommand{\Grafik}[2]{\tikz\node[scale=#2]{\input{#1}};}
+
+\lstset
+{
+  language=C++,
+  showstringspaces=false,
+  captionpos=b,
+  tabsize=4,
+  numbers=left,
+  numberstyle=\footnotesize,
+  stepnumber=1,
+  breaklines=true,
+  basicstyle=\scriptsize\ttfamily,
+  inputencoding=utf8/latin1,
+  commentstyle=\color{blue},
+  stringstyle=\color{green},
+  keywordstyle=\color{red}
+}
+
+\DeclareMathSymbol{,}{\mathpunct}{letters}{"3B}
+\DeclareMathSymbol{.}{\mathord}{letters}{"3B}
+\DeclareMathSymbol{\decimal}{\mathord}{letters}{"3A}
+
+\usetikzlibrary{trees}
+\usetikzlibrary{decorations.pathmorphing}
+\usetikzlibrary{decorations.markings}
+
+\title[Analyse von Di-Boson-Ereignissen]{Analyse von Di-Boson-Ereignissen mit
+leptonischen Endzuständen am ATLAS-Experiment
+}
+% \subtitle{}
+
+\author[B. Sauer]{Benedikt Christian Sauer}
+
+\institute{Bachelorarbeit am Physikalischen Institut der Universität Bonn}
+
+\date{22.09.2009}
+
+\subject{Physik}
+
+\pgfdeclareimage[height=0.5cm]{university-logo}{grafiken/uni-bonn}
+\logo{\pgfuseimage{university-logo}}
+
+\begin{document}
+\begin{frame}
+  \titlepage
+  % Erzählen zur Einführung:
+  % 
+% Diese Arbeit beschreibt das Vorgehen zur Erstellung der Analyse eines Prozesses
+% in der Hochenergiephysik speziell am Beispiel des ATLAS-Experimentes. Dazu wird
+%zunächst in dieser Einleitung etwas auf das Experiment selbst, die Datenaufnahme
+%und -auswertung und die Konventionen eingegangen. Im Folgenden wird der zu
+%untersuchende Prozess sowie der Grundaufbau der Analyse besprochen.  Danach wird
+%dann die genaue Implementierung mit ROOT, einem Softwareframework zur Analyse
+%großer Datenmengen, ausgeführt und sich mit dem Vorgehen zur Filterung des
+%Untergrundes auseinandergesetzt. Abschließend wird dann noch kurz der Blick auf
+%weitere mögliche Filtermethoden gerichtet.
+\end{frame}
+
+\begin{frame}{Gliederung}
+  \tableofcontents[pausesections]
+\end{frame}
+
+\section[Einführung]{Kurze Einführung in das Experiment und die Konventionen}
+\subsection{Konventionen und Bezeichnungen}
+\begin{frame}{Konventionen}
+  \begin{itemize}
+    \item Verwendetes Einheitensystem: Natürliche Einheiten
+      \begin{align}
+        \hbar = c = 1
+      \end{align}
+      \pause
+    \item Orientierung der Raumachsen
+      \pause
+    \item Koordinatensystem
+      \pause
+      \begin{align}
+        \eta := -\ln{\tan{\frac \theta 2}}
+      \end{align}
+    \item[$\Rightarrow$] Lorentzinvariant in z-Richtung
+      \pause
+    \item Abstände in der Transversalebene
+      \begin{align}
+        \Delta R^2 := \Delta\eta^2 + \Delta\phi^2
+      \end{align}
+  \end{itemize}
+\end{frame}
+
+\subsection{Experiment}
+\begin{frame}{Das Experiment}
+  \begin{itemize}
+    \item Eines der großen Experimente am LHC
+    \item Soll das Folgende (im Protonenmodus) untersuchen
+      \begin{itemize}
+        \item Higgs-Mechanismus (Suche nach dem Higgs-Boson)
+        \item Supersymmetrische Theorien
+        \item Anomalien der Elektroschwachen Wechselwirkung bei hohen Energien
+      \end{itemize} \pause
+      \vskip10pt
+    \item Leitlinien des Designs:
+      \begin{itemize}
+        \item Sehr gute elektromagnetische Kaloriemetrie zur genauen Messung von
+          Photonen und Elektronenenenergie
+        \item Effiziente Spurverfolgung bei hoher Luminosität zur genauen
+          Messung der Leptonenimpulse
+        \item Genaue Myonenverfolgung 
+        \item Abdeckung eines großen $\eta$-Bereichs
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Aufbau}
+  % Erzählen zum Experiment
+  \begin{description}
+    \item[Strahlrohr] % Mehr dazu
+      \pause
+    \item[Tracker]
+      \begin{itemize}
+        \item Silizium oder andere Halbleiter
+        \item Straw-Chambers
+      \end{itemize}
+      \pause
+    \item[Kalorimeter]
+      \begin{itemize}
+        \item Szintillatoren oder Flüssigargon
+        \item Elektronisches und Hadronisches Kalorimeter
+        \item Auch zur Erkennung von Jets
+      \end{itemize}
+      \pause
+    \item[Myondetektor]
+      \begin{itemize}
+        \item Hat bei ATLAS sein eigenes Magnetsystem
+      \end{itemize}
+  \end{description}
+\end{frame}
+
+\begin{frame}{Wichtige gemessene Größen}
+  Die für diese Analyse relevanten Größen und abgeleiteten Größen sind:
+  \begin{description}
+    \item[Leptonen] Energie, Impuls, Ladung
+    \item[Jets] Ebenfalls Energie und Impuls, Kalorimeterereignisse
+    \item[Elektronenqualität] (darauf wird später genauer eingegangen)
+    \item[Fehlende Transversalenergie]
+  \end{description}
+\end{frame}
+
+\section[Analyse]{Arbeitsschritte zur Erstellung der Analyse}
+\subsection{Vorüberlegungen}
+\begin{frame}{Der zu analysierende Prozess}
+  \begin{center}
+    \Grafik{grafiken/feynman_1.tikz}{0.5}
+    \hspace{2cm}
+    \Grafik{grafiken/feynman_2.tikz}{0.5}
+  \end{center}
+  
+  \begin{itemize}
+    \item Relativ einfach, da die Leptonen gut detektiert werden können \pause
+    \item Einziges Problem: Das Neutrino \pause
+    \item Von besonderem Interesse ist der TGC-Vertex
+      (\emph{Triple-Gauge-Boson-Coupling})
+    \item (Hier werden wir einfach die W-Masse aus der Analyse näherungsweise
+      bestimmen)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Mögliche Hintergrundprozesse}
+  \begin{itemize}
+    \item Quantenchromodynamik \pause (ausgeschlossen, da wir viele gute
+      Leptonen haben) \pause
+      \vskip10pt
+    \item $W\to l\nu$ \pause (ausgeschlossen, da zwei Teilchen gefaket werden
+      müssten) \pause
+      \vskip10pt
+    \item $Z\to ll$ mit $l\in{e,\mu,\tau}$ \pause \vskip10pt
+    \item $t\bar t$-Produktion mit darauf folgenden Zerfällen \vskip10pt
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Erster Ansatz}
+  \begin{itemize}
+    \item Betrachte nur Einträge mit genau drei Leptonen \pause
+    \item Rekonstruiere $Z^0$ als die Kombination der Leptonen mit der kleinsten
+      Differenz zu $m_{Z^0} = \unit[91.188]{MeV}$ \pause
+    \item Erzeuge Pseudoteilchen aus der fehlenden Transversalenergie \\ \pause
+      \emph{Dies ist unser Neutrino} \pause
+    \item Rekonstruiere daraus und aus dem übrigen Lepton das $W$-Boson \pause
+  \end{itemize}
+
+  \begin{block}{Problem:}
+    Der Ansatz "`funktioniert"' sowohl für das Signal als auch für die Hintergründe
+  \end{block} \pause
+  \emph{Wir müssen also herausfinden, was das Signal gegenüber den Hintergründen
+  auszeichnet.}
+\end{frame}
+
+\subsection{Schnitte}
+\begin{frame}{Vergleich mit $t\bar t$}
+  Hat kein "`echtes"' $Z^0$, die Massenverteilung ist sehr gleichmäßig.
+  \vskip10pt
+  $\Rightarrow$ Schneiden an der $Z^0$-Masse:
+  \Grafik{grafiken/ttbar/zmass_vs_no_zmass.tikz}{0.4} \hskip10pt
+  \Grafik{grafiken/ztautau/zmass_vs_no_zmass.tikz}{0.4}
+  Auf diese Weise fällt auch der $Z\to \tau\tau$-Hintergrund heraus, da wir in
+  diesem ebenfalls nicht das echte $Z^0$ erhalten, sondern höchstens eines
+  seiner Zerfallsprodukte.
+\end{frame}
+
+\begin{frame}{$Z\to ll$}
+  Aus dem eigentlichen Zerfall erhalten wir nur zwei gleichartige Leptonen,
+  das dritte ist also "`fehlerhaft"'. \pause
+
+  \begin{itemize}
+    \item Es kann einerseits ein echtes Teilchen aus einem Nebenprozess sein
+      \pause
+    \item oder andererseits ein gefaketes Teilchen. \pause
+    \item[$\Rightarrow$] Füge Vorauswahlschritte hinzu.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{$Z \to ll$ -- Vorauswahl}
+  \begin{itemize}
+    \item Standardmäßig wird alles, dass annähernd so aussieht wie eine Elektron
+      als solches deklariert. \pause
+
+    \item Um die Qualität der Zuordnung (also wie viele Tests positiv
+      ausgefallen sind) eingehen zu lassen benutzen wir die Variable
+      \lstinline'El_IsEM'. \pause
+
+    \item Diese enthält in den Bits des Wertes kodiert die Tests. \pause
+
+    \item Nun filtern wir diese mit einer der vordefinierten Masken aus Athena.
+      \pause
+
+    \item In diesem Fall nehmen wir \lstinline'Medium', da \lstinline'Tight' zu
+      viel des Signals und \lstinline'Loose' zu wenig des Hintergrundes filtert.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{$Z \to ll$ -- Vorauswahl}
+  \begin{itemize}
+    \item Um die erste Möglichkeit (echtes Lepton) auszuschließen, nehmen wir
+      uns der Hauptmöglichkeit für ein solches an.
+
+    \item Es kann in einem Hadronenjet als Zerfallsprodukt entstehen (z.B.\
+      B-Meson, dass zu $e\nu D$ zerfällt). \pause
+
+    \item[$\Rightarrow$] Filtern Leptonen, die zu nah an einem Jet liegen.
+  \end{itemize} \pause
+
+  Da jedes Elektron einen Jet erzeugt (bedingt durch die Jetrekonstruktion),
+  filtern wir zweimal.
+
+  \begin{itemize}
+    \item Zunächst alle Jets, die $\Delta R < 0.2$ zu einem Lepton haben.
+    \item Dann alle Leptonen, die $\Delta R < 0.4$ zu einem der übrigen Jets haben.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{$Z \to ll$ -- Konkret am dritten Lepton}
+  Als zweiten Schritt filtern wir gefakete dritte Leptonen.
+  \vskip10pt
+  \pause
+
+  Diese haben einen deutlich geringeren Transversalimpuls als die "`echten"'
+  Leptonen des Signals (erhält man empirisch aus der Betrachtung der Diagramme).
+  \pause
+  \vskip10pt
+
+  $\Rightarrow$ Schneiden am Transversalimpuls um den Hintergrund weiter zu
+  reduzieren.
+  
+  \begin{center}
+    \Grafik{grafiken/signal/lpt_vs_no_lpt.tikz}{0.45} \hskip10pt
+    \Grafik{grafiken/zmumu/lpt_vs_no_lpt.tikz}{0.45}
+  \end{center}
+\end{frame}
+
+\subsection{Anmerkungen}
+\begin{frame}{Anmerkungen zur Umsetzung}
+  In ROOT wird das ganze wie folgt implementiert:
+  \begin{itemize}
+    \item Laufen über ein \lstinline'TTree'-Objekt
+    \item Mit der Methode \lstinline'GetEntry' werden die Daten eines Eintrages in
+      die registrierten Variablen eingetragen
+    \item In der Hauptmethode des Analyseobjektes werden die Schnitte und
+      Berechnungen durchgeführt
+    \item Die Ergebnisse werden dann in jedem Schritt in die Histogramme
+      eingetragen
+  \end{itemize}
+
+  \begin{block}{Kleiner Tipp:}
+    Es beschleunigt das Programm ungemein, wenn man nach der Verwendung von
+    \lstinline'MakeClass' alle Branches bis auf die, die man benötigt
+    deaktiviert.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Zusammenfassung der Daten}
+  Um die Daten aus den Hintergründen und dem Signal miteinander zu vergleichen
+  werden diese auf dieselbe Luminosität normiert.
+  \vskip10pt
+  \pause
+
+  Dazu benutzt man die Anzahl der Ereignisse im Sample (das jeweils genau einen
+  Prozess enthält) und teilt diese durch die Wirkungsquerschnitte des Prozesses.
+  \vskip10pt
+  \pause
+
+  In meinem Fall haben das das Python-Programm \lstinline'normalize.py' und das
+  Shellskript \lstinline'join.sh' übernommen.
+\end{frame}
+
+\section[Ergebnisse]{Ergebnisse und Auswertung}
+\subsection{}
+\begin{frame}{Endergebnis}
+  \begin{center}
+    \Grafik{grafiken/m_t.tikz}{0.5}
+  \end{center}
+  Wie man sieht wird fast der gesamte Hintergrund herausgefiltert, das was übrig
+  bleibt geht im statistischen Rauschen des Histogramms des Signals unter.
+
+  % Breit-Wigner, m_W = 80 MeV
+\end{frame}
+
+\begin{frame}{Ungeklärtes Detail}
+  \begin{center}
+    \Grafik{grafiken/delta_phi.tikz}{0.5}
+  \end{center}
+  Man sieht in dem Histogramm zur Winkelverteilung (Winkel in der
+  Transversalebene zwischen $W^\pm$- und \Z-Boson) eine leichte Präferenz zu
+  Winkeln $> 0$.
+\end{frame}
+
+\begin{frame}{Schluss}
+  \begin{center}\Large Vielen Dank für Ihre Aufmerksamkeit.\end{center}
+  \vskip10pt
+
+  Die Quelltexte der Bachelorarbeit und insbesondere der dafür geschriebenen
+  Programme (also auch der Analyse) sind unter den Bedingungen der GPLv3 zu finden
+  unter:
+  \vskip10pt
+
+  \begin{center}http://www.github.com/filmor/ba\end{center}
+\end{frame}
+\end{document}
+
