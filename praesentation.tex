@@ -91,31 +91,29 @@ leptonischen Endzuständen am ATLAS-Experiment
 \begin{frame}{Konventionen}
   \begin{itemize}
     \item Verwendetes Einheitensystem: Natürliche Einheiten
-      \begin{align}
+      \begin{align*}
         \hbar = c = 1
-      \end{align}
-      \pause
-    \item Orientierung der Raumachsen
-      \pause
+      \end{align*} \pause
+    \item Orientierung der Raumachsen \pause
     \item Koordinatensystem
       \pause
-      \begin{align}
+      \begin{align*}
         \eta := -\ln{\tan{\frac \theta 2}}
-      \end{align}
-    \item[$\Rightarrow$] Lorentzinvariant in z-Richtung
+      \end{align*}
+    \item[$\Rightarrow$] Differenzen lorentzinvariant in z-Richtung
       \pause
-    \item Abstände in der Transversalebene
-      \begin{align}
+    \item Raumwinkelabstände
+      \begin{align*}
         \Delta R^2 := \Delta\eta^2 + \Delta\phi^2
-      \end{align}
+      \end{align*}
   \end{itemize}
 \end{frame}
 
 \subsection{Experiment}
-\begin{frame}{Das Experiment}
+\begin{frame}{Das ATLAS-Experiment}
   \begin{itemize}
     \item Eines der großen Experimente am LHC
-    \item Soll das Folgende (im Protonenmodus) untersuchen
+    \item Soll u.~a.\ das Folgende (im Protonenmodus) untersuchen
       \begin{itemize}
         \item Higgs-Mechanismus (Suche nach dem Higgs-Boson)
         \item Supersymmetrische Theorien
@@ -124,8 +122,8 @@ leptonischen Endzuständen am ATLAS-Experiment
       \vskip10pt
     \item Leitlinien des Designs:
       \begin{itemize}
-        \item Sehr gute elektromagnetische Kaloriemetrie zur genauen Messung von
-          Photonen und Elektronenenenergie
+        \item Sehr gute elektromagnetische Kalorimetrie zur genauen Messung von
+          Photonen- und Elektronenenenergien
         \item Effiziente Spurverfolgung bei hoher Luminosität zur genauen
           Messung der Leptonenimpulse
         \item Genaue Myonenverfolgung 
@@ -134,38 +132,18 @@ leptonischen Endzuständen am ATLAS-Experiment
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Aufbau}
-  % Erzählen zum Experiment
-  \begin{description}
-    \item[Strahlrohr] % Mehr dazu
-      \pause
-    \item[Tracker]
-      \begin{itemize}
-        \item Silizium oder andere Halbleiter
-        \item Straw-Chambers
-      \end{itemize}
-      \pause
-    \item[Kalorimeter]
-      \begin{itemize}
-        \item Szintillatoren oder Flüssigargon
-        \item Elektronisches und Hadronisches Kalorimeter
-        \item Auch zur Erkennung von Jets
-      \end{itemize}
-      \pause
-    \item[Myondetektor]
-      \begin{itemize}
-        \item Hat bei ATLAS sein eigenes Magnetsystem
-      \end{itemize}
-  \end{description}
-\end{frame}
-
 \begin{frame}{Wichtige gemessene Größen}
   Die für diese Analyse relevanten Größen und abgeleiteten Größen sind:
   \begin{description}
-    \item[Leptonen] Energie, Impuls, Ladung
-    \item[Jets] Ebenfalls Energie und Impuls, Kalorimeterereignisse
-    \item[Elektronenqualität] (darauf wird später genauer eingegangen)
-    \item[Fehlende Transversalenergie]
+    \item[Leptonen] ~ \\
+      Energie, Impuls, Ladung \pause
+    \item[Jets] ~ \\
+      Ebenfalls Energie und Impuls \\
+      Kalorimeterereignisse \pause
+    \item[Fehlende Transversalenergie] ~ \\
+      (Neutrinos) \pause
+    \item[Elektronenqualität] ~ \\
+      (darauf wird später genauer eingegangen)
   \end{description}
 \end{frame}
 
@@ -173,9 +151,9 @@ leptonischen Endzuständen am ATLAS-Experiment
 \subsection{Vorüberlegungen}
 \begin{frame}{Der zu analysierende Prozess}
   \begin{center}
-    \Grafik{grafiken/feynman_1.tikz}{0.5}
+    \Grafik{grafiken/feynman_1.tikz}{0.7}
     \hspace{2cm}
-    \Grafik{grafiken/feynman_2.tikz}{0.5}
+    \Grafik{grafiken/feynman_2.tikz}{0.7}
   \end{center}
   
   \begin{itemize}
@@ -183,20 +161,19 @@ leptonischen Endzuständen am ATLAS-Experiment
     \item Einziges Problem: Das Neutrino \pause
     \item Von besonderem Interesse ist der TGC-Vertex
       (\emph{Triple-Gauge-Boson-Coupling})
-    \item (Hier werden wir einfach die W-Masse aus der Analyse näherungsweise
-      bestimmen)
+    \item In dieser Analyse: \\
+      Näherungsweise Bestimmung der W-Masse
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Mögliche Hintergrundprozesse}
+\begin{frame}{Mögliche Untergrundprozesse}
   \begin{itemize}
-    \item Quantenchromodynamik \pause (ausgeschlossen, da wir viele gute
-      Leptonen haben) \pause
+    \item Quantenchromodynamik \pause (unkritisch, da wir viele gute Leptonen
+      haben) \pause
       \vskip10pt
-    \item $W\to l\nu$ \pause (ausgeschlossen, da zwei Teilchen gefaket werden
-      müssten) \pause
-      \vskip10pt
-    \item $Z\to ll$ mit $l\in{e,\mu,\tau}$ \pause \vskip10pt
+    \item $W\to l\nu$ \pause (unkritisch, da zwei Teilchen fehlerkannt werden
+      müssten) \pause \vskip10pt
+    \item $\Z\to l^+l^-$ mit $l\in{e,\mu,\tau}$ \pause \vskip10pt
     \item $t\bar t$-Produktion mit darauf folgenden Zerfällen \vskip10pt
   \end{itemize}
 \end{frame}
@@ -208,56 +185,68 @@ leptonischen Endzuständen am ATLAS-Experiment
       Differenz zu $m_{Z^0} = \unit[91.188]{MeV}$ \pause
     \item Erzeuge Pseudoteilchen aus der fehlenden Transversalenergie \\ \pause
       \emph{Dies ist unser Neutrino} \pause
-    \item Rekonstruiere daraus und aus dem übrigen Lepton das $W$-Boson \pause
+    \item "`Rekonstruiere"' daraus und aus dem übrigen Lepton das $W$-Boson
+      \pause
   \end{itemize}
 
   \begin{block}{Problem:}
-    Der Ansatz "`funktioniert"' sowohl für das Signal als auch für die Hintergründe
+    Der Ansatz "`funktioniert"' sowohl für das Signal als auch für die Untergründe
   \end{block} \pause
-  \emph{Wir müssen also herausfinden, was das Signal gegenüber den Hintergründen
+  \emph{Wir müssen also herausfinden, was das Signal gegenüber den Untergründen
   auszeichnet.}
 \end{frame}
 
 \subsection{Schnitte}
 \begin{frame}{Vergleich mit $t\bar t$}
-  Hat kein "`echtes"' $Z^0$, die Massenverteilung ist sehr gleichmäßig.
-  \vskip10pt
-  $\Rightarrow$ Schneiden an der $Z^0$-Masse:
-  \Grafik{grafiken/ttbar/zmass_vs_no_zmass.tikz}{0.4} \hskip10pt
-  \Grafik{grafiken/ztautau/zmass_vs_no_zmass.tikz}{0.4}
-  Auf diese Weise fällt auch der $Z\to \tau\tau$-Hintergrund heraus, da wir in
-  diesem ebenfalls nicht das echte $Z^0$ erhalten, sondern höchstens eines
-  seiner Zerfallsprodukte.
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \Grafik{grafiken/ttbar/zmass_vs_no_zmass.tikz}{0.55}
+      \Grafik{grafiken/ztautau/zmass_vs_no_zmass.tikz}{0.55}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      Hat kein "`echtes"' $Z^0$, die Massenverteilung ist sehr gleichmäßig.
+      \vskip10pt
+      $\Rightarrow$ Schneiden an der $Z^0$-Masse 
+      \vskip10pt
+      \pause
+      Auf diese Weise fällt auch der $Z\to \tau\tau$-Untergrund heraus, da wir in
+      diesem ebenfalls nicht das echte $Z^0$ erhalten, sondern höchstens eines
+      seiner Zerfallsprodukte.
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \begin{frame}{$Z\to ll$}
-  Aus dem eigentlichen Zerfall erhalten wir nur zwei gleichartige Leptonen,
-  das dritte ist also "`fehlerhaft"'. \pause
+  Aus dem eigentlichen Zerfall erhalten wir nur zwei Leptonen gleichen Flavours
+  und gegensätzlicher Ladung, das dritte ist also "`fehlerhaft"'. \pause
+  \vskip10pt
 
   \begin{itemize}
     \item Es kann einerseits ein echtes Teilchen aus einem Nebenprozess sein
+      \vskip10pt
       \pause
-    \item oder andererseits ein gefaketes Teilchen. \pause
+    \item oder andererseits ein fehlerkanntes Teilchen. \vskip10pt \pause
     \item[$\Rightarrow$] Füge Vorauswahlschritte hinzu.
   \end{itemize}
 \end{frame}
 
 \begin{frame}{$Z \to ll$ -- Vorauswahl}
   \begin{itemize}
-    \item Standardmäßig wird alles, dass annähernd so aussieht wie eine Elektron
+    \item Standardmäßig wird alles, was annähernd so aussieht wie ein Elektron
       als solches deklariert. \pause
 
     \item Um die Qualität der Zuordnung (also wie viele Tests positiv
       ausgefallen sind) eingehen zu lassen benutzen wir die Variable
       \lstinline'El_IsEM'. \pause
 
-    \item Diese enthält in den Bits des Wertes kodiert die Tests. \pause
+    \item \lstinline'El_IsEM' enthält in den Bits des Wertes kodiert die Tests.
+      \pause
 
     \item Nun filtern wir diese mit einer der vordefinierten Masken aus Athena.
       \pause
 
     \item In diesem Fall nehmen wir \lstinline'Medium', da \lstinline'Tight' zu
-      viel des Signals und \lstinline'Loose' zu wenig des Hintergrundes filtert.
+      viel des Signals und \lstinline'Loose' zu wenig des Untergrundes filtert.
   \end{itemize}
 \end{frame}
 
@@ -267,7 +256,7 @@ leptonischen Endzuständen am ATLAS-Experiment
       uns der Hauptmöglichkeit für ein solches an.
 
     \item Es kann in einem Hadronenjet als Zerfallsprodukt entstehen (z.B.\
-      B-Meson, dass zu $e\nu D$ zerfällt). \pause
+      $B$-Meson, dass zu $e\nu D$ zerfällt). \pause
 
     \item[$\Rightarrow$] Filtern Leptonen, die zu nah an einem Jet liegen.
   \end{itemize} \pause
@@ -282,22 +271,23 @@ leptonischen Endzuständen am ATLAS-Experiment
 \end{frame}
 
 \begin{frame}{$Z \to ll$ -- Konkret am dritten Lepton}
-  Als zweiten Schritt filtern wir gefakete dritte Leptonen.
-  \vskip10pt
-  \pause
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \Grafik{grafiken/signal/lpt_vs_no_lpt.tikz}{0.55}
+      \Grafik{grafiken/zmumu/lpt_vs_no_lpt.tikz}{0.55}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      Als zweiten Schritt filtern wir fehlerkannte dritte Leptonen.
+      \pause
 
-  Diese haben einen deutlich geringeren Transversalimpuls als die "`echten"'
-  Leptonen des Signals (erhält man empirisch aus der Betrachtung der Diagramme).
-  \pause
-  \vskip10pt
+      Diese haben einen deutlich geringeren Transversalimpuls als die "`echten"'
+      Leptonen des Signals (erhält man empirisch aus der Betrachtung der
+      Diagramme).  \pause \vskip10pt
 
-  $\Rightarrow$ Schneiden am Transversalimpuls um den Hintergrund weiter zu
-  reduzieren.
-  
-  \begin{center}
-    \Grafik{grafiken/signal/lpt_vs_no_lpt.tikz}{0.45} \hskip10pt
-    \Grafik{grafiken/zmumu/lpt_vs_no_lpt.tikz}{0.45}
-  \end{center}
+      $\Rightarrow$ Schneiden am Transversalimpuls um den Untergrund weiter zu
+      reduzieren.
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \subsection{Anmerkungen}
@@ -321,7 +311,7 @@ leptonischen Endzuständen am ATLAS-Experiment
 \end{frame}
 
 \begin{frame}{Zusammenfassung der Daten}
-  Um die Daten aus den Hintergründen und dem Signal miteinander zu vergleichen
+  Um die Daten aus den Untergründen und dem Signal miteinander zu vergleichen
   werden diese auf dieselbe Luminosität normiert.
   \vskip10pt
   \pause
@@ -337,23 +327,19 @@ leptonischen Endzuständen am ATLAS-Experiment
 
 \section[Ergebnisse]{Ergebnisse und Auswertung}
 \subsection{}
-\begin{frame}{Endergebnis}
-  \begin{center}
-    \Grafik{grafiken/m_t.tikz}{0.5}
-  \end{center}
-  Wie man sieht wird fast der gesamte Hintergrund herausgefiltert, das was übrig
-  bleibt geht im statistischen Rauschen des Histogramms des Signals unter.
-
-  % Breit-Wigner, m_W = 80 MeV
-\end{frame}
-
-\begin{frame}{Ungeklärtes Detail}
-  \begin{center}
-    \Grafik{grafiken/delta_phi.tikz}{0.5}
-  \end{center}
-  Man sieht in dem Histogramm zur Winkelverteilung (Winkel in der
-  Transversalebene zwischen $W^\pm$- und \Z-Boson) eine leichte Präferenz zu
-  Winkeln $> 0$.
+\begin{frame}{Transversale Masse des $W$-Bosons}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \Grafik{grafiken/m_t.tikz}{0.6}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \begin{align*}
+        m_t := \sqrt{E_{\mathrm{miss},t} E_l (1 - \cos(\phi))}
+      \end{align*}
+      Fast der gesamte Untergrund wird herausgefiltert, das was übrig bleibt
+      geht im statistischen Rauschen des Histogramms des Signals unter.
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \begin{frame}{Schluss}
@@ -367,5 +353,18 @@ leptonischen Endzuständen am ATLAS-Experiment
 
   \begin{center}http://www.github.com/filmor/ba\end{center}
 \end{frame}
-\end{document}
 
+\begin{frame}{Ungeklärtes Detail}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \Grafik{grafiken/delta_phi.tikz}{0.5}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      Man sieht in dem Histogramm zur Winkelverteilung (Winkel in der
+      Transversalebene zwischen $W^\pm$- und \Z-Boson) eine leichte Präferenz zu
+      Winkeln $> 0$.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\end{document}
